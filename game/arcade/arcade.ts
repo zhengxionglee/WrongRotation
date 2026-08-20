@@ -9,6 +9,7 @@ import { loadImage, getLuma, preload } from "../shared/images";
 import { sfx } from "../shared/audio";
 import * as tween from "../shared/tween";
 import * as save from "../shared/save";
+import manifestData from "../../assets/manifest.json";
 
 interface ArcadeLevel {
   image: HTMLImageElement;
@@ -44,10 +45,10 @@ export class ArcadeSession {
   private recentImages: number[] = [];
   private lastUpdate = 0;
 
-  constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, manifest: ManifestEntry[], onExit: () => void) {
+  constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, onExit: () => void) {
     this.canvas = canvas;
     this.ctx = ctx;
-    this.manifest = manifest;
+    this.manifest = (manifestData as { images: ManifestEntry[] }).images;
     this.onExit = onExit;
     this.hudEl = document.getElementById("hud")!;
     this.uiEl = document.getElementById("ui")!;

@@ -618,7 +618,7 @@ for (let id = 1; id <= 100; id++) {
   const buf = P[pat](rng, noise, pal);
   const anisotropy = computeAnisotropy(buf);
   const vImage = Math.round((1 - anisotropy) * 100) / 100;
-  const file = `img/mosaic_${String(id).padStart(3, '0')}.webp`;
+  const file = `assets/img/mosaic_${String(id).padStart(3, '0')}.webp`;
   const outPath = path.resolve(imgDir, `mosaic_${String(id).padStart(3, '0')}.webp`);
   await sharp(Buffer.from(buf.buffer, buf.byteOffset, buf.byteLength), { raw: { width: W, height: H, channels: 4 } })
     .webp({ quality: QUALITY, effort: 4 })

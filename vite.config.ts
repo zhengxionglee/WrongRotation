@@ -9,18 +9,12 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 function serveStatic(dirName: string): Plugin {
   const dir = path.resolve(__dirname, dirName);
   return {
-    name: `serve-${dirName}`,
-    configureServer(server) {
-      server.middlewares.use(`/${dirName}`, (req, res, next) => {
-        const file = path.join(dir, decodeURIComponent((req.url || "").split("?")[0]));
-        if (fs.existsSync(file) && fs.statSync(file).isFile()) {
-          const ext = path.extname(file);
-          const mime: Record<string, string> = { ".webp": "image/webp", ".json": "application/json" };
-          res.setHeader("Content-Type", mime[ext] || "application/octet-stream");
-          fs.createReadStream(file).pipe(res);
-        } else next();
-      });
-    },
+    name: `copy-${dirName}`,
+    // NOTE: no configureServer middleware! Vite dev server already serves
+    // files from the project root. A custom middleware here would intercept
+    // module requests (e.g. "/levels/levels.json?import") BEFORE Vite's
+    // transform pipeline and return raw JSON with the wrong MIME type,
+    // which breaks ES module loading (black screen).
     closeBundle() {
       const out = path.resolve(__dirname, "dist", dirName);
       if (fs.existsSync(dir)) fs.cpSync(dir, out, { recursive: true });

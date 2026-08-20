@@ -1,3 +1,5 @@
 node_modules
 dist
 *.log
+gen/sim
+gen/sim-standalone

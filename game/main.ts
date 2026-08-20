@@ -125,7 +125,7 @@ function startArcade() {
   sfx.init();
   setScreen("");
   setHud("");
-  const session = new ArcadeSession(canvas, ctx, [], () => {
+  const session = new ArcadeSession(canvas, ctx, () => {
     hideModal();
     setHud("");
     goHome();

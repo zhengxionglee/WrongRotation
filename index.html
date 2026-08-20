@@ -54,6 +54,26 @@ canvas{display:block;position:fixed;top:0;left:0;width:100%;height:100%;touch-ac
 <div id="ui"></div>
 <div id="modal"></div>
 <div id="toast" class="toast"></div>
+<script>
+(function () {
+  function showError(msg) {
+    var d = document.getElementById("err-overlay");
+    if (!d) {
+      d = document.createElement("div");
+      d.id = "err-overlay";
+      d.style.cssText = "position:fixed;bottom:0;left:0;right:0;background:#c0392b;color:#fff;padding:8px 12px;font:12px/1.4 monospace;z-index:99999;white-space:pre-wrap;max-height:40%;overflow:auto;";
+      (document.body || document.documentElement).appendChild(d);
+    }
+    d.textContent = (d.textContent ? d.textContent + "\n" : "") + msg;
+  }
+  window.addEventListener("error", function (e) {
+    showError("Error: " + (e.message || "unknown") + (e.filename ? " @ " + e.filename + ":" + e.lineno : ""));
+  });
+  window.addEventListener("unhandledrejection", function (e) {
+    showError("Promise rejection: " + (e.reason && e.reason.message ? e.reason.message : e.reason));
+  });
+})();
+</script>
 <script type="module" src="/game/main.ts"></script>
 </body>
 </html>

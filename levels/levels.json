@@ -2,7 +2,7 @@
   {
     "id": 1,
     "difficulty": 7.9,
-    "image": "img/mosaic_009.webp",
+    "image": "assets/img/mosaic_009.webp",
     "grid": {
       "type": "square",
       "seed": 1290784310,
@@ -43,7 +43,7 @@
   {
     "id": 2,
     "difficulty": 2.4,
-    "image": "img/mosaic_092.webp",
+    "image": "assets/img/mosaic_092.webp",
     "grid": {
       "type": "square",
       "seed": 3527542996,
@@ -84,7 +84,7 @@
   {
     "id": 3,
     "difficulty": 8.1,
-    "image": "img/mosaic_013.webp",
+    "image": "assets/img/mosaic_013.webp",
     "grid": {
       "type": "square",
       "seed": 264341834,
@@ -125,7 +125,7 @@
   {
     "id": 4,
     "difficulty": 3.3,
-    "image": "img/mosaic_012.webp",
+    "image": "assets/img/mosaic_012.webp",
     "grid": {
       "type": "square",
       "seed": 2350769346,
@@ -166,7 +166,7 @@
   {
     "id": 5,
     "difficulty": 4,
-    "image": "img/mosaic_069.webp",
+    "image": "assets/img/mosaic_069.webp",
     "grid": {
       "type": "square",
       "seed": 3102074255,
@@ -207,7 +207,7 @@
   {
     "id": 6,
     "difficulty": 3.7,
-    "image": "img/mosaic_064.webp",
+    "image": "assets/img/mosaic_064.webp",
     "grid": {
       "type": "square",
       "seed": 146899151,
@@ -248,7 +248,7 @@
   {
     "id": 7,
     "difficulty": 2.8,
-    "image": "img/mosaic_078.webp",
+    "image": "assets/img/mosaic_078.webp",
     "grid": {
       "type": "square",
       "seed": 2937826802,
@@ -289,7 +289,7 @@
   {
     "id": 8,
     "difficulty": 2,
-    "image": "img/mosaic_040.webp",
+    "image": "assets/img/mosaic_040.webp",
     "grid": {
       "type": "square",
       "seed": 3637878303,
@@ -330,7 +330,7 @@
   {
     "id": 9,
     "difficulty": 3.1,
-    "image": "img/mosaic_010.webp",
+    "image": "assets/img/mosaic_010.webp",
     "grid": {
       "type": "square",
       "seed": 3050327932,
@@ -371,7 +371,7 @@
   {
     "id": 10,
     "difficulty": 5.3,
-    "image": "img/mosaic_005.webp",
+    "image": "assets/img/mosaic_005.webp",
     "grid": {
       "type": "square",
       "seed": 1969136545,
@@ -412,7 +412,7 @@
   {
     "id": 11,
     "difficulty": 3.5,
-    "image": "img/mosaic_080.webp",
+    "image": "assets/img/mosaic_080.webp",
     "grid": {
       "type": "square",
       "seed": 3851035647,
@@ -453,7 +453,7 @@
   {
     "id": 12,
     "difficulty": 6.5,
-    "image": "img/mosaic_042.webp",
+    "image": "assets/img/mosaic_042.webp",
     "grid": {
       "type": "square",
       "seed": 1081974601,
@@ -494,7 +494,7 @@
   {
     "id": 13,
     "difficulty": 3.3,
-    "image": "img/mosaic_058.webp",
+    "image": "assets/img/mosaic_058.webp",
     "grid": {
       "type": "square",
       "seed": 3498652166,
@@ -535,7 +535,7 @@
   {
     "id": 14,
     "difficulty": 2.3,
-    "image": "img/mosaic_047.webp",
+    "image": "assets/img/mosaic_047.webp",
     "grid": {
       "type": "square",
       "seed": 3410838859,
@@ -576,7 +576,7 @@
   {
     "id": 15,
     "difficulty": 3.6,
-    "image": "img/mosaic_077.webp",
+    "image": "assets/img/mosaic_077.webp",
     "grid": {
       "type": "square",
       "seed": 2426210270,
@@ -617,7 +617,7 @@
   {
     "id": 16,
     "difficulty": 3.7,
-    "image": "img/mosaic_096.webp",
+    "image": "assets/img/mosaic_096.webp",
     "grid": {
       "type": "square",
       "seed": 2939948593,
@@ -658,7 +658,7 @@
   {
     "id": 17,
     "difficulty": 3.3,
-    "image": "img/mosaic_084.webp",
+    "image": "assets/img/mosaic_084.webp",
     "grid": {
       "type": "square",
       "seed": 1917895663,
@@ -699,7 +699,7 @@
   {
     "id": 18,
     "difficulty": 2.1,
-    "image": "img/mosaic_072.webp",
+    "image": "assets/img/mosaic_072.webp",
     "grid": {
       "type": "square",
       "seed": 1274231706,
@@ -740,7 +740,7 @@
   {
     "id": 19,
     "difficulty": 2.5,
-    "image": "img/mosaic_091.webp",
+    "image": "assets/img/mosaic_091.webp",
     "grid": {
       "type": "square",
       "seed": 3326524866,
@@ -781,7 +781,7 @@
   {
     "id": 20,
     "difficulty": 2,
-    "image": "img/mosaic_011.webp",
+    "image": "assets/img/mosaic_011.webp",
     "grid": {
       "type": "hex",
       "seed": 3427507725,
@@ -822,7 +822,7 @@
   {
     "id": 21,
     "difficulty": 2.9,
-    "image": "img/mosaic_060.webp",
+    "image": "assets/img/mosaic_060.webp",
     "grid": {
       "type": "hex",
       "seed": 2928553278,
@@ -863,7 +863,7 @@
   {
     "id": 22,
     "difficulty": 2.6,
-    "image": "img/mosaic_074.webp",
+    "image": "assets/img/mosaic_074.webp",
     "grid": {
       "type": "hex",
       "seed": 1756017019,
@@ -904,7 +904,7 @@
   {
     "id": 23,
     "difficulty": 3.4,
-    "image": "img/mosaic_100.webp",
+    "image": "assets/img/mosaic_100.webp",
     "grid": {
       "type": "hex",
       "seed": 2174395724,
@@ -945,7 +945,7 @@
   {
     "id": 24,
     "difficulty": 2.8,
-    "image": "img/mosaic_061.webp",
+    "image": "assets/img/mosaic_061.webp",
     "grid": {
       "type": "hex",
       "seed": 3085001709,
@@ -986,7 +986,7 @@
   {
     "id": 25,
     "difficulty": 5.1,
-    "image": "img/mosaic_049.webp",
+    "image": "assets/img/mosaic_049.webp",
     "grid": {
       "type": "hex",
       "seed": 1870359098,
@@ -1027,7 +1027,7 @@
   {
     "id": 26,
     "difficulty": 2.8,
-    "image": "img/mosaic_038.webp",
+    "image": "assets/img/mosaic_038.webp",
     "grid": {
       "type": "tri",
       "seed": 2851537103,
@@ -1068,7 +1068,7 @@
   {
     "id": 27,
     "difficulty": 4,
-    "image": "img/mosaic_023.webp",
+    "image": "assets/img/mosaic_023.webp",
     "grid": {
       "type": "tri",
       "seed": 3666715381,
@@ -1109,7 +1109,7 @@
   {
     "id": 28,
     "difficulty": 3.9,
-    "image": "img/mosaic_048.webp",
+    "image": "assets/img/mosaic_048.webp",
     "grid": {
       "type": "tri",
       "seed": 3009183969,
@@ -1150,7 +1150,7 @@
   {
     "id": 29,
     "difficulty": 2.2,
-    "image": "img/mosaic_092.webp",
+    "image": "assets/img/mosaic_092.webp",
     "grid": {
       "type": "tri",
       "seed": 1746548495,
@@ -1191,7 +1191,7 @@
   {
     "id": 30,
     "difficulty": 4.3,
-    "image": "img/mosaic_030.webp",
+    "image": "assets/img/mosaic_030.webp",
     "grid": {
       "type": "tri",
       "seed": 2377929988,
@@ -1232,7 +1232,7 @@
   {
     "id": 31,
     "difficulty": 3.2,
-    "image": "img/mosaic_003.webp",
+    "image": "assets/img/mosaic_003.webp",
     "grid": {
       "type": "square",
       "seed": 2686158142,
@@ -1277,7 +1277,7 @@
   {
     "id": 32,
     "difficulty": 2.5,
-    "image": "img/mosaic_074.webp",
+    "image": "assets/img/mosaic_074.webp",
     "grid": {
       "type": "square",
       "seed": 2036820299,
@@ -1322,7 +1322,7 @@
   {
     "id": 33,
     "difficulty": 3.7,
-    "image": "img/mosaic_015.webp",
+    "image": "assets/img/mosaic_015.webp",
     "grid": {
       "type": "hex",
       "seed": 635848483,
@@ -1367,7 +1367,7 @@
   {
     "id": 34,
     "difficulty": 5.9,
-    "image": "img/mosaic_095.webp",
+    "image": "assets/img/mosaic_095.webp",
     "grid": {
       "type": "hex",
       "seed": 4177690644,
@@ -1416,7 +1416,7 @@
   {
     "id": 35,
     "difficulty": 3.6,
-    "image": "img/mosaic_056.webp",
+    "image": "assets/img/mosaic_056.webp",
     "grid": {
       "type": "square",
       "seed": 1494878114,
@@ -1461,7 +1461,7 @@
   {
     "id": 36,
     "difficulty": 4.6,
-    "image": "img/mosaic_052.webp",
+    "image": "assets/img/mosaic_052.webp",
     "grid": {
       "type": "square",
       "seed": 36453298,
@@ -1510,7 +1510,7 @@
   {
     "id": 37,
     "difficulty": 2.7,
-    "image": "img/mosaic_012.webp",
+    "image": "assets/img/mosaic_012.webp",
     "grid": {
       "type": "tri",
       "seed": 823872297,
@@ -1555,7 +1555,7 @@
   {
     "id": 38,
     "difficulty": 4.7,
-    "image": "img/mosaic_053.webp",
+    "image": "assets/img/mosaic_053.webp",
     "grid": {
       "type": "voronoi",
       "seed": 885318069,
@@ -1600,7 +1600,7 @@
   {
     "id": 39,
     "difficulty": 6.3,
-    "image": "img/mosaic_082.webp",
+    "image": "assets/img/mosaic_082.webp",
     "grid": {
       "type": "voronoi",
       "seed": 1090059501,
@@ -1645,7 +1645,7 @@
   {
     "id": 40,
     "difficulty": 3.1,
-    "image": "img/mosaic_013.webp",
+    "image": "assets/img/mosaic_013.webp",
     "grid": {
       "type": "voronoi",
       "seed": 1398763858,
@@ -1690,7 +1690,7 @@
   {
     "id": 41,
     "difficulty": 4,
-    "image": "img/mosaic_056.webp",
+    "image": "assets/img/mosaic_056.webp",
     "grid": {
       "type": "voronoi",
       "seed": 4034204342,
@@ -1739,7 +1739,7 @@
   {
     "id": 42,
     "difficulty": 2.6,
-    "image": "img/mosaic_022.webp",
+    "image": "assets/img/mosaic_022.webp",
     "grid": {
       "type": "voronoi",
       "seed": 3806699249,
@@ -1788,7 +1788,7 @@
   {
     "id": 43,
     "difficulty": 2.1,
-    "image": "img/mosaic_006.webp",
+    "image": "assets/img/mosaic_006.webp",
     "grid": {
       "type": "voronoi",
       "seed": 2220360470,
@@ -1837,7 +1837,7 @@
   {
     "id": 44,
     "difficulty": 2,
-    "image": "img/mosaic_040.webp",
+    "image": "assets/img/mosaic_040.webp",
     "grid": {
       "type": "square",
       "seed": 3165207350,
@@ -1882,7 +1882,7 @@
   {
     "id": 45,
     "difficulty": 2.8,
-    "image": "img/mosaic_037.webp",
+    "image": "assets/img/mosaic_037.webp",
     "grid": {
       "type": "hex",
       "seed": 4189370177,
@@ -1931,7 +1931,7 @@
   {
     "id": 46,
     "difficulty": 2.5,
-    "image": "img/mosaic_083.webp",
+    "image": "assets/img/mosaic_083.webp",
     "grid": {
       "type": "voronoi",
       "seed": 2882415108,
@@ -1980,7 +1980,7 @@
   {
     "id": 47,
     "difficulty": 2.5,
-    "image": "img/mosaic_070.webp",
+    "image": "assets/img/mosaic_070.webp",
     "grid": {
       "type": "square",
       "seed": 2656339315,
@@ -2025,7 +2025,7 @@
   {
     "id": 48,
     "difficulty": 2.4,
-    "image": "img/mosaic_017.webp",
+    "image": "assets/img/mosaic_017.webp",
     "grid": {
       "type": "hex",
       "seed": 2469087063,
@@ -2074,7 +2074,7 @@
   {
     "id": 49,
     "difficulty": 2.4,
-    "image": "img/mosaic_036.webp",
+    "image": "assets/img/mosaic_036.webp",
     "grid": {
       "type": "voronoi",
       "seed": 2103678734,
@@ -2123,7 +2123,7 @@
   {
     "id": 50,
     "difficulty": 3.3,
-    "image": "img/mosaic_097.webp",
+    "image": "assets/img/mosaic_097.webp",
     "grid": {
       "type": "voronoi",
       "seed": 1737418662,
