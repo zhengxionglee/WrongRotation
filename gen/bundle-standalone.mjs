@@ -10,12 +10,16 @@ const mainJs = fs.readFileSync(path.resolve(DIST, "index-DDc1fRk5.js"), "utf-8")
 const dailyJs = fs.readFileSync(path.resolve(DIST, "daily-CfqcOD2s.js"), "utf-8");
 
 // Strip the `export{...}` from main JS
-const mainClean = mainJs.replace(/export\{(.+?)\};$/, "");
+const mainClean = mainJs.replace(/export\{(.+?)\};\s*$/, "");
 
 // Extract the import statement from daily JS and the variables it imports
 const importMatch = dailyJs.match(/^import\{(.+?)\}from".\/index-.+?\.js";?/);
 const importVars = importMatch ? importMatch[1] : "";
-const dailyClean = dailyJs.replace(/^import\{.+?}from".\/index-.+?\.js";?/, "");
+const dailyClean = dailyJs
+  .replace(/^import\{.+?}from".\/index-.+?\.js";?/, "")
+  .replace(/export\{.+?\};\s*$/, "")
+  .replace(/const L=\[/, 'const manifestData=[')
+  .replace(/,q=\{images:L\}/, ',q={images:manifestData}');
 
 // For the daily JS, we need to make the imported variables available
 // The import statement maps exports to local names: `P as V, t as u, ...`
@@ -54,7 +58,12 @@ const assignments = mapping
 
 // Build the HTML
 // Fix image paths: img/mosaic_ -> assets/img/mosaic_
-const mainFixed = mainClean.replace(/"img\/mosaic_/g, '"assets/img/mosaic_');
+// Replace dynamic import of daily chunk with direct reference to inlined DailySession
+const dynamicImportRe = /await (\w+)\(async\(\)=>\{const\{DailySession:(\w+)\}=await import\("\.\/daily-.+?\.js"\);return\{DailySession:\2\}\},\[\],\w+\)/g;
+const mainFixed = mainClean
+  .replace(/"img\/mosaic_/g, '"assets/img/mosaic_')
+  .replace(/import\.meta\.url/g, 'document.baseURI')
+  .replace(dynamicImportRe, 'Promise.resolve({DailySession})');
 const dailyFixed = dailyClean.replace(/"img\/mosaic_/g, '"assets/img/mosaic_');
 const assignmentsFixed = assignments.replace(/"img\/mosaic_/g, '"assets/img/mosaic_');
 
@@ -117,6 +126,7 @@ ${mainFixed}
 ${assignmentsFixed}
 // Daily bundle
 ${dailyFixed}
+const DailySession = typeof C !== "undefined" ? C : (typeof C !== "undefined" ? C : null);
 </script>
 </body>
 </html>`;
