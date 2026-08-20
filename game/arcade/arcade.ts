@@ -101,6 +101,7 @@ export class ArcadeSession {
     if (!this.running) return;
     const dt = Math.min(time - this.lastUpdate, 50);
     this.lastUpdate = time;
+    tween.update(dt);
     if (this.advancing) {
       this.renderHUD();
       this.render();
@@ -112,7 +113,6 @@ export class ArcadeSession {
     if (this.timeLeft < 3 && Math.floor(this.timeLeft * 2) !== Math.floor((this.timeLeft + dt / 1000) * 2)) sfx.tick();
     if (this.flashTimer > 0) this.flashTimer -= dt;
     else this.flashType = "none";
-    tween.update(dt);
     this.renderHUD();
     this.render();
     requestAnimationFrame(this.loop.bind(this));
@@ -160,7 +160,10 @@ export class ArcadeSession {
       this.flashType = "correct";
       this.flashTimer = 200;
       this.advancing = true;
-      setTimeout(() => this.advance(), 220);
+      const startRot = this.currentLevel.rotation;
+      tween.add(300, 0, 1, (t) => {
+        this.currentLevel!.rotation = startRot * (1 - t);
+      }, () => this.advance());
     } else {
       sfx.wrong();
       this.timeLeft -= 1.5;

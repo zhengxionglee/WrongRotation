@@ -6,8 +6,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 const DIST = path.resolve(ROOT, "dist", "assets");
 
-const mainJs = fs.readFileSync(path.resolve(DIST, "index-DDc1fRk5.js"), "utf-8");
-const dailyJs = fs.readFileSync(path.resolve(DIST, "daily-CfqcOD2s.js"), "utf-8");
+const mainFile = fs.readdirSync(DIST).find(f => f.startsWith("index-") && f.endsWith(".js"));
+const dailyFile = fs.readdirSync(DIST).find(f => f.startsWith("daily-") && f.endsWith(".js"));
+if (!mainFile || !dailyFile) throw new Error("Cannot find dist JS files");
+const mainJs = fs.readFileSync(path.resolve(DIST, mainFile), "utf-8");
+const dailyJs = fs.readFileSync(path.resolve(DIST, dailyFile), "utf-8");
 
 // Strip the `export{...}` from main JS
 const mainClean = mainJs.replace(/export\{(.+?)\};\s*$/, "");
@@ -16,7 +19,7 @@ const mainClean = mainJs.replace(/export\{(.+?)\};\s*$/, "");
 const importMatch = dailyJs.match(/^import\{(.+?)\}from".\/index-.+?\.js";?/);
 const importVars = importMatch ? importMatch[1] : "";
 const dailyClean = dailyJs
-  .replace(/^import\{.+?}from".\/index-.+?\.js";?/, "")
+  .replace(/^import\{.+?}from"\.\/.+?\.js";?/, "")
   .replace(/export\{.+?\};\s*$/, "")
   .replace(/const L=\[/, 'const manifestData=[')
   .replace(/,q=\{images:L\}/, ',q={images:manifestData}');
@@ -59,7 +62,7 @@ const assignments = mapping
 // Build the HTML
 // Fix image paths: img/mosaic_ -> assets/img/mosaic_
 // Replace dynamic import of daily chunk with direct reference to inlined DailySession
-const dynamicImportRe = /await (\w+)\(async\(\)=>\{const\{DailySession:(\w+)\}=await import\("\.\/daily-.+?\.js"\);return\{DailySession:\2\}\},\[\],\w+\)/g;
+const dynamicImportRe = /await (\w+)\(async\(\)=>\{const\{DailySession:(\w+)\}=await import\("\.\/.+?\.js"\);return\{DailySession:\2\}\},\[\],\w+\)/g;
 const mainFixed = mainClean
   .replace(/"img\/mosaic_/g, '"assets/img/mosaic_')
   .replace(/import\.meta\.url/g, 'document.baseURI')
