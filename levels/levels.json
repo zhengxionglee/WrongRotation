@@ -1,0 +1,2172 @@
+[
+  {
+    "id": 1,
+    "difficulty": 7.9,
+    "image": "img/mosaic_009.webp",
+    "grid": {
+      "type": "square",
+      "seed": 1290784310,
+      "param": 3
+    },
+    "targets": [
+      {
+        "cellId": 3,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        20,
+        40,
+        80
+      ]
+    },
+    "meta": {
+      "S": 0.04,
+      "C": 0.67,
+      "V_image": 0.58
+    }
+  },
+  {
+    "id": 2,
+    "difficulty": 2.4,
+    "image": "img/mosaic_092.webp",
+    "grid": {
+      "type": "square",
+      "seed": 3527542996,
+      "param": 3
+    },
+    "targets": [
+      {
+        "cellId": 6,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        16,
+        32,
+        65
+      ]
+    },
+    "meta": {
+      "S": 0.31,
+      "C": 1,
+      "V_image": 0
+    }
+  },
+  {
+    "id": 3,
+    "difficulty": 8.1,
+    "image": "img/mosaic_013.webp",
+    "grid": {
+      "type": "square",
+      "seed": 264341834,
+      "param": 3
+    },
+    "targets": [
+      {
+        "cellId": 1,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        14,
+        28,
+        55
+      ]
+    },
+    "meta": {
+      "S": 0,
+      "C": 1,
+      "V_image": 0.47
+    }
+  },
+  {
+    "id": 4,
+    "difficulty": 3.3,
+    "image": "img/mosaic_012.webp",
+    "grid": {
+      "type": "square",
+      "seed": 2350769346,
+      "param": 4
+    },
+    "targets": [
+      {
+        "cellId": 7,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        12,
+        24,
+        48
+      ]
+    },
+    "meta": {
+      "S": 0.19,
+      "C": 0.5,
+      "V_image": 0
+    }
+  },
+  {
+    "id": 5,
+    "difficulty": 4,
+    "image": "img/mosaic_069.webp",
+    "grid": {
+      "type": "square",
+      "seed": 3102074255,
+      "param": 4
+    },
+    "targets": [
+      {
+        "cellId": 13,
+        "rotation": 90
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        12,
+        24,
+        48
+      ]
+    },
+    "meta": {
+      "S": 0.15,
+      "C": 0.81,
+      "V_image": 0.47
+    }
+  },
+  {
+    "id": 6,
+    "difficulty": 3.7,
+    "image": "img/mosaic_064.webp",
+    "grid": {
+      "type": "square",
+      "seed": 146899151,
+      "param": 4
+    },
+    "targets": [
+      {
+        "cellId": 11,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        10,
+        20,
+        40
+      ]
+    },
+    "meta": {
+      "S": 0.15,
+      "C": 0.13,
+      "V_image": 0.58
+    }
+  },
+  {
+    "id": 7,
+    "difficulty": 2.8,
+    "image": "img/mosaic_078.webp",
+    "grid": {
+      "type": "square",
+      "seed": 2937826802,
+      "param": 4
+    },
+    "targets": [
+      {
+        "cellId": 1,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        10,
+        20,
+        40
+      ]
+    },
+    "meta": {
+      "S": 0.23,
+      "C": 0.25,
+      "V_image": 0.52
+    }
+  },
+  {
+    "id": 8,
+    "difficulty": 2,
+    "image": "img/mosaic_040.webp",
+    "grid": {
+      "type": "square",
+      "seed": 3637878303,
+      "param": 4
+    },
+    "targets": [
+      {
+        "cellId": 7,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        9,
+        18,
+        36
+      ]
+    },
+    "meta": {
+      "S": 0.37,
+      "C": 0,
+      "V_image": 0.11
+    }
+  },
+  {
+    "id": 9,
+    "difficulty": 3.1,
+    "image": "img/mosaic_010.webp",
+    "grid": {
+      "type": "square",
+      "seed": 3050327932,
+      "param": 5
+    },
+    "targets": [
+      {
+        "cellId": 9,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        9,
+        18,
+        36
+      ]
+    },
+    "meta": {
+      "S": 0.23,
+      "C": 0.55,
+      "V_image": 0.23
+    }
+  },
+  {
+    "id": 10,
+    "difficulty": 5.3,
+    "image": "img/mosaic_005.webp",
+    "grid": {
+      "type": "square",
+      "seed": 1969136545,
+      "param": 5
+    },
+    "targets": [
+      {
+        "cellId": 16,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        8,
+        16,
+        32
+      ]
+    },
+    "meta": {
+      "S": 0.1,
+      "C": 0.1,
+      "V_image": 0.42
+    }
+  },
+  {
+    "id": 11,
+    "difficulty": 3.5,
+    "image": "img/mosaic_080.webp",
+    "grid": {
+      "type": "square",
+      "seed": 3851035647,
+      "param": 5
+    },
+    "targets": [
+      {
+        "cellId": 5,
+        "rotation": 270
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        8,
+        16,
+        32
+      ]
+    },
+    "meta": {
+      "S": 0.17,
+      "C": 0.05,
+      "V_image": 0.96
+    }
+  },
+  {
+    "id": 12,
+    "difficulty": 6.5,
+    "image": "img/mosaic_042.webp",
+    "grid": {
+      "type": "square",
+      "seed": 1081974601,
+      "param": 5
+    },
+    "targets": [
+      {
+        "cellId": 17,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        8,
+        16,
+        32
+      ]
+    },
+    "meta": {
+      "S": 0.08,
+      "C": 0.5,
+      "V_image": 0.53
+    }
+  },
+  {
+    "id": 13,
+    "difficulty": 3.3,
+    "image": "img/mosaic_058.webp",
+    "grid": {
+      "type": "square",
+      "seed": 3498652166,
+      "param": 5
+    },
+    "targets": [
+      {
+        "cellId": 2,
+        "rotation": 90
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        7,
+        14,
+        28
+      ]
+    },
+    "meta": {
+      "S": 0.19,
+      "C": 0,
+      "V_image": 0.96
+    }
+  },
+  {
+    "id": 14,
+    "difficulty": 2.3,
+    "image": "img/mosaic_047.webp",
+    "grid": {
+      "type": "square",
+      "seed": 3410838859,
+      "param": 5
+    },
+    "targets": [
+      {
+        "cellId": 12,
+        "rotation": 120
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        7,
+        14,
+        28
+      ]
+    },
+    "meta": {
+      "S": 0.36,
+      "C": 0.05,
+      "V_image": 0.76
+    }
+  },
+  {
+    "id": 15,
+    "difficulty": 3.6,
+    "image": "img/mosaic_077.webp",
+    "grid": {
+      "type": "square",
+      "seed": 2426210270,
+      "param": 5
+    },
+    "targets": [
+      {
+        "cellId": 10,
+        "rotation": 270
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        7,
+        14,
+        28
+      ]
+    },
+    "meta": {
+      "S": 0.17,
+      "C": 0.15,
+      "V_image": 0.7
+    }
+  },
+  {
+    "id": 16,
+    "difficulty": 3.7,
+    "image": "img/mosaic_096.webp",
+    "grid": {
+      "type": "square",
+      "seed": 2939948593,
+      "param": 6
+    },
+    "targets": [
+      {
+        "cellId": 9,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        6,
+        12,
+        24
+      ]
+    },
+    "meta": {
+      "S": 0.17,
+      "C": 0.05,
+      "V_image": 0.19
+    }
+  },
+  {
+    "id": 17,
+    "difficulty": 3.3,
+    "image": "img/mosaic_084.webp",
+    "grid": {
+      "type": "square",
+      "seed": 1917895663,
+      "param": 6
+    },
+    "targets": [
+      {
+        "cellId": 26,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        6,
+        12,
+        24
+      ]
+    },
+    "meta": {
+      "S": 0.21,
+      "C": 0.1,
+      "V_image": 0.43
+    }
+  },
+  {
+    "id": 18,
+    "difficulty": 2.1,
+    "image": "img/mosaic_072.webp",
+    "grid": {
+      "type": "square",
+      "seed": 1274231706,
+      "param": 6
+    },
+    "targets": [
+      {
+        "cellId": 18,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        6,
+        12,
+        24
+      ]
+    },
+    "meta": {
+      "S": 0.5,
+      "C": 0.1,
+      "V_image": 0.7
+    }
+  },
+  {
+    "id": 19,
+    "difficulty": 2.5,
+    "image": "img/mosaic_091.webp",
+    "grid": {
+      "type": "square",
+      "seed": 3326524866,
+      "param": 6
+    },
+    "targets": [
+      {
+        "cellId": 12,
+        "rotation": 60
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        5,
+        10,
+        20
+      ]
+    },
+    "meta": {
+      "S": 0.33,
+      "C": 0,
+      "V_image": 0.7
+    }
+  },
+  {
+    "id": 20,
+    "difficulty": 2,
+    "image": "img/mosaic_011.webp",
+    "grid": {
+      "type": "hex",
+      "seed": 3427507725,
+      "param": 3
+    },
+    "targets": [
+      {
+        "cellId": 1,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        12,
+        24,
+        48
+      ]
+    },
+    "meta": {
+      "S": 0.47,
+      "C": 0.15,
+      "V_image": 0.74
+    }
+  },
+  {
+    "id": 21,
+    "difficulty": 2.9,
+    "image": "img/mosaic_060.webp",
+    "grid": {
+      "type": "hex",
+      "seed": 2928553278,
+      "param": 3
+    },
+    "targets": [
+      {
+        "cellId": 3,
+        "rotation": 90
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        10,
+        20,
+        40
+      ]
+    },
+    "meta": {
+      "S": 0.24,
+      "C": 0.2,
+      "V_image": 0.54
+    }
+  },
+  {
+    "id": 22,
+    "difficulty": 2.6,
+    "image": "img/mosaic_074.webp",
+    "grid": {
+      "type": "hex",
+      "seed": 1756017019,
+      "param": 4
+    },
+    "targets": [
+      {
+        "cellId": 9,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        9,
+        18,
+        36
+      ]
+    },
+    "meta": {
+      "S": 0.29,
+      "C": 0,
+      "V_image": 0.69
+    }
+  },
+  {
+    "id": 23,
+    "difficulty": 3.4,
+    "image": "img/mosaic_100.webp",
+    "grid": {
+      "type": "hex",
+      "seed": 2174395724,
+      "param": 4
+    },
+    "targets": [
+      {
+        "cellId": 25,
+        "rotation": 90
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        8,
+        16,
+        32
+      ]
+    },
+    "meta": {
+      "S": 0.2,
+      "C": 0.05,
+      "V_image": 0.7
+    }
+  },
+  {
+    "id": 24,
+    "difficulty": 2.8,
+    "image": "img/mosaic_061.webp",
+    "grid": {
+      "type": "hex",
+      "seed": 3085001709,
+      "param": 4
+    },
+    "targets": [
+      {
+        "cellId": 3,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        8,
+        16,
+        32
+      ]
+    },
+    "meta": {
+      "S": 0.29,
+      "C": 0.1,
+      "V_image": 0.59
+    }
+  },
+  {
+    "id": 25,
+    "difficulty": 5.1,
+    "image": "img/mosaic_049.webp",
+    "grid": {
+      "type": "hex",
+      "seed": 1870359098,
+      "param": 4
+    },
+    "targets": [
+      {
+        "cellId": 16,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        7,
+        14,
+        28
+      ]
+    },
+    "meta": {
+      "S": 0.11,
+      "C": 0,
+      "V_image": 0.35
+    }
+  },
+  {
+    "id": 26,
+    "difficulty": 2.8,
+    "image": "img/mosaic_038.webp",
+    "grid": {
+      "type": "tri",
+      "seed": 2851537103,
+      "param": 3
+    },
+    "targets": [
+      {
+        "cellId": 17,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        12,
+        24,
+        48
+      ]
+    },
+    "meta": {
+      "S": 0.24,
+      "C": 0.22,
+      "V_image": 0.18
+    }
+  },
+  {
+    "id": 27,
+    "difficulty": 4,
+    "image": "img/mosaic_023.webp",
+    "grid": {
+      "type": "tri",
+      "seed": 3666715381,
+      "param": 3
+    },
+    "targets": [
+      {
+        "cellId": 17,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        10,
+        20,
+        40
+      ]
+    },
+    "meta": {
+      "S": 0.15,
+      "C": 0.28,
+      "V_image": 0.6
+    }
+  },
+  {
+    "id": 28,
+    "difficulty": 3.9,
+    "image": "img/mosaic_048.webp",
+    "grid": {
+      "type": "tri",
+      "seed": 3009183969,
+      "param": 4
+    },
+    "targets": [
+      {
+        "cellId": 29,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        9,
+        18,
+        36
+      ]
+    },
+    "meta": {
+      "S": 0.16,
+      "C": 0.25,
+      "V_image": 0.65
+    }
+  },
+  {
+    "id": 29,
+    "difficulty": 2.2,
+    "image": "img/mosaic_092.webp",
+    "grid": {
+      "type": "tri",
+      "seed": 1746548495,
+      "param": 4
+    },
+    "targets": [
+      {
+        "cellId": 23,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        8,
+        16,
+        32
+      ]
+    },
+    "meta": {
+      "S": 0.48,
+      "C": 0,
+      "V_image": 0
+    }
+  },
+  {
+    "id": 30,
+    "difficulty": 4.3,
+    "image": "img/mosaic_030.webp",
+    "grid": {
+      "type": "tri",
+      "seed": 2377929988,
+      "param": 4
+    },
+    "targets": [
+      {
+        "cellId": 16,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        8,
+        16,
+        32
+      ]
+    },
+    "meta": {
+      "S": 0.14,
+      "C": 0,
+      "V_image": 0.96
+    }
+  },
+  {
+    "id": 31,
+    "difficulty": 3.2,
+    "image": "img/mosaic_003.webp",
+    "grid": {
+      "type": "square",
+      "seed": 2686158142,
+      "param": 4
+    },
+    "targets": [
+      {
+        "cellId": 0,
+        "rotation": 180
+      },
+      {
+        "cellId": 2,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        2,
+        6,
+        12
+      ],
+      "time": [
+        14,
+        28,
+        55
+      ]
+    },
+    "meta": {
+      "S": 0.19,
+      "C": 0.25,
+      "V_image": 0.54
+    }
+  },
+  {
+    "id": 32,
+    "difficulty": 2.5,
+    "image": "img/mosaic_074.webp",
+    "grid": {
+      "type": "square",
+      "seed": 2036820299,
+      "param": 5
+    },
+    "targets": [
+      {
+        "cellId": 13,
+        "rotation": 180
+      },
+      {
+        "cellId": 8,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        2,
+        6,
+        12
+      ],
+      "time": [
+        12,
+        24,
+        48
+      ]
+    },
+    "meta": {
+      "S": 0.3,
+      "C": 0.15,
+      "V_image": 0.69
+    }
+  },
+  {
+    "id": 33,
+    "difficulty": 3.7,
+    "image": "img/mosaic_015.webp",
+    "grid": {
+      "type": "hex",
+      "seed": 635848483,
+      "param": 4
+    },
+    "targets": [
+      {
+        "cellId": 19,
+        "rotation": 180
+      },
+      {
+        "cellId": 24,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        2,
+        6,
+        12
+      ],
+      "time": [
+        12,
+        24,
+        48
+      ]
+    },
+    "meta": {
+      "S": 0.17,
+      "C": 0.1,
+      "V_image": 0.24
+    }
+  },
+  {
+    "id": 34,
+    "difficulty": 5.9,
+    "image": "img/mosaic_095.webp",
+    "grid": {
+      "type": "hex",
+      "seed": 4177690644,
+      "param": 4
+    },
+    "targets": [
+      {
+        "cellId": 5,
+        "rotation": 180
+      },
+      {
+        "cellId": 12,
+        "rotation": 210
+      },
+      {
+        "cellId": 9,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        3,
+        9,
+        18
+      ],
+      "time": [
+        10,
+        20,
+        40
+      ]
+    },
+    "meta": {
+      "S": 0.09,
+      "C": 0,
+      "V_image": 0.68
+    }
+  },
+  {
+    "id": 35,
+    "difficulty": 3.6,
+    "image": "img/mosaic_056.webp",
+    "grid": {
+      "type": "square",
+      "seed": 1494878114,
+      "param": 4
+    },
+    "targets": [
+      {
+        "cellId": 13,
+        "rotation": 270
+      },
+      {
+        "cellId": 4,
+        "rotation": 90
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        2,
+        6,
+        12
+      ],
+      "time": [
+        14,
+        28,
+        55
+      ]
+    },
+    "meta": {
+      "S": 0.16,
+      "C": 0.25,
+      "V_image": 0.68
+    }
+  },
+  {
+    "id": 36,
+    "difficulty": 4.6,
+    "image": "img/mosaic_052.webp",
+    "grid": {
+      "type": "square",
+      "seed": 36453298,
+      "param": 5
+    },
+    "targets": [
+      {
+        "cellId": 12,
+        "rotation": 180
+      },
+      {
+        "cellId": 3,
+        "rotation": 180
+      },
+      {
+        "cellId": 21,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        3,
+        9,
+        18
+      ],
+      "time": [
+        10,
+        20,
+        40
+      ]
+    },
+    "meta": {
+      "S": 0.12,
+      "C": 0,
+      "V_image": 0.68
+    }
+  },
+  {
+    "id": 37,
+    "difficulty": 2.7,
+    "image": "img/mosaic_012.webp",
+    "grid": {
+      "type": "tri",
+      "seed": 823872297,
+      "param": 4
+    },
+    "targets": [
+      {
+        "cellId": 17,
+        "rotation": 180
+      },
+      {
+        "cellId": 7,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        2,
+        6,
+        12
+      ],
+      "time": [
+        12,
+        24,
+        48
+      ]
+    },
+    "meta": {
+      "S": 0.29,
+      "C": 0,
+      "V_image": 0
+    }
+  },
+  {
+    "id": 38,
+    "difficulty": 4.7,
+    "image": "img/mosaic_053.webp",
+    "grid": {
+      "type": "voronoi",
+      "seed": 885318069,
+      "param": 12
+    },
+    "targets": [
+      {
+        "cellId": 7,
+        "rotation": 90
+      },
+      {
+        "cellId": 5,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        2,
+        6,
+        12
+      ],
+      "time": [
+        14,
+        28,
+        55
+      ]
+    },
+    "meta": {
+      "S": 0.11,
+      "C": 0.11,
+      "V_image": 0.47
+    }
+  },
+  {
+    "id": 39,
+    "difficulty": 6.3,
+    "image": "img/mosaic_082.webp",
+    "grid": {
+      "type": "voronoi",
+      "seed": 1090059501,
+      "param": 16
+    },
+    "targets": [
+      {
+        "cellId": 15,
+        "rotation": 180
+      },
+      {
+        "cellId": 13,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        2,
+        6,
+        12
+      ],
+      "time": [
+        12,
+        24,
+        48
+      ]
+    },
+    "meta": {
+      "S": 0.08,
+      "C": 0,
+      "V_image": 0.08
+    }
+  },
+  {
+    "id": 40,
+    "difficulty": 3.1,
+    "image": "img/mosaic_013.webp",
+    "grid": {
+      "type": "voronoi",
+      "seed": 1398763858,
+      "param": 20
+    },
+    "targets": [
+      {
+        "cellId": 12,
+        "rotation": 180
+      },
+      {
+        "cellId": 9,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        2,
+        6,
+        12
+      ],
+      "time": [
+        10,
+        20,
+        40
+      ]
+    },
+    "meta": {
+      "S": 0.21,
+      "C": 0,
+      "V_image": 0.47
+    }
+  },
+  {
+    "id": 41,
+    "difficulty": 4,
+    "image": "img/mosaic_056.webp",
+    "grid": {
+      "type": "voronoi",
+      "seed": 4034204342,
+      "param": 20
+    },
+    "targets": [
+      {
+        "cellId": 7,
+        "rotation": 180
+      },
+      {
+        "cellId": 6,
+        "rotation": 150
+      },
+      {
+        "cellId": 9,
+        "rotation": 150
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        3,
+        9,
+        18
+      ],
+      "time": [
+        10,
+        20,
+        40
+      ]
+    },
+    "meta": {
+      "S": 0.15,
+      "C": 0.13,
+      "V_image": 0.68
+    }
+  },
+  {
+    "id": 42,
+    "difficulty": 2.6,
+    "image": "img/mosaic_022.webp",
+    "grid": {
+      "type": "voronoi",
+      "seed": 3806699249,
+      "param": 24
+    },
+    "targets": [
+      {
+        "cellId": 23,
+        "rotation": 180
+      },
+      {
+        "cellId": 17,
+        "rotation": 150
+      },
+      {
+        "cellId": 10,
+        "rotation": 90
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        3,
+        9,
+        18
+      ],
+      "time": [
+        8,
+        16,
+        32
+      ]
+    },
+    "meta": {
+      "S": 0.33,
+      "C": 0.15,
+      "V_image": 0.7
+    }
+  },
+  {
+    "id": 43,
+    "difficulty": 2.1,
+    "image": "img/mosaic_006.webp",
+    "grid": {
+      "type": "voronoi",
+      "seed": 2220360470,
+      "param": 28
+    },
+    "targets": [
+      {
+        "cellId": 4,
+        "rotation": 180
+      },
+      {
+        "cellId": 6,
+        "rotation": 150
+      },
+      {
+        "cellId": 11,
+        "rotation": 90
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        3,
+        9,
+        18
+      ],
+      "time": [
+        8,
+        16,
+        32
+      ]
+    },
+    "meta": {
+      "S": 0.49,
+      "C": 0,
+      "V_image": 0.72
+    }
+  },
+  {
+    "id": 44,
+    "difficulty": 2,
+    "image": "img/mosaic_040.webp",
+    "grid": {
+      "type": "square",
+      "seed": 3165207350,
+      "param": 5
+    },
+    "targets": [
+      {
+        "cellId": 24,
+        "rotation": 187
+      },
+      {
+        "cellId": 19,
+        "rotation": 166
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        2,
+        6,
+        12
+      ],
+      "time": [
+        12,
+        24,
+        48
+      ]
+    },
+    "meta": {
+      "S": 0.49,
+      "C": 0,
+      "V_image": 0.11
+    }
+  },
+  {
+    "id": 45,
+    "difficulty": 2.8,
+    "image": "img/mosaic_037.webp",
+    "grid": {
+      "type": "hex",
+      "seed": 4189370177,
+      "param": 4
+    },
+    "targets": [
+      {
+        "cellId": 21,
+        "rotation": 180
+      },
+      {
+        "cellId": 28,
+        "rotation": 90
+      },
+      {
+        "cellId": 26,
+        "rotation": 90
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        3,
+        9,
+        18
+      ],
+      "time": [
+        10,
+        20,
+        40
+      ]
+    },
+    "meta": {
+      "S": 0.28,
+      "C": 0,
+      "V_image": 0.71
+    }
+  },
+  {
+    "id": 46,
+    "difficulty": 2.5,
+    "image": "img/mosaic_083.webp",
+    "grid": {
+      "type": "voronoi",
+      "seed": 2882415108,
+      "param": 28
+    },
+    "targets": [
+      {
+        "cellId": 22,
+        "rotation": 166
+      },
+      {
+        "cellId": 5,
+        "rotation": 173
+      },
+      {
+        "cellId": 4,
+        "rotation": 173
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        3,
+        9,
+        18
+      ],
+      "time": [
+        8,
+        16,
+        32
+      ]
+    },
+    "meta": {
+      "S": 0.4,
+      "C": 0.25,
+      "V_image": 0.74
+    }
+  },
+  {
+    "id": 47,
+    "difficulty": 2.5,
+    "image": "img/mosaic_070.webp",
+    "grid": {
+      "type": "square",
+      "seed": 2656339315,
+      "param": 4
+    },
+    "targets": [
+      {
+        "cellId": 3,
+        "rotation": 180
+      },
+      {
+        "cellId": 1,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        2,
+        6,
+        12
+      ],
+      "time": [
+        14,
+        28,
+        55
+      ]
+    },
+    "meta": {
+      "S": 0.27,
+      "C": 0.13,
+      "V_image": 0.21
+    }
+  },
+  {
+    "id": 48,
+    "difficulty": 2.4,
+    "image": "img/mosaic_017.webp",
+    "grid": {
+      "type": "hex",
+      "seed": 2469087063,
+      "param": 5
+    },
+    "targets": [
+      {
+        "cellId": 37,
+        "rotation": 180
+      },
+      {
+        "cellId": 24,
+        "rotation": 180
+      },
+      {
+        "cellId": 10,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        3,
+        9,
+        18
+      ],
+      "time": [
+        8,
+        16,
+        32
+      ]
+    },
+    "meta": {
+      "S": 0.44,
+      "C": 0.05,
+      "V_image": 0.74
+    }
+  },
+  {
+    "id": 49,
+    "difficulty": 2.4,
+    "image": "img/mosaic_036.webp",
+    "grid": {
+      "type": "voronoi",
+      "seed": 2103678734,
+      "param": 30
+    },
+    "targets": [
+      {
+        "cellId": 1,
+        "rotation": 187
+      },
+      {
+        "cellId": 20,
+        "rotation": 187
+      },
+      {
+        "cellId": 10,
+        "rotation": 166
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        3,
+        9,
+        18
+      ],
+      "time": [
+        6,
+        12,
+        24
+      ]
+    },
+    "meta": {
+      "S": 0.4,
+      "C": 0.1,
+      "V_image": 0.68
+    }
+  },
+  {
+    "id": 50,
+    "difficulty": 3.3,
+    "image": "img/mosaic_097.webp",
+    "grid": {
+      "type": "voronoi",
+      "seed": 1737418662,
+      "param": 30
+    },
+    "targets": [
+      {
+        "cellId": 7,
+        "rotation": 173
+      },
+      {
+        "cellId": 2,
+        "rotation": 194
+      },
+      {
+        "cellId": 14,
+        "rotation": 187
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        3,
+        9,
+        18
+      ],
+      "time": [
+        6,
+        12,
+        24
+      ]
+    },
+    "meta": {
+      "S": 0.21,
+      "C": 0.05,
+      "V_image": 0.7
+    }
+  }
+]

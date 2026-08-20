@@ -1,0 +1,633 @@
+import sharp from 'sharp';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.resolve(__dirname, '..');
+const SIZE = 1080, SS = 1;
+const W = SIZE, H = SIZE;
+const OUT = path.resolve(ROOT, 'assets');
+const QUALITY = 86;
+
+const TIER_PLAN = { strong: 40, mid: 35, weak: 25 };
+const PATTERN_NAMES = [
+  'stripes','chevron','landscape','city','glyph','barcode','arrowfield','flag',
+  'checker','plaid','brick','wave','dot','spiral','tile','confetti','sunburst',
+  'fbm','marble','bubble','speckle','stone','mandala','gradnoise'
+];
+const TIER_FOR_PATTERN = {
+  stripes:'strong',chevron:'strong',landscape:'strong',city:'strong',glyph:'strong',
+  barcode:'strong',arrowfield:'strong',flag:'strong',
+  checker:'mid',plaid:'mid',brick:'mid',wave:'mid',dot:'mid',spiral:'mid',tile:'mid',confetti:'mid',sunburst:'mid',
+  fbm:'weak',marble:'weak',bubble:'weak',speckle:'weak',stone:'weak',mandala:'weak',gradnoise:'weak'
+};
+
+function mulberry32(seed) {
+  let a = seed >>> 0;
+  return function () {
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+const rr = (r, a, b) => a + (b - a) * r();
+const ri = (r, a, b) => Math.floor(rr(r, a, b + 1));
+const pick = (r, arr) => arr[Math.floor(r() * arr.length)];
+
+function hashString(s) {
+  let h = 1779033703 ^ s.length;
+  for (let i = 0; i < s.length; i++) { h = Math.imul(h ^ s.charCodeAt(i), 3432918353); h = (h << 13) | (h >>> 19); }
+  h = Math.imul(h ^ (h >>> 16), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909);
+  return (h ^= h >>> 16) >>> 0;
+}
+function hashN(n, s) {
+  let h = (Math.imul(n | 0, 374761393) + Math.imul(s | 0, 668265263)) | 0;
+  h = Math.imul(h ^ (h >>> 13), 1274126177);
+  return ((h ^ (h >>> 16)) >>> 0) / 4294967296;
+}
+
+function hsl2rgb(h, s, l) {
+  h = ((h % 360) + 360) % 360 / 360;
+  s = Math.max(0, Math.min(1, s));
+  l = Math.max(0, Math.min(1, l));
+  const c = (1 - Math.abs(2 * l - 1)) * s;
+  const x = c * (1 - Math.abs((h * 6) % 2 - 1));
+  const m = l - c / 2;
+  let r, g, b;
+  if (h < 1 / 6) { r = c; g = x; b = 0; }
+  else if (h < 2 / 6) { r = x; g = c; b = 0; }
+  else if (h < 3 / 6) { r = 0; g = c; b = x; }
+  else if (h < 4 / 6) { r = 0; g = x; b = c; }
+  else if (h < 5 / 6) { r = x; g = 0; b = c; }
+  else { r = c; g = 0; b = x; }
+  return [(r + m) * 255 | 0, (g + m) * 255 | 0, (b + m) * 255 | 0];
+}
+
+function makePalette(rng) {
+  const h = rng() * 360;
+  const spread = pick(rng, [20, 40, 60, 120]);
+  const sat = rr(rng, 0.3, 0.7);
+  const lightMode = rng() < 0.55;
+  const cols = [];
+  for (let i = 0; i < 4; i++) {
+    const hh = h + rr(rng, -spread, spread);
+    const ss = sat * rr(rng, 0.7, 1.3);
+    const ll = lightMode ? rr(rng, 0.35, 0.7) : rr(rng, 0.45, 0.8);
+    cols.push(hsl2rgb(hh, Math.min(0.85, ss), ll));
+  }
+  const bg = lightMode ? hsl2rgb(h + rr(rng, -10, 10), sat * 0.35, rr(rng, 0.88, 0.95))
+    : hsl2rgb(h + rr(rng, -10, 10), sat * 0.5, rr(rng, 0.10, 0.22));
+  return { bg, cols, light: lightMode };
+}
+
+function makeNoise(rng) {
+  const perm = new Uint8Array(512);
+  const p = Array.from({ length: 256 }, (_, i) => i);
+  for (let i = 255; i > 0; i--) { const j = (rng() * (i + 1)) | 0; [p[i], p[j]] = [p[j], p[i]]; }
+  for (let i = 0; i < 512; i++) perm[i] = p[i & 255];
+  function val(ix, iy) { return perm[(perm[ix & 255] + (iy & 255)) & 255] / 255; }
+  function vnoise(x, y) {
+    const xi = Math.floor(x), yi = Math.floor(y);
+    const xf = x - xi, yf = y - yi;
+    const u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf);
+    const a = val(xi, yi), b = val(xi + 1, yi), c = val(xi, yi + 1), d = val(xi + 1, yi + 1);
+    return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
+  }
+  function fbm(x, y, oct = 4, lac = 2, gain = 0.5) {
+    let s = 0, a = 0.5, f = 1, n = 0;
+    for (let i = 0; i < oct; i++) { s += a * vnoise(x * f, y * f); n += a; a *= gain; f *= lac; }
+    return s / n;
+  }
+  return { vnoise, fbm };
+}
+
+function mixC(c1, c2, t) {
+  return [(c1[0] + (c2[0] - c1[0]) * t) | 0, (c1[1] + (c2[1] - c1[1]) * t) | 0, (c1[2] + (c2[2] - c1[2]) * t) | 0];
+}
+function mulC(c, m) {
+  return [Math.min(255, c[0] * m) | 0, Math.min(255, c[1] * m) | 0, Math.min(255, c[2] * m) | 0];
+}
+
+function newBuf(bg) {
+  const d = new Uint8ClampedArray(W * H * 4);
+  for (let i = 0; i < W * H * 4; i += 4) { d[i] = bg[0]; d[i + 1] = bg[1]; d[i + 2] = bg[2]; d[i + 3] = 255; }
+  return d;
+}
+function setP(d, x, y, c) {
+  if (x < 0 || x >= W || y < 0 || y >= H) return;
+  const i = (y * W + x) * 4; d[i] = c[0]; d[i + 1] = c[1]; d[i + 2] = c[2]; d[i + 3] = 255;
+}
+function fillRect(d, x0, y0, w, h, c) {
+  const x1 = Math.min(W, x0 + w), y1 = Math.min(H, y0 + h);
+  for (let y = Math.max(0, y0); y < y1; y++) for (let x = Math.max(0, x0); x < x1; x++) setP(d, x, y, c);
+}
+function disc(d, cx, cy, r, c) {
+  const x0 = Math.max(0, Math.ceil(cx - r)), x1 = Math.min(W - 1, Math.floor(cx + r));
+  const y0 = Math.max(0, Math.ceil(cy - r)), y1 = Math.min(H - 1, Math.floor(cy + r));
+  for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {
+    const dx = x - cx, dy = y - cy;
+    if (dx * dx + dy * dy <= r * r) { const i = (y * W + x) * 4; d[i] = c[0]; d[i + 1] = c[1]; d[i + 2] = c[2]; d[i + 3] = 255; }
+  }
+}
+function line(d, x0, y0, x1, y1, w, c) {
+  const n = Math.ceil(Math.hypot(x1 - x0, y1 - y0));
+  for (let i = 0; i <= n; i++) { const t = i / n; disc(d, x0 + (x1 - x0) * t, y0 + (y1 - y0) * t, w / 2, c); }
+}
+
+function addTex(d, noise, s, amt) {
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const i = (y * W + x) * 4; const m = 1 + (noise.fbm(x * s, y * s) - 0.5) * amt;
+    d[i] = Math.min(255, d[i] * m); d[i + 1] = Math.min(255, d[i + 1] * m); d[i + 2] = Math.min(255, d[i + 2] * m);
+  }
+}
+
+// ---- PATTERNS ----
+const P = {};
+
+P.stripes = function (rng, noise, pal) {
+  const th = pick(rng, [0, Math.PI / 2, Math.PI / 4 + rr(rng, -0.4, 0.4)]);
+  const period = ri(rng, 40, 120);
+  const wobA = rr(rng, 0, period * 0.4), wobF = rr(rng, 0.002, 0.005);
+  const cos = Math.cos(th), sin = Math.sin(th);
+  const jS = ri(rng, 1, 9999);
+  const col = (s) => {
+    const r = hashN(s, jS);
+    if (r < 0.3) return pal.bg;
+    return mulC(pal.cols[Math.floor(hashN(s, jS + 5) * pal.cols.length) % pal.cols.length], 1 + (hashN(s, jS + 11) - 0.5) * 0.3);
+  };
+  const d = newBuf(pal.bg);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const v = -x * sin + y * cos;
+    const u = x * cos + y * sin + wobA * Math.sin(v * wobF);
+    const s = Math.floor(u / period);
+    const c = col(s);
+    const i = (y * W + x) * 4; d[i] = c[0]; d[i + 1] = c[1]; d[i + 2] = c[2];
+  }
+  addTex(d, noise, 0.02, 0.06);
+  return d;
+};
+
+P.chevron = function (rng, noise, pal) {
+  const h = ri(rng, 80, 140), a = ri(rng, 60, 100), amp = ri(rng, 30, 60);
+  const jS = ri(rng, 1, 9999);
+  const d = newBuf(pal.bg);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const tri = ((x % (2 * a)) + 2 * a) % (2 * a);
+    const zig = tri < a ? tri : 2 * a - tri;
+    const yy = y + amp * zig / a;
+    const s = Math.floor(yy / h);
+    const idx = Math.floor(hashN(s, jS) * pal.cols.length) % pal.cols.length;
+    const c = pal.cols[idx];
+    const i = (y * W + x) * 4; d[i] = c[0]; d[i + 1] = c[1]; d[i + 2] = c[2];
+  }
+  addTex(d, noise, 0.02, 0.05);
+  return d;
+};
+
+P.landscape = function (rng, noise, pal) {
+  const d = newBuf(pal.cols[0]);
+  const skyTop = pal.light ? mulC(pal.cols[0], 1.3) : pal.cols[0];
+  const skyBot = pal.light ? pal.cols[1] : mulC(pal.cols[1], 0.7);
+  const nLayer = ri(rng, 3, 5);
+  const layers = [];
+  for (let i = 0; i < nLayer; i++) {
+    const baseY = H * (0.3 + 0.65 * i / nLayer + rr(rng, -0.05, 0.05));
+    const amp = ri(rng, 20, 80);
+    const f = rr(rng, 0.002, 0.006);
+    const col = pal.cols[(i + 1) % pal.cols.length];
+    const edge = new Float32Array(W);
+    for (let x = 0; x < W; x++) edge[x] = baseY + (noise.fbm(x * f, 0, 4) - 0.5) * 2 * amp;
+    layers.push({ edge, col });
+  }
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const t = y / H;
+    let c = mixC(skyTop, skyBot, t);
+    for (let i = 0; i < nLayer; i++) {
+      if (y > layers[i].edge[x]) {
+        c = layers[i].col;
+        if (y - layers[i].edge[x] < 3) c = mulC(c, 1.15);
+      }
+    }
+    const i = (y * W + x) * 4; d[i] = c[0]; d[i + 1] = c[1]; d[i + 2] = c[2];
+  }
+  return d;
+};
+
+P.city = function (rng, noise, pal) {
+  const d = newBuf(pal.cols[0]);
+  const skyTop = mulC(pal.cols[0], 0.7), skyBot = pal.cols[1];
+  const bCol = pal.cols[2], winCol = pal.cols[3];
+  const buildings = [];
+  let x = 0;
+  while (x < W) {
+    const w = ri(rng, 50, 130);
+    const h = ri(rng, 200, 450);
+    buildings.push({ x, w, h });
+    x += w + ri(rng, 2, 14);
+  }
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    let c = mixC(skyTop, skyBot, y / H);
+    for (const b of buildings) {
+      if (x >= b.x && x < b.x + b.w && y > H - b.h) {
+        c = bCol;
+        const fx = x - b.x, fy = y - (H - b.h);
+        if (fx > 6 && fx < b.w - 6 && fy > 6 && fy < b.h - 6 && (fx - 6) % 14 < 8 && (fy - 6) % 18 < 10) {
+          if (hashN(b.x + fx, Math.floor(fy / 18)) > 0.3) c = mixC(winCol, pal.bg, 0.3);
+        }
+      }
+    }
+    const i = (y * W + x) * 4; d[i] = c[0]; d[i + 1] = c[1]; d[i + 2] = c[2];
+  }
+  return d;
+};
+
+P.glyph = function (rng, noise, pal) {
+  const d = newBuf(pal.bg);
+  const cellS = ri(rng, 80, 120);
+  const cols = Math.ceil(W / cellS) + 1, rows = Math.ceil(H / cellS) + 1;
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+    const cx = c * cellS + cellS / 2, cy = r * cellS + cellS / 2;
+    const id = r * 31 + c;
+    const col = pal.cols[Math.floor(hashN(id, 7) * pal.cols.length) % pal.cols.length];
+    const type = Math.floor(hashN(id, 13) * 6);
+    const s = cellS * 0.35;
+    if (type === 0) { // L
+      line(d, cx - s, cy + s, cx - s, cy - s, cellS * 0.15, col);
+      line(d, cx - s, cy + s, cx + s, cy + s, cellS * 0.15, col);
+    } else if (type === 1) { // T
+      line(d, cx - s, cy - s, cx + s, cy - s, cellS * 0.15, col);
+      line(d, cx, cy - s, cx, cy + s, cellS * 0.15, col);
+    } else if (type === 2) { // Z
+      line(d, cx - s, cy - s, cx + s, cy - s, cellS * 0.12, col);
+      line(d, cx - s, cy + s, cx + s, cy + s, cellS * 0.12, col);
+      line(d, cx - s, cy + s, cx + s, cy - s, cellS * 0.12, col);
+    } else if (type === 3) { // +
+      line(d, cx - s, cy, cx + s, cy, cellS * 0.15, col);
+      line(d, cx, cy - s, cx, cy + s, cellS * 0.15, col);
+    } else if (type === 4) { // >
+      line(d, cx - s, cy - s, cx + s, cy, cellS * 0.15, col);
+      line(d, cx - s, cy + s, cx + s, cy, cellS * 0.15, col);
+    } else { // |
+      line(d, cx, cy - s, cx, cy + s, cellS * 0.18, col);
+    }
+  }
+  return d;
+};
+
+P.barcode = function (rng, noise, pal) {
+  const d = newBuf(pal.bg);
+  let x = 0;
+  while (x < W) {
+    const w = ri(rng, 6, 50);
+    const col = pick(rng, pal.cols);
+    fillRect(d, x, 0, w, H, col);
+    x += w + ri(rng, 4, 20);
+  }
+  addTex(d, noise, 0.04, 0.04);
+  return d;
+};
+
+P.arrowfield = function (rng, noise, pal) {
+  const d = newBuf(pal.bg);
+  const n = 6;
+  const s = W / n;
+  for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) {
+    const cx = (c + 0.5) * s, cy = (r + 0.5) * s;
+    const col = pal.cols[(r + c) % pal.cols.length];
+    const len = s * 0.35, w = s * 0.12;
+    const hw = w / 2, hlen = len * 0.8;
+    line(d, cx - hlen, cy, cx + hlen, cy, w, col);
+    line(d, cx + hlen, cy, cx + hlen - len * 0.35, cy - hw, w * 0.8, col);
+    line(d, cx + hlen, cy, cx + hlen - len * 0.35, cy + hw, w * 0.8, col);
+  }
+  return d;
+};
+
+P.flag = function (rng, noise, pal) {
+  const d = newBuf(pal.cols[0]);
+  const n = ri(rng, 3, 5);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const v = (x + y * 0.7) / (W * 0.6);
+    const band = Math.floor(v * n) % pal.cols.length;
+    const c = pal.cols[band];
+    const i = (y * W + x) * 4; d[i] = c[0]; d[i + 1] = c[1]; d[i + 2] = c[2];
+  }
+  const cx = ri(rng, 300, 700), cy = ri(rng, 300, 700), r = ri(rng, 60, 180);
+  disc(d, cx, cy, r, pal.cols[pal.cols.length - 1]);
+  return d;
+};
+
+// --- MID ---
+P.checker = function (rng, noise, pal) {
+  const bs = ri(rng, 60, 140);
+  const d = newBuf(pal.bg);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const r = Math.floor(y / bs), c = Math.floor(x / bs);
+    const idx = (r + c) % pal.cols.length;
+    const col = mulC(pal.cols[idx], 1 + (hashN(r * 31 + c, 3) - 0.5) * 0.2);
+    const i = (y * W + x) * 4; d[i] = col[0]; d[i + 1] = col[1]; d[i + 2] = col[2];
+  }
+  addTex(d, noise, 0.03, 0.04);
+  return d;
+};
+
+P.plaid = function (rng, noise, pal) {
+  const d = newBuf(pal.bg);
+  const p1 = ri(rng, 40, 90), p2 = ri(rng, 40, 90);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    let c = pal.bg;
+    const on1 = Math.floor(x / p1) % 2 === 0, on2 = Math.floor(y / p2) % 2 === 0;
+    if (on1) c = mixC(c, pal.cols[0], 0.5);
+    if (on2) c = mixC(c, pal.cols[pal.cols.length - 1], 0.35);
+    const i = (y * W + x) * 4; d[i] = c[0]; d[i + 1] = c[1]; d[i + 2] = c[2];
+  }
+  return d;
+};
+
+P.brick = function (rng, noise, pal) {
+  const bh = ri(rng, 30, 50), bw = bh * ri(rng, 2, 3), mw = ri(rng, 3, 6);
+  const d = newBuf(pal.bg);
+  const mortar = mixC(pal.bg, [80, 80, 80], 0.5);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const row = Math.floor(y / bh);
+    const off = (row % 2) * bw / 2;
+    const col = Math.floor((x + off) / bw);
+    const fy = y - row * bh, fx = (x + off) - col * bw;
+    let c = mortar;
+    if (fy >= mw && fy <= bh - mw && fx >= mw && fx <= bw - mw) {
+      const id = row * 31 + col;
+      c = mulC(pal.cols[Math.floor(hashN(id, 5) * pal.cols.length) % pal.cols.length], 1 + (hashN(id, 11) - 0.5) * 0.25);
+    }
+    const i = (y * W + x) * 4; d[i] = c[0]; d[i + 1] = c[1]; d[i + 2] = c[2];
+  }
+  addTex(d, noise, 0.025, 0.04);
+  return d;
+};
+
+P.wave = function (rng, noise, pal) {
+  const d = newBuf(pal.bg);
+  const nW = ri(rng, 4, 8);
+  const amp = ri(rng, 40, 120), f = rr(rng, 0.002, 0.006);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const yy = y + amp * Math.sin(x * f + y * 0.0005);
+    const band = ((Math.floor(yy / (H / nW)) % pal.cols.length) + pal.cols.length) % pal.cols.length;
+    const c = pal.cols[band];
+    const i = (y * W + x) * 4; d[i] = c[0]; d[i + 1] = c[1]; d[i + 2] = c[2];
+  }
+  return d;
+};
+
+P.dot = function (rng, noise, pal) {
+  const d = newBuf(pal.bg);
+  const spacing = ri(rng, 100, 180);
+  const rad = spacing * rr(rng, 0.25, 0.4);
+  const n = Math.ceil(W / spacing) + 1;
+  for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) {
+    const cx = c * spacing + (r % 2) * spacing * 0.5 + rr(rng, -8, 8);
+    const cy = r * spacing * 0.87 + rr(rng, -8, 8);
+    const col = pal.cols[(r + c) % pal.cols.length];
+    disc(d, cx, cy, rad * rr(rng, 0.7, 1.1), mulC(col, 1 + (rng() - 0.5) * 0.2));
+  }
+  return d;
+};
+
+P.spiral = function (rng, noise, pal) {
+  const d = newBuf(pal.bg);
+  const cx = W / 2, cy = H / 2;
+  const nArms = ri(rng, 3, 6);
+  const turns = rr(rng, 4, 7);
+  const thick = ri(rng, 12, 24);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const dx = x - cx, dy = y - cy;
+    const r = Math.hypot(dx, dy), a = Math.atan2(dy, dx);
+    if (r < 5) continue;
+    const t = (a / (2 * Math.PI) + r / (W * 0.35 * turns / nArms)) * nArms;
+    const band = ((Math.floor(t) % pal.cols.length) + pal.cols.length) % pal.cols.length;
+    const c = pal.cols[band];
+    const i = (y * W + x) * 4; d[i] = c[0]; d[i + 1] = c[1]; d[i + 2] = c[2];
+  }
+  return d;
+};
+
+P.tile = function (rng, noise, pal) {
+  const d = newBuf(pal.bg);
+  const nSeeds = ri(rng, 50, 90);
+  const seeds = [];
+  for (let i = 0; i < nSeeds; i++) {
+    seeds.push({ x: rr(rng, 0, W), y: rr(rng, 0, H), col: pal.cols[Math.floor(rng() * pal.cols.length)] });
+  }
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    let minD = Infinity, minD2 = Infinity, minCol = pal.bg;
+    for (const s of seeds) {
+      const d = (x - s.x) * (x - s.x) + (y - s.y) * (y - s.y);
+      if (d < minD) { minD2 = minD; minD = d; minCol = s.col; }
+      else if (d < minD2) minD2 = d;
+    }
+    const gapW = 6;
+    let c = minCol;
+    if (Math.sqrt(minD2) - Math.sqrt(minD) < gapW) c = mixC(minCol, pal.bg, 0.6);
+    const i = (y * W + x) * 4; d[i] = c[0]; d[i + 1] = c[1]; d[i + 2] = c[2];
+  }
+  return d;
+};
+
+P.confetti = function (rng, noise, pal) {
+  const d = newBuf(pal.bg);
+  const n = ri(rng, 300, 600);
+  for (let i = 0; i < n; i++) {
+    const cx = rr(rng, 0, W), cy = rr(rng, 0, H);
+    const len = ri(rng, 20, 60), w = ri(rng, 6, 14);
+    const col = pal.cols[Math.floor(rng() * pal.cols.length)];
+    const a = rng() * 2 * Math.PI;
+    const dx = Math.cos(a) * len / 2, dy = Math.sin(a) * len / 2;
+    line(d, cx - dx, cy - dy, cx + dx, cy + dy, w, col);
+  }
+  return d;
+};
+
+P.sunburst = function (rng, noise, pal) {
+  const d = newBuf(pal.cols[0]);
+  const cx = W / 2, cy = H / 2;
+  const nRays = ri(rng, 5, 11);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const a = Math.atan2(y - cy, x - cx);
+    const r = Math.hypot(x - cx, y - cy);
+    const idx = Math.floor((a / (2 * Math.PI) + 0.5) * nRays) % pal.cols.length;
+    const blend = Math.min(1, r / (W * 0.5));
+    const c = mixC(pal.cols[idx], pal.cols[(idx + 1) % pal.cols.length], blend);
+    const i = (y * W + x) * 4; d[i] = c[0]; d[i + 1] = c[1]; d[i + 2] = c[2];
+  }
+  return d;
+};
+
+// --- WEAK ---
+P.fbm = function (rng, noise, pal) {
+  const d = newBuf(pal.bg);
+  const s = rr(rng, 0.003, 0.006);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const t = noise.fbm(x * s, y * s, 5);
+    const c = t < 0.33 ? pal.cols[0] : t < 0.66 ? mixC(pal.cols[0], pal.cols[1], (t - 0.33) * 3) : pal.cols[1];
+    const i = (y * W + x) * 4; d[i] = c[0]; d[i + 1] = c[1]; d[i + 2] = c[2];
+  }
+  return d;
+};
+
+P.marble = function (rng, noise, pal) {
+  const d = newBuf(pal.bg);
+  const s = rr(rng, 0.004, 0.008);
+  const f = rr(rng, 0.02, 0.05);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const v = noise.fbm(x * s, y * s, 5);
+    const t = Math.sin(x * f + v * 5) * 0.5 + 0.5;
+    const c = mixC(pal.cols[0], pal.cols[1], t);
+    const i = (y * W + x) * 4; d[i] = c[0]; d[i + 1] = c[1]; d[i + 2] = c[2];
+  }
+  return d;
+};
+
+P.bubble = function (rng, noise, pal) {
+  const d = newBuf(pal.bg);
+  const n = ri(rng, 40, 100);
+  for (let i = 0; i < n; i++) {
+    const cx = rr(rng, 0, W), cy = rr(rng, 0, H);
+    const r = ri(rng, 30, 150);
+    const col = pal.cols[Math.floor(rng() * pal.cols.length)];
+    disc(d, cx, cy, r, mulC(col, 0.7));
+    disc(d, cx - r * 0.25, cy - r * 0.25, r * 0.18, mulC(col, 1.3));
+  }
+  return d;
+};
+
+P.speckle = function (rng, noise, pal) {
+  const d = newBuf(pal.bg);
+  const s = rr(rng, 0.01, 0.03);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    if (noise.fbm(x * s, y * s, 3) > 0.6) {
+      const i = (y * W + x) * 4;
+      const col = pal.cols[Math.floor(noise.fbm(x * s * 2, y * s * 2, 2) * pal.cols.length) % pal.cols.length];
+      d[i] = col[0]; d[i + 1] = col[1]; d[i + 2] = col[2];
+    }
+  }
+  return d;
+};
+
+P.stone = function (rng, noise, pal) {
+  const d = newBuf(pal.bg);
+  const n = ri(rng, 120, 200);
+  for (let i = 0; i < n; i++) {
+    const cx = rr(rng, 0, W), cy = rr(rng, 0, H);
+    const rx = ri(rng, 20, 80), ry = ri(rng, 20, 80);
+    const col = mulC(pal.cols[Math.floor(rng() * pal.cols.length)], 1 + (rng() - 0.5) * 0.2);
+    const x0 = Math.max(0, Math.ceil(cx - rx)), x1 = Math.min(W - 1, Math.floor(cx + rx));
+    const y0 = Math.max(0, Math.ceil(cy - ry)), y1 = Math.min(H - 1, Math.floor(cy + ry));
+    for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {
+      const dx = (x - cx) / rx, dy = (y - cy) / ry;
+      if (dx * dx + dy * dy <= 1.05) {
+        const shade = 1 + (dx * 0.5 + dy * 0.3) * 0.3;
+        const i = (y * W + x) * 4; const c = mulC(col, shade);
+        d[i] = c[0]; d[i + 1] = c[1]; d[i + 2] = c[2];
+      }
+    }
+  }
+  return d;
+};
+
+P.mandala = function (rng, noise, pal) {
+  const d = newBuf(pal.bg);
+  const n = ri(rng, 3, 5);
+  const s = W / n;
+  for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) {
+    const cx = (c + 0.5) * s, cy = (r + 0.5) * s;
+    const col = pal.cols[(r + c) % pal.cols.length];
+    for (let y = Math.max(0, cy - s / 2); y < Math.min(H, cy + s / 2); y++) for (let x = Math.max(0, cx - s / 2); x < Math.min(W, cx + s / 2); x++) {
+      const dx = x - cx, dy = y - cy, d2 = Math.hypot(dx, dy);
+      const a = Math.atan2(dy, dx);
+      const k = 4;
+      const petal = Math.cos(k * a) * 0.5 + 0.5;
+      if (d2 < s * 0.15) { const i = (y * W + x) * 4; d[i] = col[0]; d[i + 1] = col[1]; d[i + 2] = col[2]; }
+      else if (d2 < s * 0.35 && petal > 0.5) {
+        const i = (y * W + x) * 4; const c2 = mulC(col, 0.7); d[i] = c2[0]; d[i + 1] = c2[1]; d[i + 2] = c2[2];
+      }
+    }
+  }
+  return d;
+};
+
+P.gradnoise = function (rng, noise, pal) {
+  const d = newBuf(pal.cols[0]);
+  const cx = W / 2, cy = H / 2;
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const r = Math.hypot(x - cx, y - cy) / (W * 0.7);
+    const t = Math.min(1, r);
+    let c = mixC(pal.cols[0], pal.cols[1], t);
+    const n = noise.fbm(x * 0.008, y * 0.008, 4);
+    c = mixC(c, pal.cols[2], (n - 0.5) * 0.3);
+    const i = (y * W + x) * 4; d[i] = c[0]; d[i + 1] = c[1]; d[i + 2] = c[2];
+  }
+  return d;
+};
+
+// ---- ANISOTROPY ----
+function computeAnisotropy(buf) {
+  const ds = 4;
+  const sw = (W / ds) | 0, sh = (H / ds) | 0;
+  let Gxx = 0, Gyy = 0, Gxy = 0, total = 0;
+  for (let y = 1; y < sh - 1; y++) for (let x = 1; x < sw - 1; x++) {
+    const l = (y * ds * W + x * ds) * 4;
+    const lx = (y * ds * W + (x + 1) * ds) * 4, ly = ((y + 1) * ds * W + x * ds) * 4;
+    const gx = (buf[lx] / 255) - (buf[l] / 255);
+    const gy = (buf[ly] / 255) - (buf[l] / 255);
+    const m2 = gx * gx + gy * gy;
+    if (m2 < 0.0001) continue;
+    Gxx += gx * gx; Gyy += gy * gy; Gxy += gx * gy; total += m2;
+  }
+  if (total < 1e-6) return 0;
+  const tr = Gxx + Gyy;
+  const coh = Math.sqrt((Gxx - Gyy) * (Gxx - Gyy) + 4 * Gxy * Gxy) / (tr + 1e-8);
+  return Math.min(1, Math.max(0, coh));
+}
+
+// ---- MAIN ----
+const TIER_ORDER = [];
+for (const [tier, cnt] of Object.entries(TIER_PLAN)) for (let i = 0; i < cnt; i++) TIER_ORDER.push(tier);
+const rngMaster = mulberry32(20260820);
+for (let i = TIER_ORDER.length - 1; i > 0; i--) { const j = (rngMaster() * (i + 1)) | 0; [TIER_ORDER[i], TIER_ORDER[j]] = [TIER_ORDER[j], TIER_ORDER[i]]; }
+
+const STRONG_P = ['stripes', 'chevron', 'landscape', 'city', 'glyph', 'barcode', 'arrowfield', 'flag'];
+const MID_P = ['checker', 'plaid', 'brick', 'wave', 'dot', 'spiral', 'tile', 'confetti', 'sunburst'];
+const WEAK_P = ['fbm', 'marble', 'bubble', 'speckle', 'stone', 'mandala', 'gradnoise'];
+const BY_TIER = { strong: STRONG_P, mid: MID_P, weak: WEAK_P };
+const TIDX = { strong: 0, mid: 0, weak: 0 };
+
+const manifest = { version: 1, size: SIZE, images: [] };
+const imgDir = path.resolve(OUT, 'img');
+fs.mkdirSync(imgDir, { recursive: true });
+
+const t0 = Date.now();
+for (let id = 1; id <= 100; id++) {
+  const tier = TIER_ORDER[id - 1];
+  const list = BY_TIER[tier];
+  const pat = list[TIDX[tier]++ % list.length];
+  const seed = hashString(`odd-rotation-${id}`);
+  const rng = mulberry32(seed);
+  const noise = makeNoise(rng);
+  const pal = makePalette(rng);
+  const t1 = Date.now();
+  const buf = P[pat](rng, noise, pal);
+  const anisotropy = computeAnisotropy(buf);
+  const vImage = Math.round((1 - anisotropy) * 100) / 100;
+  const file = `img/mosaic_${String(id).padStart(3, '0')}.webp`;
+  const outPath = path.resolve(imgDir, `mosaic_${String(id).padStart(3, '0')}.webp`);
+  await sharp(Buffer.from(buf.buffer, buf.byteOffset, buf.byteLength), { raw: { width: W, height: H, channels: 4 } })
+    .webp({ quality: QUALITY, effort: 4 })
+    .toFile(outPath);
+  const stat = fs.statSync(outPath);
+  manifest.images.push({ id, file, tier, pattern: pat, seed: seed >>> 0, anisotropy: Math.round(anisotropy * 1000) / 1000, V_image: vImage });
+  const elapsed = ((Date.now() - t1) / 1000).toFixed(1);
+  console.log(`${id}/100 ${pat} ${tier} V=${vImage} ${(stat.size / 1024).toFixed(1)}KB ${elapsed}s`);
+}
+const total = ((Date.now() - t0) / 1000).toFixed(0);
+console.log(`\nDone: 100 images in ${total}s`);
+fs.writeFileSync(path.resolve(OUT, 'manifest.json'), JSON.stringify(manifest, null, 2));

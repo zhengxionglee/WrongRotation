@@ -1,0 +1,194 @@
+import { buildGrid } from "../../core/grid";
+import type { LevelData, Grid } from "../../core/types";
+import { PuzzleRenderer, PuzzleState } from "../shared/renderer";
+import { loadImage } from "../shared/images";
+import { sfx } from "../shared/audio";
+import * as tween from "../shared/tween";
+import * as save from "../shared/save";
+import { setScreen, showModal, hideModal, toast } from "../shared/ui";
+import levels from "../../levels/levels.json";
+
+export class CampaignSession {
+  get renderer() { return this._renderer; }
+  get grid() { return this.grid_; }
+  get rotations() { return this.rotations_; }
+  public _renderer = new PuzzleRenderer();
+  public grid_: Grid | null = null;
+  public rotations_ = new Map<number, number>();
+  private canvas: HTMLCanvasElement;
+  private ctx: CanvasRenderingContext2D;
+  private levelId = 1;
+  private levelData: LevelData | null = null;
+  private touched = new Set<number>();
+  private image: HTMLImageElement | null = null;
+  private running = false;
+  private elapsed = 0;
+  private clicks = 0;
+  private hintsUsed = 0;
+  private highlightTarget = -1;
+  private highlightTimer = 0;
+  private onExit: () => void;
+  private lastUpdate = 0;
+  private animating = false;
+
+  constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, levelId: number, onExit: () => void) {
+    this.canvas = canvas;
+    this.ctx = ctx;
+    this.levelId = levelId;
+    this.onExit = onExit;
+    this._renderer.layout(canvas.width, canvas.height, 60);
+  }
+
+  async start() {
+    const lvl = (levels as LevelData[]).find(l => l.id === this.levelId);
+    if (!lvl) { toast("Level not found"); return; }
+    this.levelData = lvl;
+    this.grid_ = buildGrid(lvl.grid as any);
+    this.image = await loadImage(lvl.image);
+    this._renderer.invalidate();
+    this._renderer.layout(this.canvas.width, this.canvas.height, 60);
+    this.rotations_ = new Map(lvl.targets.map(t => [t.cellId, t.rotation]));
+    this.touched = new Set();
+    this.elapsed = 0;
+    this.clicks = 0;
+    this.hintsUsed = 0;
+    this.running = true;
+    this.lastUpdate = performance.now();
+    this.renderHUD();
+    requestAnimationFrame(this.loop.bind(this));
+  }
+
+  private loop(time: number) {
+    if (!this.running) return;
+    const dt = time - this.lastUpdate;
+    this.lastUpdate = time;
+    this.elapsed += dt;
+    this.highlightTimer -= dt;
+    if (this.highlightTimer <= 0) this.highlightTarget = -1;
+    if (!this.animating) {
+      tween.update(dt);
+      this.renderHUD();
+      this.render();
+    }
+    requestAnimationFrame(this.loop.bind(this));
+  }
+
+  private render() {
+    if (!this.image || !this.grid || !this.levelData) return;
+    const state: PuzzleState = {
+      image: this.image, grid: this.grid,
+      rotations: this.rotations,
+      rotatable: !this.levelData.mode.autoSnap,
+      highlights: this.highlightTarget >= 0 ? new Set([this.highlightTarget]) : new Set(),
+    };
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this._renderer.render(this.ctx, state);
+  }
+
+  private renderHUD() {
+    if (!this.levelData) return;
+    const nT = this.levelData.targets.length;
+    const fixed = this.levelData.targets.filter(t => {
+      const r = this.rotations.get(t.cellId) ?? 0;
+      return Math.abs(((r % 360) + 360) % 360) < 5;
+    }).length;
+    const count = this.levelData.mode.showTargetCount ? `Repaired ${fixed}/${nT}` : "";
+    const hintLabel = this.levelId > 10 ? "HINT" : "";
+    const canHint = this.levelData.limits.hints > 0 && this.hintsUsed < this.levelData.limits.hints;
+    document.getElementById("hud")!.innerHTML = `
+      <div class="hud-top">
+        <button class="btn btn-icon" id="back-btn">x</button>
+        <div class="hud-combo" style="font-size:clamp(14px,3vw,18px);color:#8b93a5">${count || `Level ${this.levelId}`}</div>
+        ${hintLabel ? `<button class="btn btn-sm" id="hint-btn" ${canHint ? "" : "disabled"}>HINT</button>` : '<div></div>'}
+      </div>`;
+    document.getElementById("back-btn")!.onclick = () => { this.running = false; this.onExit(); };
+    const hintBtn = document.getElementById("hint-btn");
+    if (hintBtn) hintBtn.onclick = () => this.useHint();
+  }
+
+  onTap(cellId: number) {
+    if (!this.levelData || this.animating) return;
+    this.clicks++;
+    const target = this.levelData.targets.find(t => t.cellId === cellId);
+    if (target && this.levelData.mode.autoSnap) {
+      sfx.correct(this.clicks);
+      this.rotations.set(cellId, 0);
+      this.animating = true;
+      setTimeout(() => {
+        this.animating = false;
+        this.checkWin();
+      }, 250);
+    } else {
+      sfx.tap();
+      if (this.levelData.mode.autoSnap) {
+        sfx.wrong();
+      }
+    }
+  }
+
+  onRotate(cellId: number, rotation: number, phase: "move" | "end") {
+    if (!this.levelData || this.levelData.mode.autoSnap) return;
+    if (phase === "move") {
+      this.rotations.set(cellId, rotation);
+    } else {
+      this.clicks++;
+      const snapped = Math.round(rotation / 15) * 15;
+      const norm = ((snapped % 360) + 360) % 360;
+      this.rotations.set(cellId, norm);
+      if (norm === 0) {
+        this.touched.add(cellId);
+        sfx.correct(this.clicks);
+      } else {
+        this.touched.add(cellId);
+        sfx.tap();
+      }
+      this.checkWin();
+    }
+  }
+
+  private useHint() {
+    if (!this.levelData) return;
+    const unfixed = this.levelData.targets.filter(t => {
+      const r = this.rotations.get(t.cellId) ?? 0;
+      return Math.abs(((r % 360) + 360) % 360) >= 5;
+    });
+    if (unfixed.length === 0) return;
+    this.hintsUsed++;
+    this.highlightTarget = unfixed[0].cellId;
+    this.highlightTimer = 1200;
+  }
+
+  private checkWin() {
+    if (!this.levelData) return;
+    const allFixed = this.levelData.targets.every(t => {
+      const r = this.rotations.get(t.cellId) ?? 0;
+      return Math.abs(((r % 360) + 360) % 360) < 5;
+    });
+    if (!allFixed) return;
+    this.running = false;
+    sfx.win();
+    const t = this.levelData.targets.length;
+    const starsC = this.clicks <= t ? 3 : this.clicks <= t * 3 ? 2 : this.clicks <= t * 6 ? 1 : 1;
+    const starsT = this.elapsed <= this.levelData.star.time[0] ? 3 : this.elapsed <= this.levelData.star.time[1] ? 2 : 1;
+    const stars = Math.min(starsC, starsT);
+    save.setCampaignLevelStars(this.levelId, this.clicks, this.elapsed, stars);
+    const next = this.levelId < 50;
+    showModal(`
+      <div class="overlay">
+        <div class="overlay-panel">
+          <div class="label">${'*'.repeat(stars)}${'*'.repeat(3-stars)}</div>
+          <div class="label">${Math.round(this.elapsed/1000)}s | ${this.clicks} taps</div>
+          ${next ? `<button class="btn btn-primary" id="next-btn">Next</button>` : ''}
+          <button class="btn" id="retry-btn">Retry</button>
+          <span class="hint-link" id="exit-btn">Level Select</span>
+        </div>
+      </div>`);
+    document.getElementById("next-btn")?.addEventListener("click", () => { hideModal(); this.levelId++; this.start(); });
+    document.getElementById("retry-btn")?.addEventListener("click", () => { hideModal(); this.start(); });
+    document.getElementById("exit-btn")?.addEventListener("click", () => { hideModal(); this.onExit(); });
+  }
+
+  resize() {
+    this._renderer.layout(this.canvas.width, this.canvas.height, 60);
+  }
+}
