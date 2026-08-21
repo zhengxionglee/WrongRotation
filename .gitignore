@@ -2,4 +2,4 @@ node_modules
 dist
 *.log
 gen/sim
-gen/sim-standalone
+gen/sim-standalonedev-log.txt
