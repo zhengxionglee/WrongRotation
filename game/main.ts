@@ -18,6 +18,8 @@ function getCanvasPos(e: MouseEvent | PointerEvent): { x: number; y: number } {
   return { x: (e.clientX - rect.left) * dpr, y: (e.clientY - rect.top) * dpr };
 }
 
+let dragState: { cellId: number; startX: number; startY: number; startAngle: number; startRot: number; moved: boolean } | null = null;
+
 function onPointerDown(e: PointerEvent) {
   sfx.init();
   canvas.setPointerCapture(e.pointerId);
@@ -27,12 +29,73 @@ function onPointerDown(e: PointerEvent) {
   if (s.renderer && s.grid) {
     const cellId = s.renderer.hitTest({ grid: s.grid, rotations: s.rotations }, p.x, p.y);
     if (cellId >= 0) {
-      s.onTap?.(cellId);
+      dragState = { cellId, startX: p.x, startY: p.y, startAngle: 0, startRot: 0, moved: false };
     }
   }
 }
 
+function onPointerMove(e: PointerEvent) {
+  if (!dragState) return;
+  const p = getCanvasPos(e);
+  const dx = p.x - dragState.startX;
+  const dy = p.y - dragState.startY;
+  if (Math.hypot(dx, dy) > 8) {
+    if (!dragState.moved) {
+      dragState.moved = true;
+      const s = currentSession as any;
+      const cell = s.grid?.cells.find((c: any) => c.id === dragState!.cellId);
+      if (cell) {
+        const cx = cell.cx * (s.renderer as any).board.size;
+        const cy = cell.cy * (s.renderer as any).board.size;
+        const bx = (s.renderer as any).board.x;
+        const by = (s.renderer as any).board.y;
+        dragState.startAngle = Math.atan2(dragState.startY - by - cy, dragState.startX - bx - cx);
+        dragState.startRot = s.rotations?.get(dragState.cellId) ?? 0;
+      }
+    }
+    if (dragState.moved) {
+      const s = currentSession as any;
+      const cell = s.grid?.cells.find((c: any) => c.id === dragState!.cellId);
+      if (cell) {
+        const cx = cell.cx * (s.renderer as any).board.size;
+        const cy = cell.cy * (s.renderer as any).board.size;
+        const bx = (s.renderer as any).board.x;
+        const by = (s.renderer as any).board.y;
+        const curAngle = Math.atan2(p.y - by - cy, p.x - bx - cx);
+        const delta = (curAngle - dragState.startAngle) * 180 / Math.PI;
+        const rot = ((dragState.startRot + delta) % 360 + 360) % 360;
+        s.onRotate?.(dragState.cellId, rot, "move");
+      }
+    }
+  }
+}
+
+function onPointerUp(e: PointerEvent) {
+  if (!dragState) return;
+  const s = currentSession as any;
+  if (dragState.moved) {
+    const cell = s.grid?.cells.find((c: any) => c.id === dragState!.cellId);
+    if (cell) {
+      const cx = cell.cx * (s.renderer as any).board.size;
+      const cy = cell.cy * (s.renderer as any).board.size;
+      const bx = (s.renderer as any).board.x;
+      const by = (s.renderer as any).board.y;
+      const p = getCanvasPos(e);
+      const curAngle = Math.atan2(p.y - by - cy, p.x - bx - cx);
+      const delta = (curAngle - dragState.startAngle) * 180 / Math.PI;
+      const rot = ((dragState.startRot + delta) % 360 + 360) % 360;
+      s.onRotate?.(dragState.cellId, rot, "end");
+    }
+  } else {
+    s.onTap?.(dragState.cellId);
+  }
+  dragState = null;
+}
+
 canvas.addEventListener("pointerdown", onPointerDown);
+canvas.addEventListener("pointermove", onPointerMove);
+canvas.addEventListener("pointerup", onPointerUp);
+canvas.addEventListener("pointercancel", onPointerUp);
 
 function onResize() {
   size = canvasSize(canvas, dpr);
