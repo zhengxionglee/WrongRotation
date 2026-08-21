@@ -43,6 +43,28 @@ const mainFixed = mainClean
     'Promise.resolve({DailySession: (typeof __DailySession !== "undefined" ? __DailySession : window.__DailySession)})')
   .replace(/import\.meta\.url/g, 'document.baseURI');
 
+// ---- Embed all images as base64 so game.html works from file:// ----
+const imgDir = path.resolve(ROOT, "assets", "img");
+const webpFiles = fs.readdirSync(imgDir).filter(f => f.endsWith(".webp")).sort();
+const imageDataEntries = webpFiles.map(f => {
+  const b64 = fs.readFileSync(path.join(imgDir, f)).toString("base64");
+  return `"assets/img/${f}":"data:image/webp;base64,${b64}"`;
+});
+const imageDataJs = `window.__IMAGE_DATA__={${imageDataEntries.join(",")}};`;
+const imagePatchJs = `
+(function () {
+  var OrigImage = window.Image;
+  window.Image = class extends OrigImage {
+    set src(v) {
+      var d = window.__IMAGE_DATA__ && window.__IMAGE_DATA__[v];
+      this.__origSrc = v;
+      super.src = d || v;
+    }
+    get src() { return this.__origSrc !== undefined ? this.__origSrc : super.src; }
+  };
+})();
+`;
+
 const html = `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -113,6 +135,8 @@ window.addEventListener("unhandledrejection", function (e) {
   })();
   d.textContent = (d.textContent ? d.textContent + "\\n" : "") + "Promise rejection: " + (e.reason && e.reason.message ? e.reason.message : e.reason);
 });
+${imageDataJs}
+${imagePatchJs}
 (function () {
 "use strict";
 // ===== Main bundle (scoped) =====

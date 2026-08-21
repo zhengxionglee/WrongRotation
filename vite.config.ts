@@ -26,6 +26,8 @@ export default defineConfig({
   publicDir: false,
   base: "./",
   plugins: [serveStatic("assets"), serveStatic("levels")],
+  server: { cors: true },
+  preview: { cors: true },
   build: { target: "es2020", outDir: "dist" },
   test: { include: ["tests/**/*.test.ts"] }
 });

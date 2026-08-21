@@ -11,7 +11,6 @@ export function loadImage(src: string): Promise<HTMLImageElement> {
     cached.onerror = () => reject(new Error(`Failed to load ${src}`));
   });
   const img = new Image();
-  img.crossOrigin = "anonymous";
   imgCache.set(src, img);
   return new Promise<HTMLImageElement>((resolve, reject) => {
     img.onload = () => resolve(img);
@@ -23,7 +22,6 @@ export function loadImage(src: string): Promise<HTMLImageElement> {
 export function preload(src: string): void {
   if (!imgCache.has(src)) {
     const img = new Image();
-    img.crossOrigin = "anonymous";
     img.src = src;
     imgCache.set(src, img);
   }
