@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node gen/gen-pwa.mjs && node gen/bundle-standalone.mjs",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "gen:images": "node gen/gen-images.mjs",

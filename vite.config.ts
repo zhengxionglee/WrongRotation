@@ -25,7 +25,16 @@ function serveStatic(dirName: string): Plugin {
 export default defineConfig({
   publicDir: false,
   base: "./",
-  plugins: [serveStatic("assets"), serveStatic("levels")],
+  plugins: [serveStatic("assets"), serveStatic("levels"), {
+    name: "copy-pwa",
+    closeBundle() {
+      const out = path.resolve(__dirname, "dist");
+      for (const f of ["manifest.json", "sw.js", "icon-192.png", "icon-512.png", "game.html"]) {
+        const src = path.resolve(__dirname, f);
+        if (fs.existsSync(src)) fs.copyFileSync(src, path.resolve(out, f));
+      }
+    }
+  }],
   server: { cors: true },
   preview: { cors: true },
   build: { target: "es2020", outDir: "dist" },
