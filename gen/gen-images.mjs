@@ -1191,7 +1191,19 @@ P.mosaic = function(rng, noise, pal) {
   const n = ri(rng, 30, 50);
   const s = Math.ceil(W / n);
   for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) {
-    fillRect(d, c * s, r * s, s, s, pick(rng, pal.cols));
+    const col = pick(rng, pal.cols);
+    const gradDir = Math.floor(rng() * 4);
+    const cx = c * s + s / 2, cy = r * s + s / 2;
+    for (let y = 0; y < s; y++) for (let x = 0; x < s; x++) {
+      let t;
+      if (gradDir === 0) t = x / s;
+      else if (gradDir === 1) t = y / s;
+      else if (gradDir === 2) t = Math.hypot(x - s / 2, y - s / 2) / (s * 0.71);
+      else t = (x + y) / (s * 2);
+      t = Math.min(1, t * 0.7 + 0.15);
+      const cg = mixC(col, pal.bg, t * 0.35);
+      setP(d, c * s + x, r * s + y, cg);
+    }
   }
   addTex(d, noise, 0.05, 0.08);
   return d;

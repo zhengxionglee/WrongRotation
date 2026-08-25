@@ -1097,8 +1097,8 @@
       "tier": "mid",
       "pattern": "mosaic",
       "seed": 1455041218,
-      "anisotropy": 0.077,
-      "V_image": 0.92
+      "anisotropy": 0.075,
+      "V_image": 0.93
     },
     {
       "id": 123,
@@ -1106,7 +1106,7 @@
       "tier": "mid",
       "pattern": "mosaic",
       "seed": 3521545912,
-      "anisotropy": 0.074,
+      "anisotropy": 0.066,
       "V_image": 0.93
     },
     {
