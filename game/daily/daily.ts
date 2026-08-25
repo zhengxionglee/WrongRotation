@@ -1,4 +1,3 @@
-import { Rng, hashString } from "../../core/rng";
 import { buildGrid } from "../../core/grid";
 import { salience, S_MIN, downsampleLuma } from "../../core/salience";
 import type { LumaMatrix, LevelData } from "../../core/types";
@@ -26,7 +25,8 @@ export class DailySession {
   private running = false;
   private totalTimeMs = 0;
   private lastUpdate = 0;
-  private dateStr = "";
+  private highlightTarget = -1;
+  private highlightTimer = 0;
   private manifest = (manifest as Manifest).images;
 
   constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, onExit: () => void) {
@@ -34,46 +34,66 @@ export class DailySession {
     this.ctx = ctx;
     this.onExit = onExit;
     this._renderer.layout(canvas.width, canvas.height, 60);
+    document.getElementById("hud")!.addEventListener("pointerdown", (e) => {
+      const t = e.target as HTMLElement | null;
+      if (!t || !t.closest) return;
+      if (t.closest("#cancel-btn")) { this.running = false; this.onExit(); }
+      if (t.closest("#hint-btn")) this.useHint();
+    });
   }
 
   async start() {
-    this.dateStr = save.todayStr();
-    const seed = hashString(this.dateStr);
-    const rng = new Rng(seed);
-    const params = [
-      { shape: "square", n: 3, tier: "strong", angles: [180] },
-      { shape: "square", n: 3, tier: "strong", angles: [180, 90] },
-      { shape: "square", n: 4, tier: "strong", angles: [90, 180, 270] },
-      { shape: "hex", n: 3, tier: "strong", angles: [180, 90, 270] },
-      { shape: "square", n: 4, tier: "mid", angles: [90, 180, 270] },
-      { shape: "hex", n: 3, tier: "mid", angles: [90, 180, 270] },
-      { shape: "square", n: 5, tier: "mid", angles: [90, 180, 270] },
-      { shape: "tri", n: 3, tier: "mid", angles: [90, 180, 270] },
-      { shape: "square", n: 5, tier: "mid", angles: [30, 45, 90, 180, 270] },
-      { shape: "square", n: 5, tier: "mid", angles: [30, 45, 90, 180, 270] },
+    const MICRO = [8, 14, 166, 173, 187, 194, 346, 352];
+    const EXTRA = [5, 10, 170, 175, 185, 190, 350, 355];
+    const params: { shape: string; n: number; tier: string; angles: number[] }[] = [
+      { shape: "square", n: 6, tier: "weak", angles: MICRO },
+      { shape: "hex", n: 5, tier: "weak", angles: MICRO },
+      { shape: "tri", n: 5, tier: "weak", angles: MICRO },
+      { shape: "voronoi", n: 24, tier: "weak", angles: MICRO },
+      { shape: "square", n: 6, tier: "weak", angles: EXTRA },
+      { shape: "voronoi", n: 28, tier: "weak", angles: MICRO },
+      { shape: "hex", n: 5, tier: "weak", angles: EXTRA },
+      { shape: "voronoi", n: 30, tier: "weak", angles: MICRO },
+      { shape: "tri", n: 5, tier: "weak", angles: EXTRA },
+      { shape: "voronoi", n: 30, tier: "weak", angles: [...MICRO, ...EXTRA] },
     ];
-    const pool = this.manifest.filter(e => e.tier === "strong" || e.tier === "mid");
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < params.length; i++) {
       const p = params[i];
-      const entry = rng.pick(pool);
-      const grid = buildGrid({ type: p.shape as any, seed: rng.next() * 100000 | 0, param: p.n });
-      const angle = rng.pick(p.angles);
-      const cells = rng.shuffle(grid.cells);
+      const pool = this.manifest.filter(e => e.tier === p.tier || (p.tier === "mid" && (e.tier === "strong" || e.tier === "mid")));
+      const entry = pool[Math.floor(Math.random() * pool.length)];
+      const grid = buildGrid({ type: p.shape as any, seed: Math.random() * 100000 | 0, param: p.n });
+      const cells = grid.cells.slice().sort(() => Math.random() - 0.5);
       const img = await loadImage(entry.file);
       const luma = await getLuma(entry.file);
-      let bestCell = cells[0], bestS = 0;
+      const scored: { cellId: number; rotation: number; s: number }[] = [];
       for (const cell of cells.slice(0, 12)) {
-        const s = salience(luma, cell, angle).S;
-        if (s > bestS) { bestS = s; bestCell = cell; }
+        for (const angle of p.angles) {
+          const s = salience(luma, cell, angle).S;
+          if (Math.abs(angle - 180) < 1 && s < 0.1) continue;
+          scored.push({ cellId: cell.id, rotation: angle, s });
+        }
+      }
+      scored.sort((a, b) => b.s - a.s);
+      const targets: { cellId: number; rotation: number }[] = [];
+      const usedIds = new Set<number>();
+      for (const c of scored) {
+        if (usedIds.has(c.cellId)) continue;
+        targets.push({ cellId: c.cellId, rotation: c.rotation });
+        usedIds.add(c.cellId);
+        if (targets.length >= 2) break;
+      }
+      while (targets.length < 2) {
+        const cell = cells[targets.length];
+        targets.push({ cellId: cell.id, rotation: p.angles[0] });
       }
       this.levels.push({
         id: i + 1, difficulty: 3, image: entry.file,
         grid: { type: p.shape as any, seed: 0, param: p.n },
-        targets: [{ cellId: bestCell.id, rotation: angle }],
+        targets,
         mode: { autoSnap: true, showTargetCount: false },
         limits: { timeLimit: null, hints: 0 },
         star: { clicks: [1, 3, 6], time: [5, 15, 30] },
-        meta: { S: bestS, C: 0, V_image: entry.V_image }
+        meta: { S: scored[0]?.s ?? 0, C: 0, V_image: entry.V_image }
       });
     }
     this.currentIdx = 0;
@@ -89,6 +109,8 @@ export class DailySession {
     this.image = await loadImage(lvl.image);
     this.grid_ = buildGrid(lvl.grid as any);
     this.rotations = new Map(lvl.targets.map(t => [t.cellId, t.rotation]));
+    this.highlightTarget = -1;
+    this.highlightTimer = 0;
     this._renderer.invalidate();
     this._renderer.layout(this.canvas.width, this.canvas.height, 60);
     this.renderHUD();
@@ -99,6 +121,8 @@ export class DailySession {
     const dt = time - this.lastUpdate;
     this.lastUpdate = time;
     this.totalTimeMs += dt;
+    this.highlightTimer -= dt;
+    if (this.highlightTimer <= 0) this.highlightTarget = -1;
     this.renderHUD();
     this.render();
     requestAnimationFrame(this.loop.bind(this));
@@ -108,36 +132,71 @@ export class DailySession {
     if (!this.image || !this.grid) return;
     const state: PuzzleState = {
       image: this.image, grid: this.grid, rotations: this.rotations,
-      rotatable: false, highlights: new Set(),
+      rotatable: false, boldGrid: true,
+      highlights: this.highlightTarget >= 0 ? new Set([this.highlightTarget]) : new Set(),
     };
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this._renderer.render(this.ctx, state);
   }
 
   private renderHUD() {
+    const lvl = this.levels[this.currentIdx];
+    const g = this.grid_;
+    const gridLabel = g ? (g.type === "square" ? `${g.param}×${g.param}` : `${g.cells.length}`) : "";
+    const fixed = lvl ? lvl.targets.filter(t => {
+      const r = this.rotations.get(t.cellId) ?? 0;
+      return Math.abs(((r % 360) + 360) % 360) < 5;
+    }).length : 0;
+    const nT = lvl ? lvl.targets.length : 2;
     document.getElementById("hud")!.innerHTML = `
-      <div class="hud-top">
-        <button class="btn btn-icon" id="cancel-btn">x</button>
-        <div class="hud-combo" style="font-size:16px;color:#8b93a5">${this.currentIdx + 1}/10</div>
-        <div class="hud-score">${formatTime(this.totalTimeMs)}</div>
+      <div class="hud-top" style="background:rgba(0,0,0,0.25);padding:clamp(6px,2vh,14px) clamp(10px,3vw,18px);padding-top:calc(env(safe-area-inset-top,0px) + clamp(6px,2vh,14px))">
+        <button class="btn btn-icon" id="cancel-btn" style="width:48px;height:48px;font-size:22px;border-radius:14px;font-weight:700">x</button>
+        <div style="flex:1;text-align:center">
+          <div style="font-size:clamp(16px,4vw,22px);font-weight:700;color:#ffd94d">${this.currentIdx + 1}/10 · 已修复 ${fixed}/${nT}</div>
+          <div style="font-size:clamp(12px,2.5vw,15px);color:#8b93a5">${gridLabel} · ${formatTime(this.totalTimeMs)}</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button class="btn btn-sm" id="hint-btn" style="padding:10px 18px;font-size:15px;font-weight:700">提示</button>
+        </div>
       </div>`;
-    document.getElementById("cancel-btn")!.onclick = () => { this.running = false; this.onExit(); };
+  }
+
+  private useHint() {
+    const lvl = this.levels[this.currentIdx];
+    if (!lvl || this.highlightTarget >= 0) return;
+    const unfixed = lvl.targets.filter(t => {
+      const r = this.rotations.get(t.cellId) ?? 0;
+      return Math.abs(((r % 360) + 360) % 360) >= 5;
+    });
+    if (unfixed.length === 0) return;
+    this.highlightTarget = unfixed[0].cellId;
+    this.highlightTimer = 1500;
+    sfx.tap();
   }
 
   onTap(cellId: number) {
-    if (!this.levels[this.currentIdx]) return;
-    const target = this.levels[this.currentIdx].targets.find(t => t.cellId === cellId);
+    const lvl = this.levels[this.currentIdx];
+    if (!lvl) return;
+    const target = lvl.targets.find(t => t.cellId === cellId);
     if (target) {
+      const r = this.rotations.get(cellId) ?? 0;
+      if (Math.abs(((r % 360) + 360) % 360) < 5) return;
       sfx.correct(this.currentIdx);
       this.rotations.set(cellId, 0);
-      setTimeout(() => {
-        this.currentIdx++;
-        if (this.currentIdx >= 10) {
-          this.finish();
-        } else {
-          this.loadLevel(this.currentIdx);
-        }
-      }, 200);
+      const allFixed = lvl.targets.every(t => {
+        const rr = this.rotations.get(t.cellId) ?? 0;
+        return Math.abs(((rr % 360) + 360) % 360) < 5;
+      });
+      if (allFixed) {
+        setTimeout(() => {
+          this.currentIdx++;
+          if (this.currentIdx >= this.levels.length) {
+            this.finish();
+          } else {
+            this.loadLevel(this.currentIdx);
+          }
+        }, 400);
+      }
     } else {
       sfx.wrong();
       this.totalTimeMs += 5000;
@@ -147,17 +206,16 @@ export class DailySession {
   private finish() {
     this.running = false;
     sfx.win();
-    save.setDailyResult(this.dateStr, this.totalTimeMs);
+    save.setDailyResult("challenge", this.totalTimeMs);
     const state = save.getDailyState();
     showModal(`
       <div class="overlay">
         <div class="overlay-panel">
-          <div class="label">Daily Challenge</div>
+          <div class="label">挑战</div>
           <div class="big">${formatTime(this.totalTimeMs)}</div>
-          <div class="label">${this.dateStr}</div>
-          <button class="btn btn-primary" id="share-btn">Save Score Card</button>
-          <button class="btn" id="retry-btn">Retry</button>
-          <span class="hint-link" id="exit-btn">Home</span>
+          <button class="btn btn-primary" id="share-btn">保存成绩卡</button>
+          <button class="btn" id="retry-btn">重试</button>
+          <span class="hint-link" id="exit-btn">主页</span>
         </div>
       </div>`);
     document.getElementById("share-btn")?.addEventListener("click", () => this.shareScore());
@@ -174,24 +232,21 @@ export class DailySession {
     ctx.fillStyle = "#ffd94d";
     ctx.font = "bold 48px system-ui";
     ctx.textAlign = "center";
-    ctx.fillText("Wrong Rotation", 360, 180);
+    ctx.fillText("转错了", 360, 180);
     ctx.fillStyle = "#e9ecf2";
     ctx.font = "28px system-ui";
-    ctx.fillText("Daily Challenge", 360, 240);
-    ctx.fillStyle = "#8b93a5";
-    ctx.font = "24px system-ui";
-    ctx.fillText(this.dateStr, 360, 300);
+    ctx.fillText("挑战", 360, 240);
     ctx.fillStyle = "#ffd94d";
     ctx.font = "bold 72px system-ui";
     ctx.fillText(formatTime(this.totalTimeMs), 360, 480);
     ctx.fillStyle = "#e9ecf2";
     ctx.font = "20px system-ui";
-    ctx.fillText("Come challenge the same puzzle tomorrow!", 360, 640);
+    ctx.fillText("你能超越这个时间吗？", 360, 640);
     const link = document.createElement("a");
-    link.download = `odd-rotation-daily-${this.dateStr}.png`;
+    link.download = `转错了-挑战.png`;
     link.href = c.toDataURL("image/png");
     link.click();
-    toast("Score card saved!");
+    toast("成绩卡已保存！");
   }
 
   resize() { this._renderer.layout(this.canvas.width, this.canvas.height, 60); }

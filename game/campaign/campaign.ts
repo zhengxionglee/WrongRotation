@@ -37,11 +37,18 @@ export class CampaignSession {
     this.levelId = levelId;
     this.onExit = onExit;
     this._renderer.layout(canvas.width, canvas.height, 60);
+    document.getElementById("hud")!.addEventListener("pointerdown", (e) => {
+      const t = e.target as HTMLElement | null;
+      if (!t || !t.closest) return;
+      if (t.closest("#back-btn")) { this.running = false; this.onExit(); }
+      if (t.closest("#reset-btn")) this.reset();
+      if (t.closest("#hint-btn")) this.useHint();
+    });
   }
 
   async start() {
     const lvl = (levels as LevelData[]).find(l => l.id === this.levelId);
-    if (!lvl) { toast("Level not found"); return; }
+    if (!lvl) { toast("关卡不存在"); return; }
     this.levelData = lvl;
     this.grid_ = buildGrid(lvl.grid as any);
     this.image = await loadImage(lvl.image);
@@ -78,7 +85,7 @@ export class CampaignSession {
     const state: PuzzleState = {
       image: this.image, grid: this.grid,
       rotations: this.rotations,
-      rotatable: !this.levelData.mode.autoSnap,
+      rotatable: true,
       highlights: this.highlightTarget >= 0 ? new Set([this.highlightTarget]) : new Set(),
     };
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -92,42 +99,38 @@ export class CampaignSession {
       const r = this.rotations.get(t.cellId) ?? 0;
       return Math.abs(((r % 360) + 360) % 360) < 5;
     }).length;
-    const count = this.levelData.mode.showTargetCount ? `Repaired ${fixed}/${nT}` : "";
-    const hintLabel = this.levelId > 10 ? "HINT" : "";
-    const canHint = this.levelData.limits.hints > 0 && this.hintsUsed < this.levelData.limits.hints;
+    const count = this.levelData.mode.showTargetCount ? `已修复 ${fixed}/${nT}` : "";
+    const hintLabel = "提示";
+    const canHint = true;
     document.getElementById("hud")!.innerHTML = `
-      <div class="hud-top">
-        <button class="btn btn-icon" id="back-btn">x</button>
-        <div class="hud-combo" style="font-size:clamp(14px,3vw,18px);color:#8b93a5">${count || `Level ${this.levelId}`}</div>
-        ${hintLabel ? `<button class="btn btn-sm" id="hint-btn" ${canHint ? "" : "disabled"}>HINT</button>` : '<div></div>'}
+      <div class="hud-top" style="background:rgba(0,0,0,0.25);padding:clamp(6px,2vh,14px) clamp(10px,3vw,18px);padding-top:calc(env(safe-area-inset-top,0px) + clamp(6px,2vh,14px))">
+        <button class="btn btn-icon" id="back-btn" style="width:48px;height:48px;font-size:22px;border-radius:14px;font-weight:700">x</button>
+        <div class="hud-combo" style="font-size:clamp(16px,4vw,22px);font-weight:700;color:#ffd94d">${count || `第${this.levelId}关`}</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button class="btn btn-sm" id="reset-btn" style="padding:10px 18px;font-size:15px;font-weight:700">重置</button>
+          ${hintLabel ? `<button class="btn btn-sm" id="hint-btn" style="padding:10px 18px;font-size:15px;font-weight:700" ${canHint ? "" : "disabled"}>提示</button>` : ''}
+        </div>
       </div>`;
-    document.getElementById("back-btn")!.onclick = () => { this.running = false; this.onExit(); };
-    const hintBtn = document.getElementById("hint-btn");
-    if (hintBtn) hintBtn.onclick = () => this.useHint();
+  }
+
+  private reset() {
+    if (!this.levelData || this.animating) return;
+    this.rotations_ = new Map(this.levelData.targets.map(t => [t.cellId, t.rotation]));
+    this.touched = new Set();
+    this.highlightTarget = -1;
+    this._renderer.invalidate();
+    sfx.tap();
+    this.render();
   }
 
   onTap(cellId: number) {
     if (!this.levelData || this.animating) return;
     this.clicks++;
-    const target = this.levelData.targets.find(t => t.cellId === cellId);
-    if (target && this.levelData.mode.autoSnap) {
-      sfx.correct(this.clicks);
-      this.rotations.set(cellId, 0);
-      this.animating = true;
-      setTimeout(() => {
-        this.animating = false;
-        this.checkWin();
-      }, 250);
-    } else {
-      sfx.tap();
-      if (this.levelData.mode.autoSnap) {
-        sfx.wrong();
-      }
-    }
+    sfx.tap();
   }
 
   onRotate(cellId: number, rotation: number, phase: "move" | "end") {
-    if (!this.levelData || this.levelData.mode.autoSnap) return;
+    if (!this.levelData) return;
     if (phase === "move") {
       this.rotations.set(cellId, rotation);
     } else {
@@ -177,10 +180,10 @@ export class CampaignSession {
       <div class="overlay">
         <div class="overlay-panel">
           <div class="label">${'*'.repeat(stars)}${'*'.repeat(3-stars)}</div>
-          <div class="label">${Math.round(this.elapsed/1000)}s | ${this.clicks} taps</div>
-          ${next ? `<button class="btn btn-primary" id="next-btn">Next</button>` : ''}
-          <button class="btn" id="retry-btn">Retry</button>
-          <span class="hint-link" id="exit-btn">Level Select</span>
+          <div class="label">${Math.round(this.elapsed/1000)}秒 | ${this.clicks}次点击</div>
+          ${next ? `<button class="btn btn-primary" id="next-btn">下一关</button>` : ''}
+          <button class="btn" id="retry-btn">重试</button>
+          <span class="hint-link" id="exit-btn">选关</span>
         </div>
       </div>`);
     document.getElementById("next-btn")?.addEventListener("click", () => { hideModal(); this.levelId++; this.start(); });

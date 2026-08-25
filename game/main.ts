@@ -3,6 +3,7 @@ import * as save from "./shared/save";
 import { setScreen, setHud, showModal, hideModal, toast, canvasSize } from "./shared/ui";
 import { ArcadeSession } from "./arcade/arcade";
 import { CampaignSession } from "./campaign/campaign";
+import { RelaxationSession } from "./relaxation/relaxation";
 
 save.load();
 const canvas = document.getElementById("cv") as HTMLCanvasElement;
@@ -108,39 +109,96 @@ function goHome() {
   const unlocked = save.campaignUnlocked();
   const arcade = save.getArcadeBest();
   const daily = save.getDailyState();
+  const imgData = (window as any).__IMAGE_DATA__;
+  const bgUrl = (imgData && imgData["assets/img/mosaic_025.webp"]) || "assets/img/mosaic_025.webp";
+  const bgStyle = `background-image:linear-gradient(rgba(15,17,21,.88),rgba(15,17,21,.88)),url('${bgUrl}');background-size:cover;background-position:center;`;
 
   if (passed < 3) {
     setScreen(`
-      <div class="screen">
-        <div class="title">Wrong Rotation</div>
-        <div class="subtitle">Odd Rotation</div>
-        <button class="btn btn-primary" id="start-campaign-btn">Start Campaign</button>
-        <div class="label">Complete the first 3 levels to unlock all modes</div>
+      <div class="screen" style="${bgStyle}">
+        <div class="title">转错了</div>
+        <button class="btn btn-primary" id="start-campaign-btn">开始闯关</button>
+        <div class="label">完成前3关解锁所有模式</div>
+        <span class="hint-link" id="rules-toggle2">玩法说明</span>
+        <div id="rules-text2" class="label" style="font-size:13px;color:#8b93a5;line-height:1.5;display:none;text-align:left;max-width:400px;padding:0 12px">
+          闯关模式：找到旋转错误的单元格，拖拽将其旋转归位。修复所有错误单元格即可过关。<br>
+        休闲模式：欣赏风景，点击不同的单元格，轻松无压力。
+        </div>
       </div>`);
     document.getElementById("start-campaign-btn")!.onclick = () => startCampaign(1);
+    const rulesToggle2 = document.getElementById("rules-toggle2");
+    if (rulesToggle2) {
+      rulesToggle2.addEventListener("click", () => {
+        const el = document.getElementById("rules-text2");
+        if (el) el.style.display = el.style.display === "none" ? "block" : "none";
+      });
+    }
     return;
   }
 
-  const arcadeBtn = passed >= 3 ? `<button class="btn btn-primary" id="arcade-btn">Arcade Mode</button>` : `<button class="btn btn-lock" id="arcade-btn">Arcade (Locked)</button>`;
-  const dailyBtn = passed >= 3 ? `<button class="btn" id="daily-btn">Daily Challenge</button>` : `<button class="btn btn-lock">Daily (Locked)</button>`;
+  const arcadeBtn = passed >= 3 ? `<button class="btn btn-primary btn-hero" id="arcade-btn">街机模式</button>` : `<button class="btn btn-lock btn-hero" id="arcade-btn">街机 (未解锁)</button>`;
+  const dailyBtn = passed >= 3 ? `<button class="btn" id="daily-btn">挑战</button>` : `<button class="btn btn-lock">挑战 (未解锁)</button>`;
+  const relaxBtn = `<button class="btn" id="relax-btn">休闲</button>`;
+  const curTime = save.getArcadeTime();
+  const timeBtns = [5, 8, 12, 20].map(t => `<button class="time-btn ${curTime === t ? "active" : ""}" data-t="${t}">${t}秒</button>`).join("");
+  const curVar = save.getArcadeMinVar();
+  const varOpts: { v: number; l: string }[] = [{ v: 0, l: "关" }, { v: 0.05, l: "5%" }, { v: 0.15, l: "15%" }, { v: 0.3, l: "30%" }, { v: 0.5, l: "50%" }];
+  const varBtns = varOpts.map(o => `<button class="var-btn ${curVar === o.v ? "active" : ""}" data-v="${o.v}">${o.l}</button>`).join("");
 
   setScreen(`
-    <div class="screen">
-      <div class="title">Wrong Rotation</div>
-      <div class="subtitle">Odd Rotation</div>
-      <button class="btn" id="campaign-btn">Campaign (${passed}/50)</button>
+    <div class="screen" style="${bgStyle}">
+      <div class="title">转错了</div>
       ${arcadeBtn}
+      <button class="btn" id="campaign-btn">闯关 (${passed}/50)</button>
       ${dailyBtn}
+      ${relaxBtn}
       <div class="row">
-        <span class="badge">Arcade Best: ${arcade.bestScore} pts</span>
-        <span class="badge">Combo: x${arcade.bestCombo}</span>
+        <span class="badge">街机最高: ${arcade.bestScore}分</span>
+        <span class="badge">连击: x${arcade.bestCombo}</span>
       </div>
-      ${passed < 20 ? '<div class="hint-link">Clear level 20 to unlock hexagons</div>' : ""}
+      <div class="row" style="align-items:center;gap:8px">
+        <span class="label" style="font-size:14px;color:#8b93a5">时间</span>
+        ${timeBtns}
+      </div>
+      <div class="label" style="font-size:12px;color:#5a6270;margin-top:-4px;margin-bottom:6px;text-align:center">每关基础时间 (影响时限和奖励)</div>
+      <div class="row" style="align-items:center;gap:8px">
+        <span class="label" style="font-size:14px;color:#8b93a5">最小方差</span>
+        ${varBtns}
+      </div>
+      <div class="label" style="font-size:12px;color:#5a6270;margin-top:-4px;margin-bottom:6px;text-align:center">最小单元格方差比 (越高越容易识别)</div>
+      <span class="hint-link" id="rules-toggle">玩法说明</span>
+      <div id="rules-text" class="label" style="font-size:13px;color:#8b93a5;line-height:1.5;display:none;text-align:left;max-width:400px;padding:0 12px">
+        街机：点击旋转错误的单元格。争分夺秒，积累连击，刷新纪录。<br>
+        闯关：拖拽旋转错误单元格，全部修复即可过关。<br>
+        挑战：10关计时，找出每关的错误单元格。<br>
+        休闲：5关风景图，轻松找不同，不计时惩罚。
+      </div>
+      ${passed < 20 ? '<div class="hint-link">通关第20关解锁六边形</div>' : ""}
     </div>`);
 
   document.getElementById("campaign-btn")!.onclick = () => showCampaignSelect();
   document.getElementById("arcade-btn")?.addEventListener("click", () => startArcade());
-  document.getElementById("daily-btn")?.addEventListener("click", () => startDaily());
+  document.getElementById("daily-btn")?.addEventListener("click", () => startChallenge());
+  document.getElementById("relax-btn")?.addEventListener("click", () => startRelaxation());
+  document.querySelectorAll(".time-btn").forEach(el => {
+    el.addEventListener("click", () => {
+      save.setArcadeTime(parseInt((el as HTMLElement).dataset.t || "8"));
+      goHome();
+    });
+  });
+  document.querySelectorAll(".var-btn").forEach(el => {
+    el.addEventListener("click", () => {
+      save.setArcadeMinVar(parseFloat((el as HTMLElement).dataset.v || "0.15"));
+      goHome();
+    });
+  });
+  const rulesToggle = document.getElementById("rules-toggle");
+  if (rulesToggle) {
+    rulesToggle.addEventListener("click", () => {
+      const el = document.getElementById("rules-text");
+      if (el) el.style.display = el.style.display === "none" ? "block" : "none";
+    });
+  }
 }
 
 function showCampaignSelect() {
@@ -157,7 +215,7 @@ function showCampaignSelect() {
     <div class="screen" style="justify-content:flex-start;padding-top:clamp(12px,3vh,24px);">
       <div style="display:flex;align-items:center;gap:8px;width:100%;max-width:500px;padding:0 12px;">
         <button class="btn btn-icon" id="back-btn">x</button>
-        <div style="font-size:20px;font-weight:600;flex:1;text-align:center;">Campaign</div>
+        <div style="font-size:20px;font-weight:600;flex:1;text-align:center;">闯关</div>
         <div style="width:44px"></div>
       </div>
       <div class="level-grid">${nodes}</div>
@@ -197,27 +255,9 @@ function startArcade() {
   session.start();
 }
 
-function startDaily() {
+function startChallenge() {
   sfx.init();
-  const currentDate = save.todayStr();
-  const dailyState = save.getDailyState();
-  if (dailyState.date === currentDate && dailyState.played) {
-    showModal(`
-      <div class="overlay">
-        <div class="overlay-panel">
-          <div class="label">Today's Result</div>
-          <div class="big">${(dailyState.firstTimeMs! / 1000).toFixed(1)}s</div>
-          <div class="row">
-            <button class="btn btn-primary" id="play-again-btn">Play Again</button>
-            <span class="hint-link" id="exit-btn">Home</span>
-          </div>
-        </div>
-      </div>`);
-    document.getElementById("play-again-btn")?.addEventListener("click", () => { hideModal(); startDailyPlay(); });
-    document.getElementById("exit-btn")?.addEventListener("click", () => { hideModal(); goHome(); });
-  } else {
-    startDailyPlay();
-  }
+  startDailyPlay();
 }
 
 async function startDailyPlay() {
@@ -225,6 +265,19 @@ async function startDailyPlay() {
   setScreen("");
   setHud("");
   const session = new DailySession(canvas, ctx, () => {
+    hideModal();
+    setHud("");
+    goHome();
+  });
+  currentSession = session;
+  session.start();
+}
+
+function startRelaxation() {
+  sfx.init();
+  setScreen("");
+  setHud("");
+  const session = new RelaxationSession(canvas, ctx, () => {
     hideModal();
     setHud("");
     goHome();

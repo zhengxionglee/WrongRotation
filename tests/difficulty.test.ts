@@ -29,11 +29,11 @@ describe("arcadeParams", () => {
     expect(p.easy).toBe(false);
   });
 
-  it("combo 41+: 6x6 weak 5s with micro angles", () => {
+  it("combo 41+: 6x6 weak with micro angles", () => {
     const p = arcadeParams(41, false);
     expect(p.gridN).toBe(6);
     expect(p.tier).toBe("weak");
-    expect(p.timeLimit).toBe(5);
+    expect(p.timeLimit).toBe(8);
     expect(p.angles.some(a => a < 15)).toBe(true); // micro angle present
   });
 
@@ -51,10 +51,10 @@ describe("arcadeParams", () => {
     // chaos doesn't change the table, only unlocks shapes
   });
 
-  it("timeLimit never below 5", () => {
+  it("timeLimit constant at 8 across all combos", () => {
     for (let c = 0; c < 100; c++) {
       const p = arcadeParams(c, false);
-      expect(p.timeLimit).toBeGreaterThanOrEqual(5);
+      expect(p.timeLimit).toBe(8);
     }
   });
 });

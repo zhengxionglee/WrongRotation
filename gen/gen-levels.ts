@@ -16,7 +16,7 @@ const lumaCache = new Map<string, LumaMatrix>();
 
 async function getLuma(file: string): Promise<LumaMatrix> {
   if (lumaCache.has(file)) return lumaCache.get(file)!;
-  const buf = await sharp(path.resolve(ASSETS_DIR, file)).raw().toBuffer();
+  const buf = await sharp(path.resolve(ROOT, file)).raw().toBuffer();
   const data = new Float32Array(1080 * 1080);
   for (let i = 0; i < 1080 * 1080; i++) data[i] = (0.299 * buf[i * 3] + 0.587 * buf[i * 3 + 1] + 0.114 * buf[i * 3 + 2]) / 255;
   const lm: LumaMatrix = { w: 1080, h: 1080, data };
@@ -119,7 +119,7 @@ async function main() {
         if (usedIds.has(cell.id)) continue;
         for (const angle of angleSet) {
           const s = salience(luma, cell, angle).S;
-          if (s > bestS) { bestS = s; bestCell = cell; bestAngle = angle; }
+          if (s > bestS && !(Math.abs(angle - 180) < 1 && s < 0.1)) { bestS = s; bestCell = cell; bestAngle = angle; }
         }
       }
       usedIds.add(bestCell.id);

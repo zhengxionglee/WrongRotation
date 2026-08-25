@@ -40,16 +40,23 @@ const dailyVars = importPairs.map(p => `var ${p.local} = __mainExp.${p.external}
 // ---- Replace dynamic import of daily chunk with global reference ----
 const mainFixed = mainClean
   .replace(/await (\w+)\(async\(\)=>\{const\{DailySession:(\w+)\}=await import\("\.\/daily-[^"]*"\);return\{DailySession:\2\}\},\[\],[^)]*\)/g,
-    'Promise.resolve({DailySession: (typeof __DailySession !== "undefined" ? __DailySession : window.__DailySession)})')
+    '({DailySession: (typeof __DailySession !== "undefined" ? __DailySession : window.__DailySession)})')
   .replace(/import\.meta\.url/g, 'document.baseURI');
 
 // ---- Embed all images as base64 so game.html works from file:// ----
+function embedDir(dirPath, prefix) {
+  const files = fs.readdirSync(dirPath).filter(f => f.endsWith(".webp")).sort();
+  return files.map(f => {
+    const b64 = fs.readFileSync(path.join(dirPath, f)).toString("base64");
+    return `"${prefix}${f}":"data:image/webp;base64,${b64}"`;
+  });
+}
 const imgDir = path.resolve(ROOT, "assets", "img");
-const webpFiles = fs.readdirSync(imgDir).filter(f => f.endsWith(".webp")).sort();
-const imageDataEntries = webpFiles.map(f => {
-  const b64 = fs.readFileSync(path.join(imgDir, f)).toString("base64");
-  return `"assets/img/${f}":"data:image/webp;base64,${b64}"`;
-});
+const relaxDir = path.resolve(ROOT, "assets", "relax");
+const imageDataEntries = [
+  ...embedDir(imgDir, "assets/img/"),
+  ...embedDir(relaxDir, "assets/relax/")
+];
 const imageDataJs = `window.__IMAGE_DATA__={${imageDataEntries.join(",")}};`;
 const imagePatchJs = `
 (function () {
@@ -86,12 +93,15 @@ canvas{display:block;position:fixed;top:0;left:0;width:100%;height:100%;touch-ac
 .btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border-radius:14px;border:none;font-size:clamp(16px,4vw,22px);font-weight:600;background:#22262e;color:#e9ecf2;cursor:pointer;transition:transform .1s,opacity .2s;width:min(320px,80vw);}
 .btn:active{transform:scale(.96);}
 .btn-primary{background:#ffd94d;color:#0f1115;}
+.btn-hero{width:min(380px,88vw);padding:20px 32px;font-size:clamp(22px,6vw,30px);font-weight:800;letter-spacing:1px;border-radius:18px;background:linear-gradient(135deg,#ffe06b,#ff9f43);color:#151201;box-shadow:0 6px 24px rgba(255,190,60,.45),inset 0 1px 0 rgba(255,255,255,.35);text-shadow:0 1px 0 rgba(255,255,255,.3);}
+.btn-hero:active{transform:scale(.97);}
 .btn-lock{opacity:.5;background:#181c23;color:#5a6270;}
 .btn-sm{width:auto;padding:10px 20px;font-size:14px;border-radius:10px;}
 .btn-icon{width:44px;height:44px;padding:0;border-radius:12px;font-size:20px;flex-shrink:0;}
 .hud-top{display:flex;align-items:center;justify-content:space-between;padding:clamp(4px,1.5vh,12px) clamp(8px,2vw,16px);padding-top:env(safe-area-inset-top,8px);width:100%;}
 .hud-combo{font-size:clamp(28px,6vw,48px);font-weight:800;color:#ffd94d;text-align:center;flex:1;}
 .hud-score{font-size:clamp(14px,3vw,20px);color:#8b93a5;min-width:60px;text-align:right;}
+.hud-grid{font-size:clamp(14px,3vw,20px);font-weight:700;color:#ffd94d;min-width:60px;}
 .hud-timer{width:100%;height:clamp(4px,1vw,6px);background:#1a1e26;border-radius:3px;overflow:hidden;margin:0;}
 .hud-timer-bar{height:100%;background:#ffd94d;border-radius:3px;transition:width .1s,background .3s;}
 .hud-timer-bar.danger{background:#e74c3c;}
@@ -108,6 +118,9 @@ canvas{display:block;position:fixed;top:0;left:0;width:100%;height:100%;touch-ac
 .overlay-panel .label{font-size:clamp(14px,3.5vw,18px);color:#8b93a5;}
 .overlay-panel .row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
 .badge{font-size:clamp(12px,3vw,16px);color:#ffd94d;background:#ffd94d22;padding:4px 12px;border-radius:8px;}
+.time-btn,.var-btn{border:2px solid #22262e;background:#181c23;color:#8b93a5;border-radius:10px;padding:6px 14px;font-size:14px;font-weight:600;cursor:pointer;transition:transform .1s;}
+.time-btn:active,.var-btn:active{transform:scale(.94);}
+.time-btn.active,.var-btn.active{border-color:#ffd94d;color:#ffd94d;background:#ffd94d22;}
 .hint-link{font-size:13px;color:#5a6270;cursor:pointer;text-decoration:underline;margin-top:8px;}
 .hint-link:hover{color:#8b93a5;}
 .toast{position:fixed;bottom:clamp(40px,10vh,80px);left:50%;transform:translateX(-50%);background:#1a1e26;padding:10px 24px;border-radius:12px;font-size:14px;color:#e9ecf2;pointer-events:none;z-index:40;opacity:0;transition:opacity .3s;}

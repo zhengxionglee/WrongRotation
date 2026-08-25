@@ -5,902 +5,1676 @@
     {
       "id": 1,
       "file": "assets/img/mosaic_001.webp",
-      "tier": "weak",
-      "pattern": "fbm",
-      "seed": 987016858,
-      "anisotropy": 0.339,
-      "V_image": 0.66
+      "tier": "strong",
+      "pattern": "stripes",
+      "seed": 2160527387,
+      "anisotropy": 0.978,
+      "V_image": 0.02
     },
     {
       "id": 2,
       "file": "assets/img/mosaic_002.webp",
       "tier": "strong",
       "pattern": "stripes",
-      "seed": 3150100980,
-      "anisotropy": 0.959,
-      "V_image": 0.04
+      "seed": 806314727,
+      "anisotropy": 0.85,
+      "V_image": 0.15
     },
     {
       "id": 3,
       "file": "assets/img/mosaic_003.webp",
       "tier": "strong",
-      "pattern": "chevron",
-      "seed": 3475701653,
-      "anisotropy": 0.457,
-      "V_image": 0.54
+      "pattern": "stripes",
+      "seed": 1548375183,
+      "anisotropy": 0.946,
+      "V_image": 0.05
     },
     {
       "id": 4,
       "file": "assets/img/mosaic_004.webp",
-      "tier": "weak",
-      "pattern": "marble",
-      "seed": 2352815319,
-      "anisotropy": 0.911,
-      "V_image": 0.09
+      "tier": "strong",
+      "pattern": "chevron",
+      "seed": 2983883904,
+      "anisotropy": 0.456,
+      "V_image": 0.54
     },
     {
       "id": 5,
       "file": "assets/img/mosaic_005.webp",
       "tier": "strong",
-      "pattern": "landscape",
-      "seed": 383700028,
-      "anisotropy": 0.579,
-      "V_image": 0.42
+      "pattern": "chevron",
+      "seed": 2765218380,
+      "anisotropy": 0.458,
+      "V_image": 0.54
     },
     {
       "id": 6,
       "file": "assets/img/mosaic_006.webp",
-      "tier": "weak",
-      "pattern": "bubble",
-      "seed": 2076419723,
-      "anisotropy": 0.278,
-      "V_image": 0.72
+      "tier": "strong",
+      "pattern": "chevron",
+      "seed": 2942233037,
+      "anisotropy": 0.476,
+      "V_image": 0.52
     },
     {
       "id": 7,
       "file": "assets/img/mosaic_007.webp",
-      "tier": "weak",
-      "pattern": "speckle",
-      "seed": 747093170,
-      "anisotropy": 0.306,
-      "V_image": 0.69
+      "tier": "strong",
+      "pattern": "landscape",
+      "seed": 4222603044,
+      "anisotropy": 0.827,
+      "V_image": 0.17
     },
     {
       "id": 8,
       "file": "assets/img/mosaic_008.webp",
-      "tier": "mid",
-      "pattern": "checker",
-      "seed": 538152519,
-      "anisotropy": 0.044,
-      "V_image": 0.96
+      "tier": "strong",
+      "pattern": "landscape",
+      "seed": 1359370579,
+      "anisotropy": 0.775,
+      "V_image": 0.22
     },
     {
       "id": 9,
       "file": "assets/img/mosaic_009.webp",
       "tier": "strong",
-      "pattern": "city",
-      "seed": 2645359608,
-      "anisotropy": 0.418,
-      "V_image": 0.58
+      "pattern": "landscape",
+      "seed": 2778721918,
+      "anisotropy": 0.782,
+      "V_image": 0.22
     },
     {
       "id": 10,
       "file": "assets/img/mosaic_010.webp",
-      "tier": "mid",
-      "pattern": "plaid",
-      "seed": 1827094099,
-      "anisotropy": 0.771,
-      "V_image": 0.23
+      "tier": "strong",
+      "pattern": "city",
+      "seed": 1671628080,
+      "anisotropy": 0.409,
+      "V_image": 0.59
     },
     {
       "id": 11,
       "file": "assets/img/mosaic_011.webp",
       "tier": "strong",
-      "pattern": "glyph",
-      "seed": 34974000,
-      "anisotropy": 0.259,
-      "V_image": 0.74
+      "pattern": "city",
+      "seed": 2661650250,
+      "anisotropy": 0.368,
+      "V_image": 0.63
     },
     {
       "id": 12,
       "file": "assets/img/mosaic_012.webp",
       "tier": "strong",
-      "pattern": "barcode",
-      "seed": 1626249982,
-      "anisotropy": 1,
-      "V_image": 0
+      "pattern": "city",
+      "seed": 2633169897,
+      "anisotropy": 0.347,
+      "V_image": 0.65
     },
     {
       "id": 13,
       "file": "assets/img/mosaic_013.webp",
       "tier": "strong",
-      "pattern": "arrowfield",
-      "seed": 1289023802,
-      "anisotropy": 0.53,
-      "V_image": 0.47
+      "pattern": "glyph",
+      "seed": 798369314,
+      "anisotropy": 0.251,
+      "V_image": 0.75
     },
     {
       "id": 14,
       "file": "assets/img/mosaic_014.webp",
-      "tier": "mid",
-      "pattern": "brick",
-      "seed": 1555022055,
-      "anisotropy": 0.385,
-      "V_image": 0.61
+      "tier": "strong",
+      "pattern": "glyph",
+      "seed": 1768056715,
+      "anisotropy": 0.266,
+      "V_image": 0.73
     },
     {
       "id": 15,
       "file": "assets/img/mosaic_015.webp",
       "tier": "strong",
-      "pattern": "flag",
-      "seed": 2373537225,
-      "anisotropy": 0.765,
-      "V_image": 0.24
+      "pattern": "glyph",
+      "seed": 4061325607,
+      "anisotropy": 0.231,
+      "V_image": 0.77
     },
     {
       "id": 16,
       "file": "assets/img/mosaic_016.webp",
       "tier": "strong",
-      "pattern": "stripes",
-      "seed": 1770430388,
-      "anisotropy": 0.98,
-      "V_image": 0.02
+      "pattern": "barcode",
+      "seed": 1894648378,
+      "anisotropy": 1,
+      "V_image": 0
     },
     {
       "id": 17,
       "file": "assets/img/mosaic_017.webp",
-      "tier": "weak",
-      "pattern": "stone",
-      "seed": 2281583721,
-      "anisotropy": 0.265,
-      "V_image": 0.74
+      "tier": "strong",
+      "pattern": "barcode",
+      "seed": 2223385343,
+      "anisotropy": 1,
+      "V_image": 0
     },
     {
       "id": 18,
       "file": "assets/img/mosaic_018.webp",
-      "tier": "mid",
-      "pattern": "wave",
-      "seed": 2620504054,
-      "anisotropy": 0.775,
-      "V_image": 0.23
+      "tier": "strong",
+      "pattern": "barcode",
+      "seed": 1231699249,
+      "anisotropy": 1,
+      "V_image": 0
     },
     {
       "id": 19,
       "file": "assets/img/mosaic_019.webp",
       "tier": "strong",
-      "pattern": "chevron",
-      "seed": 4027931322,
-      "anisotropy": 0.514,
-      "V_image": 0.49
+      "pattern": "arrowfield",
+      "seed": 2099188836,
+      "anisotropy": 0.53,
+      "V_image": 0.47
     },
     {
       "id": 20,
       "file": "assets/img/mosaic_020.webp",
-      "tier": "weak",
-      "pattern": "mandala",
-      "seed": 1361468319,
-      "anisotropy": 0.285,
-      "V_image": 0.72
+      "tier": "strong",
+      "pattern": "arrowfield",
+      "seed": 1046192602,
+      "anisotropy": 0.53,
+      "V_image": 0.47
     },
     {
       "id": 21,
       "file": "assets/img/mosaic_021.webp",
       "tier": "strong",
-      "pattern": "landscape",
-      "seed": 1014581866,
-      "anisotropy": 0.704,
-      "V_image": 0.3
+      "pattern": "arrowfield",
+      "seed": 258341398,
+      "anisotropy": 0.53,
+      "V_image": 0.47
     },
     {
       "id": 22,
       "file": "assets/img/mosaic_022.webp",
-      "tier": "mid",
-      "pattern": "dot",
-      "seed": 1200279177,
-      "anisotropy": 0.298,
-      "V_image": 0.7
+      "tier": "strong",
+      "pattern": "flag",
+      "seed": 1388014150,
+      "anisotropy": 0.833,
+      "V_image": 0.17
     },
     {
       "id": 23,
       "file": "assets/img/mosaic_023.webp",
       "tier": "strong",
-      "pattern": "city",
-      "seed": 3007551742,
-      "anisotropy": 0.396,
-      "V_image": 0.6
+      "pattern": "flag",
+      "seed": 1545778024,
+      "anisotropy": 0.84,
+      "V_image": 0.16
     },
     {
       "id": 24,
       "file": "assets/img/mosaic_024.webp",
       "tier": "strong",
-      "pattern": "glyph",
-      "seed": 2991823252,
-      "anisotropy": 0.23,
-      "V_image": 0.77
+      "pattern": "flag",
+      "seed": 4292040293,
+      "anisotropy": 0.793,
+      "V_image": 0.21
     },
     {
       "id": 25,
       "file": "assets/img/mosaic_025.webp",
-      "tier": "mid",
-      "pattern": "spiral",
-      "seed": 2865972906,
-      "anisotropy": 0.308,
-      "V_image": 0.69
+      "tier": "strong",
+      "pattern": "letters",
+      "seed": 3188142914,
+      "anisotropy": 0.271,
+      "V_image": 0.73
     },
     {
       "id": 26,
       "file": "assets/img/mosaic_026.webp",
-      "tier": "mid",
-      "pattern": "tile",
-      "seed": 2648934978,
-      "anisotropy": 0.333,
-      "V_image": 0.67
+      "tier": "strong",
+      "pattern": "letters",
+      "seed": 3010474095,
+      "anisotropy": 0.276,
+      "V_image": 0.72
     },
     {
       "id": 27,
       "file": "assets/img/mosaic_027.webp",
-      "tier": "weak",
-      "pattern": "gradnoise",
-      "seed": 3953844465,
-      "anisotropy": 1,
-      "V_image": 0
+      "tier": "strong",
+      "pattern": "letters",
+      "seed": 1253044213,
+      "anisotropy": 0.279,
+      "V_image": 0.72
     },
     {
       "id": 28,
       "file": "assets/img/mosaic_028.webp",
-      "tier": "mid",
-      "pattern": "confetti",
-      "seed": 4091433773,
-      "anisotropy": 0.314,
-      "V_image": 0.69
+      "tier": "strong",
+      "pattern": "numbers",
+      "seed": 270582541,
+      "anisotropy": 0.155,
+      "V_image": 0.85
     },
     {
       "id": 29,
       "file": "assets/img/mosaic_029.webp",
-      "tier": "mid",
-      "pattern": "sunburst",
-      "seed": 3951613073,
-      "anisotropy": 0.325,
-      "V_image": 0.68
+      "tier": "strong",
+      "pattern": "numbers",
+      "seed": 4256670372,
+      "anisotropy": 0.147,
+      "V_image": 0.85
     },
     {
       "id": 30,
       "file": "assets/img/mosaic_030.webp",
-      "tier": "mid",
-      "pattern": "checker",
-      "seed": 2178782925,
-      "anisotropy": 0.044,
-      "V_image": 0.96
+      "tier": "strong",
+      "pattern": "numbers",
+      "seed": 2884569612,
+      "anisotropy": 0.14,
+      "V_image": 0.86
     },
     {
       "id": 31,
       "file": "assets/img/mosaic_031.webp",
       "tier": "strong",
-      "pattern": "barcode",
-      "seed": 696751261,
-      "anisotropy": 1,
-      "V_image": 0
+      "pattern": "shapes",
+      "seed": 197102780,
+      "anisotropy": 0.332,
+      "V_image": 0.67
     },
     {
       "id": 32,
       "file": "assets/img/mosaic_032.webp",
       "tier": "strong",
-      "pattern": "arrowfield",
-      "seed": 3626835245,
-      "anisotropy": 0.53,
-      "V_image": 0.47
+      "pattern": "shapes",
+      "seed": 1280710711,
+      "anisotropy": 0.336,
+      "V_image": 0.66
     },
     {
       "id": 33,
       "file": "assets/img/mosaic_033.webp",
-      "tier": "mid",
-      "pattern": "plaid",
-      "seed": 3565256912,
-      "anisotropy": 0.529,
-      "V_image": 0.47
+      "tier": "strong",
+      "pattern": "shapes",
+      "seed": 792366000,
+      "anisotropy": 0.324,
+      "V_image": 0.68
     },
     {
       "id": 34,
       "file": "assets/img/mosaic_034.webp",
-      "tier": "weak",
-      "pattern": "fbm",
-      "seed": 2002013467,
-      "anisotropy": 0.174,
-      "V_image": 0.83
+      "tier": "strong",
+      "pattern": "roads",
+      "seed": 1674120784,
+      "anisotropy": 0.162,
+      "V_image": 0.84
     },
     {
       "id": 35,
       "file": "assets/img/mosaic_035.webp",
-      "tier": "weak",
-      "pattern": "marble",
-      "seed": 3289538181,
-      "anisotropy": 0.864,
-      "V_image": 0.14
+      "tier": "strong",
+      "pattern": "roads",
+      "seed": 1204471983,
+      "anisotropy": 0.27,
+      "V_image": 0.73
     },
     {
       "id": 36,
       "file": "assets/img/mosaic_036.webp",
-      "tier": "weak",
-      "pattern": "bubble",
-      "seed": 2254567491,
-      "anisotropy": 0.319,
-      "V_image": 0.68
+      "tier": "strong",
+      "pattern": "roads",
+      "seed": 1409901819,
+      "anisotropy": 0.175,
+      "V_image": 0.83
     },
     {
       "id": 37,
       "file": "assets/img/mosaic_037.webp",
-      "tier": "weak",
-      "pattern": "speckle",
-      "seed": 3397589003,
-      "anisotropy": 0.288,
-      "V_image": 0.71
+      "tier": "strong",
+      "pattern": "maze",
+      "seed": 520078626,
+      "anisotropy": 0.046,
+      "V_image": 0.95
     },
     {
       "id": 38,
       "file": "assets/img/mosaic_038.webp",
       "tier": "strong",
-      "pattern": "flag",
-      "seed": 519181201,
-      "anisotropy": 0.824,
-      "V_image": 0.18
+      "pattern": "maze",
+      "seed": 4076946841,
+      "anisotropy": 0.061,
+      "V_image": 0.94
     },
     {
       "id": 39,
       "file": "assets/img/mosaic_039.webp",
-      "tier": "weak",
-      "pattern": "stone",
-      "seed": 4177320949,
-      "anisotropy": 0.272,
-      "V_image": 0.73
+      "tier": "strong",
+      "pattern": "maze",
+      "seed": 3819925023,
+      "anisotropy": 0.072,
+      "V_image": 0.93
     },
     {
       "id": 40,
       "file": "assets/img/mosaic_040.webp",
       "tier": "strong",
-      "pattern": "stripes",
-      "seed": 4133940420,
-      "anisotropy": 0.891,
-      "V_image": 0.11
+      "pattern": "pipes",
+      "seed": 4178525462,
+      "anisotropy": 0.086,
+      "V_image": 0.91
     },
     {
       "id": 41,
       "file": "assets/img/mosaic_041.webp",
-      "tier": "weak",
-      "pattern": "mandala",
-      "seed": 758944604,
-      "anisotropy": 0.296,
-      "V_image": 0.7
+      "tier": "strong",
+      "pattern": "pipes",
+      "seed": 4011291037,
+      "anisotropy": 0.061,
+      "V_image": 0.94
     },
     {
       "id": 42,
       "file": "assets/img/mosaic_042.webp",
       "tier": "strong",
-      "pattern": "chevron",
-      "seed": 868813459,
-      "anisotropy": 0.467,
-      "V_image": 0.53
+      "pattern": "pipes",
+      "seed": 2660589912,
+      "anisotropy": 0.106,
+      "V_image": 0.89
     },
     {
       "id": 43,
       "file": "assets/img/mosaic_043.webp",
       "tier": "strong",
-      "pattern": "landscape",
-      "seed": 2784706082,
-      "anisotropy": 0.855,
-      "V_image": 0.15
+      "pattern": "snowflake",
+      "seed": 1780370000,
+      "anisotropy": 0.336,
+      "V_image": 0.66
     },
     {
       "id": 44,
       "file": "assets/img/mosaic_044.webp",
-      "tier": "weak",
-      "pattern": "gradnoise",
-      "seed": 3504565398,
-      "anisotropy": 1,
-      "V_image": 0
+      "tier": "strong",
+      "pattern": "snowflake",
+      "seed": 2628016087,
+      "anisotropy": 0.326,
+      "V_image": 0.67
     },
     {
       "id": 45,
       "file": "assets/img/mosaic_045.webp",
       "tier": "strong",
-      "pattern": "city",
-      "seed": 220017978,
-      "anisotropy": 0.411,
-      "V_image": 0.59
+      "pattern": "snowflake",
+      "seed": 3111933579,
+      "anisotropy": 0.318,
+      "V_image": 0.68
     },
     {
       "id": 46,
       "file": "assets/img/mosaic_046.webp",
-      "tier": "weak",
-      "pattern": "fbm",
-      "seed": 2484880693,
-      "anisotropy": 0,
-      "V_image": 1
+      "tier": "strong",
+      "pattern": "tartan",
+      "seed": 784721961,
+      "anisotropy": 0.809,
+      "V_image": 0.19
     },
     {
       "id": 47,
       "file": "assets/img/mosaic_047.webp",
       "tier": "strong",
-      "pattern": "glyph",
-      "seed": 1488524577,
-      "anisotropy": 0.237,
-      "V_image": 0.76
+      "pattern": "tartan",
+      "seed": 617104286,
+      "anisotropy": 0.77,
+      "V_image": 0.23
     },
     {
       "id": 48,
       "file": "assets/img/mosaic_048.webp",
-      "tier": "mid",
-      "pattern": "brick",
-      "seed": 2407110645,
-      "anisotropy": 0.354,
-      "V_image": 0.65
+      "tier": "strong",
+      "pattern": "tartan",
+      "seed": 3284721058,
+      "anisotropy": 0.746,
+      "V_image": 0.25
     },
     {
       "id": 49,
       "file": "assets/img/mosaic_049.webp",
-      "tier": "mid",
-      "pattern": "wave",
-      "seed": 1793818575,
-      "anisotropy": 0.651,
-      "V_image": 0.35
+      "tier": "strong",
+      "pattern": "zigzag",
+      "seed": 2265532850,
+      "anisotropy": 0.405,
+      "V_image": 0.6
     },
     {
       "id": 50,
       "file": "assets/img/mosaic_050.webp",
       "tier": "strong",
-      "pattern": "barcode",
-      "seed": 2493954054,
-      "anisotropy": 1,
-      "V_image": 0
+      "pattern": "zigzag",
+      "seed": 3628050873,
+      "anisotropy": 0.332,
+      "V_image": 0.67
     },
     {
       "id": 51,
       "file": "assets/img/mosaic_051.webp",
-      "tier": "mid",
-      "pattern": "dot",
-      "seed": 2670048936,
-      "anisotropy": 0.297,
-      "V_image": 0.7
+      "tier": "strong",
+      "pattern": "zigzag",
+      "seed": 655864621,
+      "anisotropy": 0.441,
+      "V_image": 0.56
     },
     {
       "id": 52,
       "file": "assets/img/mosaic_052.webp",
-      "tier": "mid",
-      "pattern": "spiral",
-      "seed": 4174567158,
-      "anisotropy": 0.321,
-      "V_image": 0.68
+      "tier": "strong",
+      "pattern": "crossword",
+      "seed": 3897157864,
+      "anisotropy": 0.196,
+      "V_image": 0.8
     },
     {
       "id": 53,
       "file": "assets/img/mosaic_053.webp",
       "tier": "strong",
-      "pattern": "arrowfield",
-      "seed": 2717167274,
-      "anisotropy": 0.53,
-      "V_image": 0.47
+      "pattern": "crossword",
+      "seed": 3264808341,
+      "anisotropy": 0.243,
+      "V_image": 0.76
     },
     {
       "id": 54,
       "file": "assets/img/mosaic_054.webp",
-      "tier": "mid",
-      "pattern": "tile",
-      "seed": 59667505,
-      "anisotropy": 0.319,
-      "V_image": 0.68
+      "tier": "strong",
+      "pattern": "crossword",
+      "seed": 4064564536,
+      "anisotropy": 0.169,
+      "V_image": 0.83
     },
     {
       "id": 55,
       "file": "assets/img/mosaic_055.webp",
       "tier": "strong",
-      "pattern": "flag",
-      "seed": 3168307838,
-      "anisotropy": 0.819,
+      "pattern": "domino",
+      "seed": 487599797,
+      "anisotropy": 0.82,
       "V_image": 0.18
     },
     {
       "id": 56,
       "file": "assets/img/mosaic_056.webp",
-      "tier": "mid",
-      "pattern": "confetti",
-      "seed": 3640908749,
-      "anisotropy": 0.316,
-      "V_image": 0.68
+      "tier": "strong",
+      "pattern": "domino",
+      "seed": 2879226070,
+      "anisotropy": 0.436,
+      "V_image": 0.56
     },
     {
       "id": 57,
       "file": "assets/img/mosaic_057.webp",
-      "tier": "mid",
-      "pattern": "sunburst",
-      "seed": 3196534701,
-      "anisotropy": 0.322,
-      "V_image": 0.68
+      "tier": "strong",
+      "pattern": "domino",
+      "seed": 3329593883,
+      "anisotropy": 0.362,
+      "V_image": 0.64
     },
     {
       "id": 58,
       "file": "assets/img/mosaic_058.webp",
-      "tier": "mid",
-      "pattern": "checker",
-      "seed": 3035181066,
-      "anisotropy": 0.04,
-      "V_image": 0.96
+      "tier": "strong",
+      "pattern": "stainedglass",
+      "seed": 1929858702,
+      "anisotropy": 0.06,
+      "V_image": 0.94
     },
     {
       "id": 59,
       "file": "assets/img/mosaic_059.webp",
       "tier": "strong",
-      "pattern": "stripes",
-      "seed": 800635726,
-      "anisotropy": 0.978,
-      "V_image": 0.02
+      "pattern": "stainedglass",
+      "seed": 149271014,
+      "anisotropy": 0.124,
+      "V_image": 0.88
     },
     {
       "id": 60,
       "file": "assets/img/mosaic_060.webp",
       "tier": "strong",
-      "pattern": "chevron",
-      "seed": 2367351101,
-      "anisotropy": 0.461,
-      "V_image": 0.54
+      "pattern": "stainedglass",
+      "seed": 3868987823,
+      "anisotropy": 0.031,
+      "V_image": 0.97
     },
     {
       "id": 61,
       "file": "assets/img/mosaic_061.webp",
-      "tier": "mid",
-      "pattern": "plaid",
-      "seed": 2756723210,
-      "anisotropy": 0.409,
-      "V_image": 0.59
+      "tier": "strong",
+      "pattern": "hexgrid",
+      "seed": 1682784232,
+      "anisotropy": 0.314,
+      "V_image": 0.69
     },
     {
       "id": 62,
       "file": "assets/img/mosaic_062.webp",
       "tier": "strong",
-      "pattern": "landscape",
-      "seed": 64462930,
-      "anisotropy": 0.746,
-      "V_image": 0.25
+      "pattern": "hexgrid",
+      "seed": 2054918822,
+      "anisotropy": 0.312,
+      "V_image": 0.69
     },
     {
       "id": 63,
       "file": "assets/img/mosaic_063.webp",
-      "tier": "weak",
-      "pattern": "marble",
-      "seed": 574808800,
-      "anisotropy": 0.894,
-      "V_image": 0.11
+      "tier": "strong",
+      "pattern": "hexgrid",
+      "seed": 3307874498,
+      "anisotropy": 0.323,
+      "V_image": 0.68
     },
     {
       "id": 64,
       "file": "assets/img/mosaic_064.webp",
       "tier": "strong",
-      "pattern": "city",
-      "seed": 3674359713,
-      "anisotropy": 0.424,
-      "V_image": 0.58
+      "pattern": "trigrid",
+      "seed": 3122623386,
+      "anisotropy": 0.294,
+      "V_image": 0.71
     },
     {
       "id": 65,
       "file": "assets/img/mosaic_065.webp",
       "tier": "strong",
-      "pattern": "glyph",
-      "seed": 2613845473,
-      "anisotropy": 0.241,
-      "V_image": 0.76
+      "pattern": "trigrid",
+      "seed": 3574420398,
+      "anisotropy": 0.31,
+      "V_image": 0.69
     },
     {
       "id": 66,
       "file": "assets/img/mosaic_066.webp",
-      "tier": "mid",
-      "pattern": "brick",
-      "seed": 4158610112,
-      "anisotropy": 0.535,
-      "V_image": 0.46
+      "tier": "strong",
+      "pattern": "trigrid",
+      "seed": 3521093644,
+      "anisotropy": 0.311,
+      "V_image": 0.69
     },
     {
       "id": 67,
       "file": "assets/img/mosaic_067.webp",
       "tier": "strong",
-      "pattern": "barcode",
-      "seed": 3950714542,
-      "anisotropy": 1,
-      "V_image": 0
+      "pattern": "pentagon",
+      "seed": 3003828575,
+      "anisotropy": 0.288,
+      "V_image": 0.71
     },
     {
       "id": 68,
       "file": "assets/img/mosaic_068.webp",
-      "tier": "weak",
-      "pattern": "bubble",
-      "seed": 2579420755,
-      "anisotropy": 0.277,
-      "V_image": 0.72
+      "tier": "strong",
+      "pattern": "pentagon",
+      "seed": 2982716335,
+      "anisotropy": 0.303,
+      "V_image": 0.7
     },
     {
       "id": 69,
       "file": "assets/img/mosaic_069.webp",
       "tier": "strong",
-      "pattern": "arrowfield",
-      "seed": 1069822044,
-      "anisotropy": 0.53,
-      "V_image": 0.47
+      "pattern": "pentagon",
+      "seed": 3010552412,
+      "anisotropy": 0.295,
+      "V_image": 0.71
     },
     {
       "id": 70,
       "file": "assets/img/mosaic_070.webp",
-      "tier": "strong",
-      "pattern": "flag",
-      "seed": 3691993601,
-      "anisotropy": 0.793,
-      "V_image": 0.21
+      "tier": "mid",
+      "pattern": "checker",
+      "seed": 45785648,
+      "anisotropy": 0.043,
+      "V_image": 0.96
     },
     {
       "id": 71,
       "file": "assets/img/mosaic_071.webp",
       "tier": "mid",
-      "pattern": "wave",
-      "seed": 2983925875,
-      "anisotropy": 0.683,
-      "V_image": 0.32
+      "pattern": "checker",
+      "seed": 4197595915,
+      "anisotropy": 0.032,
+      "V_image": 0.97
     },
     {
       "id": 72,
       "file": "assets/img/mosaic_072.webp",
       "tier": "mid",
-      "pattern": "dot",
-      "seed": 4027276230,
-      "anisotropy": 0.297,
-      "V_image": 0.7
+      "pattern": "checker",
+      "seed": 3871709413,
+      "anisotropy": 0.045,
+      "V_image": 0.96
     },
     {
       "id": 73,
       "file": "assets/img/mosaic_073.webp",
-      "tier": "weak",
-      "pattern": "speckle",
-      "seed": 4071105179,
-      "anisotropy": 0.299,
-      "V_image": 0.7
+      "tier": "mid",
+      "pattern": "plaid",
+      "seed": 424327519,
+      "anisotropy": 0.056,
+      "V_image": 0.94
     },
     {
       "id": 74,
       "file": "assets/img/mosaic_074.webp",
       "tier": "mid",
-      "pattern": "spiral",
-      "seed": 1493104892,
-      "anisotropy": 0.313,
-      "V_image": 0.69
+      "pattern": "plaid",
+      "seed": 1012263659,
+      "anisotropy": 0.469,
+      "V_image": 0.53
     },
     {
       "id": 75,
       "file": "assets/img/mosaic_075.webp",
       "tier": "mid",
-      "pattern": "tile",
-      "seed": 659910160,
-      "anisotropy": 0.227,
-      "V_image": 0.77
+      "pattern": "plaid",
+      "seed": 2128837929,
+      "anisotropy": 0.257,
+      "V_image": 0.74
     },
     {
       "id": 76,
       "file": "assets/img/mosaic_076.webp",
-      "tier": "strong",
-      "pattern": "stripes",
-      "seed": 3668004015,
-      "anisotropy": 0.957,
-      "V_image": 0.04
+      "tier": "mid",
+      "pattern": "brick",
+      "seed": 3356738831,
+      "anisotropy": 0.548,
+      "V_image": 0.45
     },
     {
       "id": 77,
       "file": "assets/img/mosaic_077.webp",
       "tier": "mid",
-      "pattern": "confetti",
-      "seed": 665975414,
-      "anisotropy": 0.297,
-      "V_image": 0.7
+      "pattern": "brick",
+      "seed": 3596698416,
+      "anisotropy": 0.445,
+      "V_image": 0.55
     },
     {
       "id": 78,
       "file": "assets/img/mosaic_078.webp",
-      "tier": "strong",
-      "pattern": "chevron",
-      "seed": 3001226555,
-      "anisotropy": 0.476,
-      "V_image": 0.52
+      "tier": "mid",
+      "pattern": "brick",
+      "seed": 3473571341,
+      "anisotropy": 0.553,
+      "V_image": 0.45
     },
     {
       "id": 79,
       "file": "assets/img/mosaic_079.webp",
       "tier": "mid",
-      "pattern": "sunburst",
-      "seed": 2745858858,
-      "anisotropy": 0.319,
-      "V_image": 0.68
+      "pattern": "wave",
+      "seed": 85910313,
+      "anisotropy": 0.808,
+      "V_image": 0.19
     },
     {
       "id": 80,
       "file": "assets/img/mosaic_080.webp",
       "tier": "mid",
-      "pattern": "checker",
-      "seed": 2051626356,
-      "anisotropy": 0.041,
-      "V_image": 0.96
+      "pattern": "wave",
+      "seed": 1538196554,
+      "anisotropy": 0.834,
+      "V_image": 0.17
     },
     {
       "id": 81,
       "file": "assets/img/mosaic_081.webp",
-      "tier": "strong",
-      "pattern": "landscape",
-      "seed": 2838915253,
-      "anisotropy": 0.768,
-      "V_image": 0.23
+      "tier": "mid",
+      "pattern": "wave",
+      "seed": 929396859,
+      "anisotropy": 0.666,
+      "V_image": 0.33
     },
     {
       "id": 82,
       "file": "assets/img/mosaic_082.webp",
       "tier": "mid",
-      "pattern": "plaid",
-      "seed": 3995559248,
-      "anisotropy": 0.92,
-      "V_image": 0.08
+      "pattern": "dot",
+      "seed": 2984612221,
+      "anisotropy": 0.3,
+      "V_image": 0.7
     },
     {
       "id": 83,
       "file": "assets/img/mosaic_083.webp",
-      "tier": "weak",
-      "pattern": "stone",
-      "seed": 3566981948,
-      "anisotropy": 0.258,
-      "V_image": 0.74
+      "tier": "mid",
+      "pattern": "dot",
+      "seed": 1048420340,
+      "anisotropy": 0.3,
+      "V_image": 0.7
     },
     {
       "id": 84,
       "file": "assets/img/mosaic_084.webp",
       "tier": "mid",
-      "pattern": "brick",
-      "seed": 3891195639,
-      "anisotropy": 0.569,
-      "V_image": 0.43
+      "pattern": "dot",
+      "seed": 1970510699,
+      "anisotropy": 0.299,
+      "V_image": 0.7
     },
     {
       "id": 85,
       "file": "assets/img/mosaic_085.webp",
-      "tier": "weak",
-      "pattern": "mandala",
-      "seed": 3030838820,
-      "anisotropy": 0.297,
-      "V_image": 0.7
+      "tier": "mid",
+      "pattern": "spiral",
+      "seed": 3804286081,
+      "anisotropy": 0.313,
+      "V_image": 0.69
     },
     {
       "id": 86,
       "file": "assets/img/mosaic_086.webp",
-      "tier": "weak",
-      "pattern": "gradnoise",
-      "seed": 3358665169,
-      "anisotropy": 1,
-      "V_image": 0
+      "tier": "mid",
+      "pattern": "spiral",
+      "seed": 929701884,
+      "anisotropy": 0.357,
+      "V_image": 0.64
     },
     {
       "id": 87,
       "file": "assets/img/mosaic_087.webp",
-      "tier": "strong",
-      "pattern": "city",
-      "seed": 2339730412,
-      "anisotropy": 0.396,
-      "V_image": 0.6
+      "tier": "mid",
+      "pattern": "spiral",
+      "seed": 2555263103,
+      "anisotropy": 0.322,
+      "V_image": 0.68
     },
     {
       "id": 88,
       "file": "assets/img/mosaic_088.webp",
       "tier": "mid",
-      "pattern": "wave",
-      "seed": 1467326980,
-      "anisotropy": 0.686,
-      "V_image": 0.31
+      "pattern": "tile",
+      "seed": 3532605477,
+      "anisotropy": 0.317,
+      "V_image": 0.68
     },
     {
       "id": 89,
       "file": "assets/img/mosaic_089.webp",
-      "tier": "weak",
-      "pattern": "fbm",
-      "seed": 4017473435,
-      "anisotropy": 0.401,
-      "V_image": 0.6
+      "tier": "mid",
+      "pattern": "tile",
+      "seed": 3069345311,
+      "anisotropy": 0.301,
+      "V_image": 0.7
     },
     {
       "id": 90,
       "file": "assets/img/mosaic_090.webp",
-      "tier": "strong",
-      "pattern": "glyph",
-      "seed": 1501247747,
-      "anisotropy": 0.256,
-      "V_image": 0.74
+      "tier": "mid",
+      "pattern": "tile",
+      "seed": 3789395525,
+      "anisotropy": 0.29,
+      "V_image": 0.71
     },
     {
       "id": 91,
       "file": "assets/img/mosaic_091.webp",
       "tier": "mid",
-      "pattern": "dot",
-      "seed": 2150686891,
-      "anisotropy": 0.296,
-      "V_image": 0.7
+      "pattern": "confetti",
+      "seed": 3576171279,
+      "anisotropy": 0.318,
+      "V_image": 0.68
     },
     {
       "id": 92,
       "file": "assets/img/mosaic_092.webp",
-      "tier": "strong",
-      "pattern": "barcode",
-      "seed": 2203134728,
-      "anisotropy": 1,
-      "V_image": 0
+      "tier": "mid",
+      "pattern": "confetti",
+      "seed": 1835136226,
+      "anisotropy": 0.291,
+      "V_image": 0.71
     },
     {
       "id": 93,
       "file": "assets/img/mosaic_093.webp",
-      "tier": "weak",
-      "pattern": "marble",
-      "seed": 2686976463,
-      "anisotropy": 0.866,
-      "V_image": 0.13
+      "tier": "mid",
+      "pattern": "confetti",
+      "seed": 30928855,
+      "anisotropy": 0.32,
+      "V_image": 0.68
     },
     {
       "id": 94,
       "file": "assets/img/mosaic_094.webp",
-      "tier": "strong",
-      "pattern": "arrowfield",
-      "seed": 1199442858,
-      "anisotropy": 0.53,
-      "V_image": 0.47
+      "tier": "mid",
+      "pattern": "sunburst",
+      "seed": 23296009,
+      "anisotropy": 0.327,
+      "V_image": 0.67
     },
     {
       "id": 95,
       "file": "assets/img/mosaic_095.webp",
       "tier": "mid",
-      "pattern": "spiral",
-      "seed": 870571536,
-      "anisotropy": 0.325,
-      "V_image": 0.68
+      "pattern": "sunburst",
+      "seed": 687476276,
+      "anisotropy": 0.402,
+      "V_image": 0.6
     },
     {
       "id": 96,
       "file": "assets/img/mosaic_096.webp",
-      "tier": "strong",
-      "pattern": "flag",
-      "seed": 3179411037,
-      "anisotropy": 0.812,
-      "V_image": 0.19
+      "tier": "mid",
+      "pattern": "sunburst",
+      "seed": 2209369675,
+      "anisotropy": 0.407,
+      "V_image": 0.59
     },
     {
       "id": 97,
       "file": "assets/img/mosaic_097.webp",
-      "tier": "weak",
-      "pattern": "bubble",
-      "seed": 3504426492,
-      "anisotropy": 0.297,
-      "V_image": 0.7
+      "tier": "mid",
+      "pattern": "circuit",
+      "seed": 4278698198,
+      "anisotropy": 0.228,
+      "V_image": 0.77
     },
     {
       "id": 98,
       "file": "assets/img/mosaic_098.webp",
       "tier": "mid",
-      "pattern": "tile",
-      "seed": 2213384316,
-      "anisotropy": 0.271,
-      "V_image": 0.73
+      "pattern": "circuit",
+      "seed": 2980152234,
+      "anisotropy": 0.141,
+      "V_image": 0.86
     },
     {
       "id": 99,
       "file": "assets/img/mosaic_099.webp",
-      "tier": "weak",
-      "pattern": "speckle",
-      "seed": 2748389348,
-      "anisotropy": 0.302,
-      "V_image": 0.7
+      "tier": "mid",
+      "pattern": "circuit",
+      "seed": 1771940937,
+      "anisotropy": 0.116,
+      "V_image": 0.88
     },
     {
       "id": 100,
       "file": "assets/img/mosaic_100.webp",
       "tier": "mid",
-      "pattern": "confetti",
-      "seed": 3198982771,
+      "pattern": "isoblock",
+      "seed": 1722331016,
+      "anisotropy": 0.459,
+      "V_image": 0.54
+    },
+    {
+      "id": 101,
+      "file": "assets/img/mosaic_101.webp",
+      "tier": "mid",
+      "pattern": "isoblock",
+      "seed": 2310576340,
+      "anisotropy": 0.568,
+      "V_image": 0.43
+    },
+    {
+      "id": 102,
+      "file": "assets/img/mosaic_102.webp",
+      "tier": "mid",
+      "pattern": "isoblock",
+      "seed": 902858443,
+      "anisotropy": 0.481,
+      "V_image": 0.52
+    },
+    {
+      "id": 103,
+      "file": "assets/img/mosaic_103.webp",
+      "tier": "mid",
+      "pattern": "map",
+      "seed": 1670493799,
+      "anisotropy": 0.315,
+      "V_image": 0.68
+    },
+    {
+      "id": 104,
+      "file": "assets/img/mosaic_104.webp",
+      "tier": "mid",
+      "pattern": "map",
+      "seed": 1667190910,
+      "anisotropy": 0.243,
+      "V_image": 0.76
+    },
+    {
+      "id": 105,
+      "file": "assets/img/mosaic_105.webp",
+      "tier": "mid",
+      "pattern": "map",
+      "seed": 1625308510,
+      "anisotropy": 0.262,
+      "V_image": 0.74
+    },
+    {
+      "id": 106,
+      "file": "assets/img/mosaic_106.webp",
+      "tier": "mid",
+      "pattern": "celestial",
+      "seed": 1158007262,
+      "anisotropy": 0.403,
+      "V_image": 0.6
+    },
+    {
+      "id": 107,
+      "file": "assets/img/mosaic_107.webp",
+      "tier": "mid",
+      "pattern": "celestial",
+      "seed": 1563836751,
+      "anisotropy": 0.354,
+      "V_image": 0.65
+    },
+    {
+      "id": 108,
+      "file": "assets/img/mosaic_108.webp",
+      "tier": "mid",
+      "pattern": "celestial",
+      "seed": 14752374,
+      "anisotropy": 0.406,
+      "V_image": 0.59
+    },
+    {
+      "id": 109,
+      "file": "assets/img/mosaic_109.webp",
+      "tier": "mid",
+      "pattern": "cog",
+      "seed": 940201148,
+      "anisotropy": 0.299,
+      "V_image": 0.7
+    },
+    {
+      "id": 110,
+      "file": "assets/img/mosaic_110.webp",
+      "tier": "mid",
+      "pattern": "cog",
+      "seed": 1749220854,
+      "anisotropy": 0.299,
+      "V_image": 0.7
+    },
+    {
+      "id": 111,
+      "file": "assets/img/mosaic_111.webp",
+      "tier": "mid",
+      "pattern": "cog",
+      "seed": 2179435515,
       "anisotropy": 0.297,
       "V_image": 0.7
+    },
+    {
+      "id": 112,
+      "file": "assets/img/mosaic_112.webp",
+      "tier": "mid",
+      "pattern": "ribbon",
+      "seed": 174158515,
+      "anisotropy": 0.43,
+      "V_image": 0.57
+    },
+    {
+      "id": 113,
+      "file": "assets/img/mosaic_113.webp",
+      "tier": "mid",
+      "pattern": "ribbon",
+      "seed": 1545349055,
+      "anisotropy": 0.45,
+      "V_image": 0.55
+    },
+    {
+      "id": 114,
+      "file": "assets/img/mosaic_114.webp",
+      "tier": "mid",
+      "pattern": "ribbon",
+      "seed": 2058190589,
+      "anisotropy": 0.404,
+      "V_image": 0.6
+    },
+    {
+      "id": 115,
+      "file": "assets/img/mosaic_115.webp",
+      "tier": "mid",
+      "pattern": "puzzle",
+      "seed": 1011062930,
+      "anisotropy": 0.08,
+      "V_image": 0.92
+    },
+    {
+      "id": 116,
+      "file": "assets/img/mosaic_116.webp",
+      "tier": "mid",
+      "pattern": "puzzle",
+      "seed": 2836286838,
+      "anisotropy": 0.083,
+      "V_image": 0.92
+    },
+    {
+      "id": 117,
+      "file": "assets/img/mosaic_117.webp",
+      "tier": "mid",
+      "pattern": "puzzle",
+      "seed": 960943352,
+      "anisotropy": 0.113,
+      "V_image": 0.89
+    },
+    {
+      "id": 118,
+      "file": "assets/img/mosaic_118.webp",
+      "tier": "mid",
+      "pattern": "lattice",
+      "seed": 3242931228,
+      "anisotropy": 0.487,
+      "V_image": 0.51
+    },
+    {
+      "id": 119,
+      "file": "assets/img/mosaic_119.webp",
+      "tier": "mid",
+      "pattern": "lattice",
+      "seed": 2597546701,
+      "anisotropy": 0.486,
+      "V_image": 0.51
+    },
+    {
+      "id": 120,
+      "file": "assets/img/mosaic_120.webp",
+      "tier": "mid",
+      "pattern": "lattice",
+      "seed": 771540979,
+      "anisotropy": 0.489,
+      "V_image": 0.51
+    },
+    {
+      "id": 121,
+      "file": "assets/img/mosaic_121.webp",
+      "tier": "mid",
+      "pattern": "mosaic",
+      "seed": 4084961132,
+      "anisotropy": 0.086,
+      "V_image": 0.91
+    },
+    {
+      "id": 122,
+      "file": "assets/img/mosaic_122.webp",
+      "tier": "mid",
+      "pattern": "mosaic",
+      "seed": 1455041218,
+      "anisotropy": 0.077,
+      "V_image": 0.92
+    },
+    {
+      "id": 123,
+      "file": "assets/img/mosaic_123.webp",
+      "tier": "mid",
+      "pattern": "mosaic",
+      "seed": 3521545912,
+      "anisotropy": 0.074,
+      "V_image": 0.93
+    },
+    {
+      "id": 124,
+      "file": "assets/img/mosaic_124.webp",
+      "tier": "mid",
+      "pattern": "eye",
+      "seed": 1367159950,
+      "anisotropy": 0.336,
+      "V_image": 0.66
+    },
+    {
+      "id": 125,
+      "file": "assets/img/mosaic_125.webp",
+      "tier": "mid",
+      "pattern": "eye",
+      "seed": 789303711,
+      "anisotropy": 0.317,
+      "V_image": 0.68
+    },
+    {
+      "id": 126,
+      "file": "assets/img/mosaic_126.webp",
+      "tier": "mid",
+      "pattern": "eye",
+      "seed": 4228591913,
+      "anisotropy": 0.347,
+      "V_image": 0.65
+    },
+    {
+      "id": 127,
+      "file": "assets/img/mosaic_127.webp",
+      "tier": "mid",
+      "pattern": "feather",
+      "seed": 320288493,
+      "anisotropy": 0.339,
+      "V_image": 0.66
+    },
+    {
+      "id": 128,
+      "file": "assets/img/mosaic_128.webp",
+      "tier": "mid",
+      "pattern": "feather",
+      "seed": 2900295953,
+      "anisotropy": 0.339,
+      "V_image": 0.66
+    },
+    {
+      "id": 129,
+      "file": "assets/img/mosaic_129.webp",
+      "tier": "mid",
+      "pattern": "feather",
+      "seed": 2668473146,
+      "anisotropy": 0.344,
+      "V_image": 0.66
+    },
+    {
+      "id": 130,
+      "file": "assets/img/mosaic_130.webp",
+      "tier": "mid",
+      "pattern": "scale",
+      "seed": 3024092725,
+      "anisotropy": 0.401,
+      "V_image": 0.6
+    },
+    {
+      "id": 131,
+      "file": "assets/img/mosaic_131.webp",
+      "tier": "mid",
+      "pattern": "scale",
+      "seed": 1374245940,
+      "anisotropy": 0.38,
+      "V_image": 0.62
+    },
+    {
+      "id": 132,
+      "file": "assets/img/mosaic_132.webp",
+      "tier": "mid",
+      "pattern": "scale",
+      "seed": 3184518767,
+      "anisotropy": 0.404,
+      "V_image": 0.6
+    },
+    {
+      "id": 133,
+      "file": "assets/img/mosaic_133.webp",
+      "tier": "mid",
+      "pattern": "basket",
+      "seed": 633421605,
+      "anisotropy": 0.237,
+      "V_image": 0.76
+    },
+    {
+      "id": 134,
+      "file": "assets/img/mosaic_134.webp",
+      "tier": "mid",
+      "pattern": "basket",
+      "seed": 1020424500,
+      "anisotropy": 0.204,
+      "V_image": 0.8
+    },
+    {
+      "id": 135,
+      "file": "assets/img/mosaic_135.webp",
+      "tier": "mid",
+      "pattern": "basket",
+      "seed": 2181690190,
+      "anisotropy": 0.049,
+      "V_image": 0.95
+    },
+    {
+      "id": 136,
+      "file": "assets/img/mosaic_136.webp",
+      "tier": "weak",
+      "pattern": "fbm",
+      "seed": 2823718124,
+      "anisotropy": 0.097,
+      "V_image": 0.9
+    },
+    {
+      "id": 137,
+      "file": "assets/img/mosaic_137.webp",
+      "tier": "weak",
+      "pattern": "fbm",
+      "seed": 1020367306,
+      "anisotropy": 0.028,
+      "V_image": 0.97
+    },
+    {
+      "id": 138,
+      "file": "assets/img/mosaic_138.webp",
+      "tier": "weak",
+      "pattern": "fbm",
+      "seed": 2900088002,
+      "anisotropy": 0.192,
+      "V_image": 0.81
+    },
+    {
+      "id": 139,
+      "file": "assets/img/mosaic_139.webp",
+      "tier": "weak",
+      "pattern": "marble",
+      "seed": 3520281617,
+      "anisotropy": 0.675,
+      "V_image": 0.33
+    },
+    {
+      "id": 140,
+      "file": "assets/img/mosaic_140.webp",
+      "tier": "weak",
+      "pattern": "marble",
+      "seed": 3270749747,
+      "anisotropy": 0.893,
+      "V_image": 0.11
+    },
+    {
+      "id": 141,
+      "file": "assets/img/mosaic_141.webp",
+      "tier": "weak",
+      "pattern": "marble",
+      "seed": 483988409,
+      "anisotropy": 0.83,
+      "V_image": 0.17
+    },
+    {
+      "id": 142,
+      "file": "assets/img/mosaic_142.webp",
+      "tier": "weak",
+      "pattern": "bubble",
+      "seed": 510494646,
+      "anisotropy": 0.303,
+      "V_image": 0.7
+    },
+    {
+      "id": 143,
+      "file": "assets/img/mosaic_143.webp",
+      "tier": "weak",
+      "pattern": "bubble",
+      "seed": 2035759324,
+      "anisotropy": 0.319,
+      "V_image": 0.68
+    },
+    {
+      "id": 144,
+      "file": "assets/img/mosaic_144.webp",
+      "tier": "weak",
+      "pattern": "bubble",
+      "seed": 281192386,
+      "anisotropy": 0.3,
+      "V_image": 0.7
+    },
+    {
+      "id": 145,
+      "file": "assets/img/mosaic_145.webp",
+      "tier": "weak",
+      "pattern": "speckle",
+      "seed": 1358776938,
+      "anisotropy": 0.271,
+      "V_image": 0.73
+    },
+    {
+      "id": 146,
+      "file": "assets/img/mosaic_146.webp",
+      "tier": "weak",
+      "pattern": "speckle",
+      "seed": 485340015,
+      "anisotropy": 0.263,
+      "V_image": 0.74
+    },
+    {
+      "id": 147,
+      "file": "assets/img/mosaic_147.webp",
+      "tier": "weak",
+      "pattern": "speckle",
+      "seed": 2145520157,
+      "anisotropy": 0.29,
+      "V_image": 0.71
+    },
+    {
+      "id": 148,
+      "file": "assets/img/mosaic_148.webp",
+      "tier": "weak",
+      "pattern": "stone",
+      "seed": 2308270657,
+      "anisotropy": 0.273,
+      "V_image": 0.73
+    },
+    {
+      "id": 149,
+      "file": "assets/img/mosaic_149.webp",
+      "tier": "weak",
+      "pattern": "stone",
+      "seed": 4086985831,
+      "anisotropy": 0.262,
+      "V_image": 0.74
+    },
+    {
+      "id": 150,
+      "file": "assets/img/mosaic_150.webp",
+      "tier": "weak",
+      "pattern": "stone",
+      "seed": 2224987235,
+      "anisotropy": 0.278,
+      "V_image": 0.72
+    },
+    {
+      "id": 151,
+      "file": "assets/img/mosaic_151.webp",
+      "tier": "weak",
+      "pattern": "mandala",
+      "seed": 2544815644,
+      "anisotropy": 0.296,
+      "V_image": 0.7
+    },
+    {
+      "id": 152,
+      "file": "assets/img/mosaic_152.webp",
+      "tier": "weak",
+      "pattern": "mandala",
+      "seed": 1148993147,
+      "anisotropy": 0.266,
+      "V_image": 0.73
+    },
+    {
+      "id": 153,
+      "file": "assets/img/mosaic_153.webp",
+      "tier": "weak",
+      "pattern": "mandala",
+      "seed": 3697307894,
+      "anisotropy": 0.287,
+      "V_image": 0.71
+    },
+    {
+      "id": 154,
+      "file": "assets/img/mosaic_154.webp",
+      "tier": "weak",
+      "pattern": "weave",
+      "seed": 2824451239,
+      "anisotropy": 0.508,
+      "V_image": 0.49
+    },
+    {
+      "id": 155,
+      "file": "assets/img/mosaic_155.webp",
+      "tier": "weak",
+      "pattern": "weave",
+      "seed": 4085277604,
+      "anisotropy": 0.322,
+      "V_image": 0.68
+    },
+    {
+      "id": 156,
+      "file": "assets/img/mosaic_156.webp",
+      "tier": "weak",
+      "pattern": "weave",
+      "seed": 3806698225,
+      "anisotropy": 0.361,
+      "V_image": 0.64
+    },
+    {
+      "id": 157,
+      "file": "assets/img/mosaic_157.webp",
+      "tier": "weak",
+      "pattern": "crackle",
+      "seed": 1568947307,
+      "anisotropy": 0.28,
+      "V_image": 0.72
+    },
+    {
+      "id": 158,
+      "file": "assets/img/mosaic_158.webp",
+      "tier": "weak",
+      "pattern": "crackle",
+      "seed": 4235668062,
+      "anisotropy": 0.299,
+      "V_image": 0.7
+    },
+    {
+      "id": 159,
+      "file": "assets/img/mosaic_159.webp",
+      "tier": "weak",
+      "pattern": "crackle",
+      "seed": 1406413013,
+      "anisotropy": 0.316,
+      "V_image": 0.68
+    },
+    {
+      "id": 160,
+      "file": "assets/img/mosaic_160.webp",
+      "tier": "weak",
+      "pattern": "terrain",
+      "seed": 2691127981,
+      "anisotropy": 0.299,
+      "V_image": 0.7
+    },
+    {
+      "id": 161,
+      "file": "assets/img/mosaic_161.webp",
+      "tier": "weak",
+      "pattern": "terrain",
+      "seed": 447017406,
+      "anisotropy": 0.263,
+      "V_image": 0.74
+    },
+    {
+      "id": 162,
+      "file": "assets/img/mosaic_162.webp",
+      "tier": "weak",
+      "pattern": "terrain",
+      "seed": 4254340051,
+      "anisotropy": 0.203,
+      "V_image": 0.8
+    },
+    {
+      "id": 163,
+      "file": "assets/img/mosaic_163.webp",
+      "tier": "weak",
+      "pattern": "galaxy",
+      "seed": 707738998,
+      "anisotropy": 0.037,
+      "V_image": 0.96
+    },
+    {
+      "id": 164,
+      "file": "assets/img/mosaic_164.webp",
+      "tier": "weak",
+      "pattern": "galaxy",
+      "seed": 3102877842,
+      "anisotropy": 0.015,
+      "V_image": 0.99
+    },
+    {
+      "id": 165,
+      "file": "assets/img/mosaic_165.webp",
+      "tier": "weak",
+      "pattern": "galaxy",
+      "seed": 557308681,
+      "anisotropy": 0.153,
+      "V_image": 0.85
+    },
+    {
+      "id": 166,
+      "file": "assets/img/mosaic_166.webp",
+      "tier": "weak",
+      "pattern": "fingerprint",
+      "seed": 482932970,
+      "anisotropy": 0.415,
+      "V_image": 0.59
+    },
+    {
+      "id": 167,
+      "file": "assets/img/mosaic_167.webp",
+      "tier": "weak",
+      "pattern": "fingerprint",
+      "seed": 3517476310,
+      "anisotropy": 0.455,
+      "V_image": 0.55
+    },
+    {
+      "id": 168,
+      "file": "assets/img/mosaic_168.webp",
+      "tier": "weak",
+      "pattern": "fingerprint",
+      "seed": 3443343006,
+      "anisotropy": 0.421,
+      "V_image": 0.58
+    },
+    {
+      "id": 169,
+      "file": "assets/img/mosaic_169.webp",
+      "tier": "weak",
+      "pattern": "sand",
+      "seed": 755223455,
+      "anisotropy": 0.267,
+      "V_image": 0.73
+    },
+    {
+      "id": 170,
+      "file": "assets/img/mosaic_170.webp",
+      "tier": "weak",
+      "pattern": "sand",
+      "seed": 2341385076,
+      "anisotropy": 0.278,
+      "V_image": 0.72
+    },
+    {
+      "id": 171,
+      "file": "assets/img/mosaic_171.webp",
+      "tier": "weak",
+      "pattern": "sand",
+      "seed": 2755291741,
+      "anisotropy": 0.289,
+      "V_image": 0.71
+    },
+    {
+      "id": 172,
+      "file": "assets/img/mosaic_172.webp",
+      "tier": "weak",
+      "pattern": "smoke",
+      "seed": 3332740073,
+      "anisotropy": 0.338,
+      "V_image": 0.66
+    },
+    {
+      "id": 173,
+      "file": "assets/img/mosaic_173.webp",
+      "tier": "weak",
+      "pattern": "smoke",
+      "seed": 3486246130,
+      "anisotropy": 0.343,
+      "V_image": 0.66
+    },
+    {
+      "id": 174,
+      "file": "assets/img/mosaic_174.webp",
+      "tier": "weak",
+      "pattern": "smoke",
+      "seed": 234970628,
+      "anisotropy": 0.298,
+      "V_image": 0.7
+    },
+    {
+      "id": 175,
+      "file": "assets/img/mosaic_175.webp",
+      "tier": "weak",
+      "pattern": "fur",
+      "seed": 1461475721,
+      "anisotropy": 0.445,
+      "V_image": 0.55
+    },
+    {
+      "id": 176,
+      "file": "assets/img/mosaic_176.webp",
+      "tier": "weak",
+      "pattern": "fur",
+      "seed": 3359653734,
+      "anisotropy": 0.447,
+      "V_image": 0.55
+    },
+    {
+      "id": 177,
+      "file": "assets/img/mosaic_177.webp",
+      "tier": "weak",
+      "pattern": "fur",
+      "seed": 3497512433,
+      "anisotropy": 0.433,
+      "V_image": 0.57
+    },
+    {
+      "id": 178,
+      "file": "assets/img/mosaic_178.webp",
+      "tier": "weak",
+      "pattern": "water",
+      "seed": 2626292576,
+      "anisotropy": 0.399,
+      "V_image": 0.6
+    },
+    {
+      "id": 179,
+      "file": "assets/img/mosaic_179.webp",
+      "tier": "weak",
+      "pattern": "water",
+      "seed": 1250969815,
+      "anisotropy": 0.395,
+      "V_image": 0.61
+    },
+    {
+      "id": 180,
+      "file": "assets/img/mosaic_180.webp",
+      "tier": "weak",
+      "pattern": "water",
+      "seed": 3785237862,
+      "anisotropy": 0.387,
+      "V_image": 0.61
+    },
+    {
+      "id": 181,
+      "file": "assets/img/mosaic_181.webp",
+      "tier": "weak",
+      "pattern": "brush",
+      "seed": 388726482,
+      "anisotropy": 0.325,
+      "V_image": 0.67
+    },
+    {
+      "id": 182,
+      "file": "assets/img/mosaic_182.webp",
+      "tier": "weak",
+      "pattern": "brush",
+      "seed": 3448727506,
+      "anisotropy": 0.311,
+      "V_image": 0.69
+    },
+    {
+      "id": 183,
+      "file": "assets/img/mosaic_183.webp",
+      "tier": "weak",
+      "pattern": "brush",
+      "seed": 1090963206,
+      "anisotropy": 0.362,
+      "V_image": 0.64
+    },
+    {
+      "id": 184,
+      "file": "assets/img/mosaic_184.webp",
+      "tier": "weak",
+      "pattern": "stucco",
+      "seed": 1908590821,
+      "anisotropy": 0.5,
+      "V_image": 0.5
+    },
+    {
+      "id": 185,
+      "file": "assets/img/mosaic_185.webp",
+      "tier": "weak",
+      "pattern": "stucco",
+      "seed": 1657116114,
+      "anisotropy": 0.5,
+      "V_image": 0.5
+    },
+    {
+      "id": 186,
+      "file": "assets/img/mosaic_186.webp",
+      "tier": "weak",
+      "pattern": "stucco",
+      "seed": 2728023979,
+      "anisotropy": 0.5,
+      "V_image": 0.5
     }
   ]
 }

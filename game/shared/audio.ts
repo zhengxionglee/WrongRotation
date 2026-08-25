@@ -52,6 +52,11 @@ class Sfx {
 
   tap() { this.tone(600, 0.025, "sine", 0.06); }
 
+  skip() {
+    this.tone(500, 0.06, "triangle", 0.1);
+    this.tone(340, 0.08, "triangle", 0.08, 0.06);
+  }
+
   unlock() {
     this.tone(880, 0.08, "sine", 0.1);
     this.tone(1100, 0.1, "sine", 0.1, 0.08);

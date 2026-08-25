@@ -2,4 +2,6 @@ node_modules
 dist
 *.log
 gen/sim
-gen/sim-standalonedev-log.txt
+gen/sim-standalone
+game.html
+assets/jpg/

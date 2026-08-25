@@ -6,13 +6,14 @@ export interface PuzzleState {
   rotations: Map<number, number>;
   rotatable: boolean;
   highlights: Set<number>;
+  baseRotation?: number;
+  boldGrid?: boolean;
 }
 
 export class PuzzleRenderer {
   board = { x: 0, y: 0, size: 0 };
   private cache: HTMLCanvasElement | null = null;
-  private cacheImg: string | null = null;
-  private cacheGrid: string | null = null;
+  private cacheKey: string | null = null;
   dpr = 1;
 
   layout(canvasW: number, canvasH: number, hudH: number) {
@@ -22,27 +23,42 @@ export class PuzzleRenderer {
     this.invalidate();
   }
 
-  invalidate() { this.cache = null; this.cacheImg = null; this.cacheGrid = null; }
+  invalidate() { this.cache = null; this.cacheKey = null; }
+
+  private gridStroke(highlight: boolean, bold: boolean): { style: string; width: number } {
+    if (highlight) return { style: "#ffd94d", width: 3 };
+    if (bold) return { style: "rgba(0,0,0,0.55)", width: 2.5 };
+    return { style: "rgba(0,0,0,0.12)", width: 1.5 };
+  }
 
   private buildCache(state: PuzzleState) {
+    const baseRot = state.baseRotation ?? 0;
+    const bold = state.boldGrid ?? false;
     const imgKey = state.image.src;
     const gridKey = JSON.stringify(state.grid.cells.map(c => c.id));
-    if (this.cache && this.cacheImg === imgKey && this.cacheGrid === gridKey) return;
+    const key = `${imgKey}|${gridKey}|${baseRot}|${bold}`;
+    if (this.cache && this.cacheKey === key) return;
     const s = this.board.size;
     const canvas = document.createElement("canvas");
     canvas.width = s;
     canvas.height = s;
     const ctx = canvas.getContext("2d")!;
+    if (baseRot) {
+      ctx.translate(s / 2, s / 2);
+      ctx.rotate(baseRot * Math.PI / 180);
+      ctx.translate(-s / 2, -s / 2);
+    }
     ctx.drawImage(state.image, 0, 0, s, s);
-    ctx.strokeStyle = "rgba(0,0,0,0.12)";
-    ctx.lineWidth = 1.5;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    const stroke = this.gridStroke(false, bold);
+    ctx.strokeStyle = stroke.style;
+    ctx.lineWidth = stroke.width;
     for (const cell of state.grid.cells) {
       this.cellPath(ctx, cell, s);
       ctx.stroke();
     }
     this.cache = canvas;
-    this.cacheImg = imgKey;
-    this.cacheGrid = gridKey;
+    this.cacheKey = key;
   }
 
   private cellPath(ctx: CanvasRenderingContext2D, cell: Cell, size: number) {
@@ -68,7 +84,7 @@ export class PuzzleRenderer {
       if (rot === 0) continue;
       const cell = state.grid.cells.find(c => c.id === id);
       if (!cell) continue;
-      this.drawCell(ctx, state.image, cell, rot, s, state.highlights.has(id));
+      this.drawCell(ctx, state.image, cell, rot, s, state.highlights.has(id), state.baseRotation ?? 0, state.boldGrid ?? false);
     }
     for (const id of state.highlights) {
       const cell = state.grid.cells.find(c => c.id === id);
@@ -81,7 +97,7 @@ export class PuzzleRenderer {
     ctx.restore();
   }
 
-  drawCell(ctx: CanvasRenderingContext2D, img: HTMLImageElement, cell: Cell, rot: number, size: number, highlight: boolean) {
+  drawCell(ctx: CanvasRenderingContext2D, img: HTMLImageElement, cell: Cell, rot: number, size: number, highlight: boolean, baseRot = 0, bold = false) {
     ctx.save();
     this.cellPath(ctx, cell, size);
     ctx.clip();
@@ -89,10 +105,14 @@ export class PuzzleRenderer {
     ctx.translate(cx, cy);
     ctx.rotate(rot * Math.PI / 180);
     ctx.translate(-cx, -cy);
+    ctx.translate(size / 2, size / 2);
+    ctx.rotate(baseRot * Math.PI / 180);
+    ctx.translate(-size / 2, -size / 2);
     ctx.drawImage(img, 0, 0, size, size);
     ctx.restore();
-    ctx.strokeStyle = highlight ? "#ffd94d" : "rgba(0,0,0,0.12)";
-    ctx.lineWidth = highlight ? 3 : 1.5;
+    const stroke = this.gridStroke(highlight, bold);
+    ctx.strokeStyle = stroke.style;
+    ctx.lineWidth = stroke.width;
     this.cellPath(ctx, cell, size);
     ctx.stroke();
   }

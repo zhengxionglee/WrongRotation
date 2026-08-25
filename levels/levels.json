@@ -1,8 +1,8 @@
 [
   {
     "id": 1,
-    "difficulty": 7.9,
-    "image": "assets/img/mosaic_009.webp",
+    "difficulty": 4,
+    "image": "assets/img/mosaic_007.webp",
     "grid": {
       "type": "square",
       "seed": 1290784310,
@@ -10,7 +10,7 @@
     },
     "targets": [
       {
-        "cellId": 3,
+        "cellId": 2,
         "rotation": 180
       }
     ],
@@ -35,15 +35,15 @@
       ]
     },
     "meta": {
-      "S": 0.04,
-      "C": 0.67,
-      "V_image": 0.58
+      "S": 0.13,
+      "C": 0.33,
+      "V_image": 0.17
     }
   },
   {
     "id": 2,
-    "difficulty": 2.4,
-    "image": "assets/img/mosaic_092.webp",
+    "difficulty": 1.9,
+    "image": "assets/img/mosaic_065.webp",
     "grid": {
       "type": "square",
       "seed": 3527542996,
@@ -51,7 +51,7 @@
     },
     "targets": [
       {
-        "cellId": 6,
+        "cellId": 5,
         "rotation": 180
       }
     ],
@@ -76,15 +76,15 @@
       ]
     },
     "meta": {
-      "S": 0.31,
-      "C": 1,
-      "V_image": 0
+      "S": 0.4,
+      "C": 0.33,
+      "V_image": 0.69
     }
   },
   {
     "id": 3,
     "difficulty": 8.1,
-    "image": "assets/img/mosaic_013.webp",
+    "image": "assets/img/mosaic_011.webp",
     "grid": {
       "type": "square",
       "seed": 264341834,
@@ -92,7 +92,7 @@
     },
     "targets": [
       {
-        "cellId": 1,
+        "cellId": 4,
         "rotation": 180
       }
     ],
@@ -119,13 +119,13 @@
     "meta": {
       "S": 0,
       "C": 1,
-      "V_image": 0.47
+      "V_image": 0.63
     }
   },
   {
     "id": 4,
-    "difficulty": 3.3,
-    "image": "assets/img/mosaic_012.webp",
+    "difficulty": 4.7,
+    "image": "assets/img/mosaic_009.webp",
     "grid": {
       "type": "square",
       "seed": 2350769346,
@@ -158,15 +158,15 @@
       ]
     },
     "meta": {
-      "S": 0.19,
-      "C": 0.5,
-      "V_image": 0
+      "S": 0.11,
+      "C": 0.06,
+      "V_image": 0.22
     }
   },
   {
     "id": 5,
-    "difficulty": 4,
-    "image": "assets/img/mosaic_069.webp",
+    "difficulty": 2.8,
+    "image": "assets/img/mosaic_053.webp",
     "grid": {
       "type": "square",
       "seed": 3102074255,
@@ -174,7 +174,7 @@
     },
     "targets": [
       {
-        "cellId": 13,
+        "cellId": 0,
         "rotation": 90
       }
     ],
@@ -199,15 +199,15 @@
       ]
     },
     "meta": {
-      "S": 0.15,
-      "C": 0.81,
-      "V_image": 0.47
+      "S": 0.22,
+      "C": 0.06,
+      "V_image": 0.76
     }
   },
   {
     "id": 6,
-    "difficulty": 3.7,
-    "image": "assets/img/mosaic_064.webp",
+    "difficulty": 2.8,
+    "image": "assets/img/mosaic_049.webp",
     "grid": {
       "type": "square",
       "seed": 146899151,
@@ -215,7 +215,7 @@
     },
     "targets": [
       {
-        "cellId": 11,
+        "cellId": 13,
         "rotation": 180
       }
     ],
@@ -240,15 +240,15 @@
       ]
     },
     "meta": {
-      "S": 0.15,
-      "C": 0.13,
-      "V_image": 0.58
+      "S": 0.23,
+      "C": 0.25,
+      "V_image": 0.6
     }
   },
   {
     "id": 7,
-    "difficulty": 2.8,
-    "image": "assets/img/mosaic_078.webp",
+    "difficulty": 2.2,
+    "image": "assets/img/mosaic_059.webp",
     "grid": {
       "type": "square",
       "seed": 2937826802,
@@ -281,15 +281,15 @@
       ]
     },
     "meta": {
-      "S": 0.23,
-      "C": 0.25,
-      "V_image": 0.52
+      "S": 0.37,
+      "C": 0.31,
+      "V_image": 0.88
     }
   },
   {
     "id": 8,
-    "difficulty": 2,
-    "image": "assets/img/mosaic_040.webp",
+    "difficulty": 3.1,
+    "image": "assets/img/mosaic_051.webp",
     "grid": {
       "type": "square",
       "seed": 3637878303,
@@ -297,130 +297,7 @@
     },
     "targets": [
       {
-        "cellId": 7,
-        "rotation": 180
-      }
-    ],
-    "mode": {
-      "autoSnap": true,
-      "showTargetCount": false
-    },
-    "limits": {
-      "timeLimit": null,
-      "hints": 1
-    },
-    "star": {
-      "clicks": [
-        1,
-        3,
-        6
-      ],
-      "time": [
-        9,
-        18,
-        36
-      ]
-    },
-    "meta": {
-      "S": 0.37,
-      "C": 0,
-      "V_image": 0.11
-    }
-  },
-  {
-    "id": 9,
-    "difficulty": 3.1,
-    "image": "assets/img/mosaic_010.webp",
-    "grid": {
-      "type": "square",
-      "seed": 3050327932,
-      "param": 5
-    },
-    "targets": [
-      {
-        "cellId": 9,
-        "rotation": 180
-      }
-    ],
-    "mode": {
-      "autoSnap": true,
-      "showTargetCount": false
-    },
-    "limits": {
-      "timeLimit": null,
-      "hints": 1
-    },
-    "star": {
-      "clicks": [
-        1,
-        3,
-        6
-      ],
-      "time": [
-        9,
-        18,
-        36
-      ]
-    },
-    "meta": {
-      "S": 0.23,
-      "C": 0.55,
-      "V_image": 0.23
-    }
-  },
-  {
-    "id": 10,
-    "difficulty": 5.3,
-    "image": "assets/img/mosaic_005.webp",
-    "grid": {
-      "type": "square",
-      "seed": 1969136545,
-      "param": 5
-    },
-    "targets": [
-      {
-        "cellId": 16,
-        "rotation": 180
-      }
-    ],
-    "mode": {
-      "autoSnap": true,
-      "showTargetCount": false
-    },
-    "limits": {
-      "timeLimit": null,
-      "hints": 1
-    },
-    "star": {
-      "clicks": [
-        1,
-        3,
-        6
-      ],
-      "time": [
-        8,
-        16,
-        32
-      ]
-    },
-    "meta": {
-      "S": 0.1,
-      "C": 0.1,
-      "V_image": 0.42
-    }
-  },
-  {
-    "id": 11,
-    "difficulty": 3.5,
-    "image": "assets/img/mosaic_080.webp",
-    "grid": {
-      "type": "square",
-      "seed": 3851035647,
-      "param": 5
-    },
-    "targets": [
-      {
-        "cellId": 5,
+        "cellId": 1,
         "rotation": 270
       }
     ],
@@ -439,70 +316,29 @@
         6
       ],
       "time": [
-        8,
-        16,
-        32
+        9,
+        18,
+        36
       ]
     },
     "meta": {
-      "S": 0.17,
-      "C": 0.05,
-      "V_image": 0.96
+      "S": 0.2,
+      "C": 0.25,
+      "V_image": 0.56
     }
   },
   {
-    "id": 12,
-    "difficulty": 6.5,
-    "image": "assets/img/mosaic_042.webp",
+    "id": 9,
+    "difficulty": 3.9,
+    "image": "assets/img/mosaic_012.webp",
     "grid": {
       "type": "square",
-      "seed": 1081974601,
+      "seed": 3050327932,
       "param": 5
     },
     "targets": [
       {
-        "cellId": 17,
-        "rotation": 180
-      }
-    ],
-    "mode": {
-      "autoSnap": true,
-      "showTargetCount": false
-    },
-    "limits": {
-      "timeLimit": null,
-      "hints": 1
-    },
-    "star": {
-      "clicks": [
-        1,
-        3,
-        6
-      ],
-      "time": [
-        8,
-        16,
-        32
-      ]
-    },
-    "meta": {
-      "S": 0.08,
-      "C": 0.5,
-      "V_image": 0.53
-    }
-  },
-  {
-    "id": 13,
-    "difficulty": 3.3,
-    "image": "assets/img/mosaic_058.webp",
-    "grid": {
-      "type": "square",
-      "seed": 3498652166,
-      "param": 5
-    },
-    "targets": [
-      {
-        "cellId": 2,
+        "cellId": 24,
         "rotation": 90
       }
     ],
@@ -521,70 +357,29 @@
         6
       ],
       "time": [
-        7,
-        14,
-        28
+        9,
+        18,
+        36
       ]
     },
     "meta": {
-      "S": 0.19,
-      "C": 0,
-      "V_image": 0.96
+      "S": 0.15,
+      "C": 0.1,
+      "V_image": 0.65
     }
   },
   {
-    "id": 14,
-    "difficulty": 2.3,
-    "image": "assets/img/mosaic_047.webp",
+    "id": 10,
+    "difficulty": 8.2,
+    "image": "assets/img/mosaic_005.webp",
     "grid": {
       "type": "square",
-      "seed": 3410838859,
+      "seed": 1969136545,
       "param": 5
     },
     "targets": [
       {
-        "cellId": 12,
-        "rotation": 120
-      }
-    ],
-    "mode": {
-      "autoSnap": true,
-      "showTargetCount": false
-    },
-    "limits": {
-      "timeLimit": null,
-      "hints": 1
-    },
-    "star": {
-      "clicks": [
-        1,
-        3,
-        6
-      ],
-      "time": [
-        7,
-        14,
-        28
-      ]
-    },
-    "meta": {
-      "S": 0.36,
-      "C": 0.05,
-      "V_image": 0.76
-    }
-  },
-  {
-    "id": 15,
-    "difficulty": 3.6,
-    "image": "assets/img/mosaic_077.webp",
-    "grid": {
-      "type": "square",
-      "seed": 2426210270,
-      "param": 5
-    },
-    "targets": [
-      {
-        "cellId": 10,
+        "cellId": 4,
         "rotation": 270
       }
     ],
@@ -603,21 +398,226 @@
         6
       ],
       "time": [
+        8,
+        16,
+        32
+      ]
+    },
+    "meta": {
+      "S": 0.05,
+      "C": 0.3,
+      "V_image": 0.54
+    }
+  },
+  {
+    "id": 11,
+    "difficulty": 3.7,
+    "image": "assets/img/mosaic_111.webp",
+    "grid": {
+      "type": "square",
+      "seed": 3851035647,
+      "param": 5
+    },
+    "targets": [
+      {
+        "cellId": 11,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        8,
+        16,
+        32
+      ]
+    },
+    "meta": {
+      "S": 0.16,
+      "C": 0,
+      "V_image": 0.7
+    }
+  },
+  {
+    "id": 12,
+    "difficulty": 2.8,
+    "image": "assets/img/mosaic_049.webp",
+    "grid": {
+      "type": "square",
+      "seed": 1081974601,
+      "param": 5
+    },
+    "targets": [
+      {
+        "cellId": 21,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        8,
+        16,
+        32
+      ]
+    },
+    "meta": {
+      "S": 0.24,
+      "C": 0.15,
+      "V_image": 0.6
+    }
+  },
+  {
+    "id": 13,
+    "difficulty": 5.8,
+    "image": "assets/img/mosaic_077.webp",
+    "grid": {
+      "type": "square",
+      "seed": 3498652166,
+      "param": 5
+    },
+    "targets": [
+      {
+        "cellId": 18,
+        "rotation": 300
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
         7,
         14,
         28
       ]
     },
     "meta": {
-      "S": 0.17,
+      "S": 0.09,
+      "C": 0.1,
+      "V_image": 0.55
+    }
+  },
+  {
+    "id": 14,
+    "difficulty": 2.2,
+    "image": "assets/img/mosaic_057.webp",
+    "grid": {
+      "type": "square",
+      "seed": 3410838859,
+      "param": 5
+    },
+    "targets": [
+      {
+        "cellId": 6,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        7,
+        14,
+        28
+      ]
+    },
+    "meta": {
+      "S": 0.4,
+      "C": 0.1,
+      "V_image": 0.64
+    }
+  },
+  {
+    "id": 15,
+    "difficulty": 2.5,
+    "image": "assets/img/mosaic_105.webp",
+    "grid": {
+      "type": "square",
+      "seed": 2426210270,
+      "param": 5
+    },
+    "targets": [
+      {
+        "cellId": 23,
+        "rotation": 150
+      }
+    ],
+    "mode": {
+      "autoSnap": true,
+      "showTargetCount": false
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        1,
+        3,
+        6
+      ],
+      "time": [
+        7,
+        14,
+        28
+      ]
+    },
+    "meta": {
+      "S": 0.33,
       "C": 0.15,
-      "V_image": 0.7
+      "V_image": 0.74
     }
   },
   {
     "id": 16,
-    "difficulty": 3.7,
-    "image": "assets/img/mosaic_096.webp",
+    "difficulty": 2.4,
+    "image": "assets/img/mosaic_131.webp",
     "grid": {
       "type": "square",
       "seed": 2939948593,
@@ -650,15 +650,15 @@
       ]
     },
     "meta": {
-      "S": 0.17,
-      "C": 0.05,
-      "V_image": 0.19
+      "S": 0.37,
+      "C": 0.2,
+      "V_image": 0.62
     }
   },
   {
     "id": 17,
-    "difficulty": 3.3,
-    "image": "assets/img/mosaic_084.webp",
+    "difficulty": 2.8,
+    "image": "assets/img/mosaic_117.webp",
     "grid": {
       "type": "square",
       "seed": 1917895663,
@@ -666,8 +666,8 @@
     },
     "targets": [
       {
-        "cellId": 26,
-        "rotation": 180
+        "cellId": 30,
+        "rotation": 240
       }
     ],
     "mode": {
@@ -691,15 +691,15 @@
       ]
     },
     "meta": {
-      "S": 0.21,
-      "C": 0.1,
-      "V_image": 0.43
+      "S": 0.27,
+      "C": 0.05,
+      "V_image": 0.89
     }
   },
   {
     "id": 18,
-    "difficulty": 2.1,
-    "image": "assets/img/mosaic_072.webp",
+    "difficulty": 2.3,
+    "image": "assets/img/mosaic_100.webp",
     "grid": {
       "type": "square",
       "seed": 1274231706,
@@ -707,8 +707,8 @@
     },
     "targets": [
       {
-        "cellId": 18,
-        "rotation": 180
+        "cellId": 0,
+        "rotation": 210
       }
     ],
     "mode": {
@@ -732,15 +732,15 @@
       ]
     },
     "meta": {
-      "S": 0.5,
-      "C": 0.1,
-      "V_image": 0.7
+      "S": 0.42,
+      "C": 0.15,
+      "V_image": 0.54
     }
   },
   {
     "id": 19,
-    "difficulty": 2.5,
-    "image": "assets/img/mosaic_091.webp",
+    "difficulty": 2.9,
+    "image": "assets/img/mosaic_124.webp",
     "grid": {
       "type": "square",
       "seed": 3326524866,
@@ -748,8 +748,8 @@
     },
     "targets": [
       {
-        "cellId": 12,
-        "rotation": 60
+        "cellId": 21,
+        "rotation": 180
       }
     ],
     "mode": {
@@ -773,15 +773,15 @@
       ]
     },
     "meta": {
-      "S": 0.33,
-      "C": 0,
-      "V_image": 0.7
+      "S": 0.25,
+      "C": 0.05,
+      "V_image": 0.66
     }
   },
   {
     "id": 20,
-    "difficulty": 2,
-    "image": "assets/img/mosaic_011.webp",
+    "difficulty": 3.5,
+    "image": "assets/img/mosaic_008.webp",
     "grid": {
       "type": "hex",
       "seed": 3427507725,
@@ -789,7 +789,7 @@
     },
     "targets": [
       {
-        "cellId": 1,
+        "cellId": 5,
         "rotation": 180
       }
     ],
@@ -814,15 +814,15 @@
       ]
     },
     "meta": {
-      "S": 0.47,
-      "C": 0.15,
-      "V_image": 0.74
+      "S": 0.18,
+      "C": 0.25,
+      "V_image": 0.22
     }
   },
   {
     "id": 21,
-    "difficulty": 2.9,
-    "image": "assets/img/mosaic_060.webp",
+    "difficulty": 2.1,
+    "image": "assets/img/mosaic_082.webp",
     "grid": {
       "type": "hex",
       "seed": 2928553278,
@@ -830,8 +830,8 @@
     },
     "targets": [
       {
-        "cellId": 3,
-        "rotation": 90
+        "cellId": 12,
+        "rotation": 180
       }
     ],
     "mode": {
@@ -855,15 +855,15 @@
       ]
     },
     "meta": {
-      "S": 0.24,
+      "S": 0.41,
       "C": 0.2,
-      "V_image": 0.54
+      "V_image": 0.7
     }
   },
   {
     "id": 22,
     "difficulty": 2.6,
-    "image": "assets/img/mosaic_074.webp",
+    "image": "assets/img/mosaic_102.webp",
     "grid": {
       "type": "hex",
       "seed": 1756017019,
@@ -871,7 +871,7 @@
     },
     "targets": [
       {
-        "cellId": 9,
+        "cellId": 32,
         "rotation": 180
       }
     ],
@@ -896,15 +896,15 @@
       ]
     },
     "meta": {
-      "S": 0.29,
-      "C": 0,
-      "V_image": 0.69
+      "S": 0.32,
+      "C": 0.1,
+      "V_image": 0.52
     }
   },
   {
     "id": 23,
     "difficulty": 3.4,
-    "image": "assets/img/mosaic_100.webp",
+    "image": "assets/img/mosaic_135.webp",
     "grid": {
       "type": "hex",
       "seed": 2174395724,
@@ -912,7 +912,7 @@
     },
     "targets": [
       {
-        "cellId": 25,
+        "cellId": 1,
         "rotation": 90
       }
     ],
@@ -938,14 +938,14 @@
     },
     "meta": {
       "S": 0.2,
-      "C": 0.05,
-      "V_image": 0.7
+      "C": 0,
+      "V_image": 0.95
     }
   },
   {
     "id": 24,
-    "difficulty": 2.8,
-    "image": "assets/img/mosaic_061.webp",
+    "difficulty": 2.2,
+    "image": "assets/img/mosaic_084.webp",
     "grid": {
       "type": "hex",
       "seed": 3085001709,
@@ -953,8 +953,8 @@
     },
     "targets": [
       {
-        "cellId": 3,
-        "rotation": 180
+        "cellId": 32,
+        "rotation": 120
       }
     ],
     "mode": {
@@ -978,15 +978,15 @@
       ]
     },
     "meta": {
-      "S": 0.29,
+      "S": 0.5,
       "C": 0.1,
-      "V_image": 0.59
+      "V_image": 0.7
     }
   },
   {
     "id": 25,
-    "difficulty": 5.1,
-    "image": "assets/img/mosaic_049.webp",
+    "difficulty": 2.2,
+    "image": "assets/img/mosaic_063.webp",
     "grid": {
       "type": "hex",
       "seed": 1870359098,
@@ -994,8 +994,8 @@
     },
     "targets": [
       {
-        "cellId": 16,
-        "rotation": 180
+        "cellId": 0,
+        "rotation": 120
       }
     ],
     "mode": {
@@ -1019,15 +1019,15 @@
       ]
     },
     "meta": {
-      "S": 0.11,
-      "C": 0,
-      "V_image": 0.35
+      "S": 0.51,
+      "C": 0.2,
+      "V_image": 0.68
     }
   },
   {
     "id": 26,
-    "difficulty": 2.8,
-    "image": "assets/img/mosaic_038.webp",
+    "difficulty": 3.7,
+    "image": "assets/img/mosaic_028.webp",
     "grid": {
       "type": "tri",
       "seed": 2851537103,
@@ -1060,15 +1060,15 @@
       ]
     },
     "meta": {
-      "S": 0.24,
-      "C": 0.22,
-      "V_image": 0.18
+      "S": 0.16,
+      "C": 0.11,
+      "V_image": 0.85
     }
   },
   {
     "id": 27,
-    "difficulty": 4,
-    "image": "assets/img/mosaic_023.webp",
+    "difficulty": 2.5,
+    "image": "assets/img/mosaic_032.webp",
     "grid": {
       "type": "tri",
       "seed": 3666715381,
@@ -1076,8 +1076,8 @@
     },
     "targets": [
       {
-        "cellId": 17,
-        "rotation": 180
+        "cellId": 9,
+        "rotation": 270
       }
     ],
     "mode": {
@@ -1101,15 +1101,15 @@
       ]
     },
     "meta": {
-      "S": 0.15,
-      "C": 0.28,
-      "V_image": 0.6
+      "S": 0.29,
+      "C": 0,
+      "V_image": 0.66
     }
   },
   {
     "id": 28,
-    "difficulty": 3.9,
-    "image": "assets/img/mosaic_048.webp",
+    "difficulty": 2.4,
+    "image": "assets/img/mosaic_058.webp",
     "grid": {
       "type": "tri",
       "seed": 3009183969,
@@ -1117,7 +1117,7 @@
     },
     "targets": [
       {
-        "cellId": 29,
+        "cellId": 28,
         "rotation": 180
       }
     ],
@@ -1142,15 +1142,15 @@
       ]
     },
     "meta": {
-      "S": 0.16,
-      "C": 0.25,
-      "V_image": 0.65
+      "S": 0.41,
+      "C": 0.5,
+      "V_image": 0.94
     }
   },
   {
     "id": 29,
-    "difficulty": 2.2,
-    "image": "assets/img/mosaic_092.webp",
+    "difficulty": 3,
+    "image": "assets/img/mosaic_126.webp",
     "grid": {
       "type": "tri",
       "seed": 1746548495,
@@ -1158,8 +1158,8 @@
     },
     "targets": [
       {
-        "cellId": 23,
-        "rotation": 180
+        "cellId": 19,
+        "rotation": 135
       }
     ],
     "mode": {
@@ -1183,15 +1183,15 @@
       ]
     },
     "meta": {
-      "S": 0.48,
+      "S": 0.24,
       "C": 0,
-      "V_image": 0
+      "V_image": 0.65
     }
   },
   {
     "id": 30,
-    "difficulty": 4.3,
-    "image": "assets/img/mosaic_030.webp",
+    "difficulty": 2.4,
+    "image": "assets/img/mosaic_042.webp",
     "grid": {
       "type": "tri",
       "seed": 2377929988,
@@ -1199,7 +1199,7 @@
     },
     "targets": [
       {
-        "cellId": 16,
+        "cellId": 5,
         "rotation": 180
       }
     ],
@@ -1224,14 +1224,14 @@
       ]
     },
     "meta": {
-      "S": 0.14,
+      "S": 0.38,
       "C": 0,
-      "V_image": 0.96
+      "V_image": 0.89
     }
   },
   {
     "id": 31,
-    "difficulty": 3.2,
+    "difficulty": 1.9,
     "image": "assets/img/mosaic_003.webp",
     "grid": {
       "type": "square",
@@ -1240,11 +1240,11 @@
     },
     "targets": [
       {
-        "cellId": 0,
+        "cellId": 5,
         "rotation": 180
       },
       {
-        "cellId": 2,
+        "cellId": 4,
         "rotation": 180
       }
     ],
@@ -1269,15 +1269,15 @@
       ]
     },
     "meta": {
-      "S": 0.19,
-      "C": 0.25,
-      "V_image": 0.54
+      "S": 0.5,
+      "C": 0.5,
+      "V_image": 0.05
     }
   },
   {
     "id": 32,
-    "difficulty": 2.5,
-    "image": "assets/img/mosaic_074.webp",
+    "difficulty": 2.1,
+    "image": "assets/img/mosaic_101.webp",
     "grid": {
       "type": "square",
       "seed": 2036820299,
@@ -1285,11 +1285,11 @@
     },
     "targets": [
       {
-        "cellId": 13,
+        "cellId": 0,
         "rotation": 180
       },
       {
-        "cellId": 8,
+        "cellId": 4,
         "rotation": 180
       }
     ],
@@ -1314,15 +1314,15 @@
       ]
     },
     "meta": {
-      "S": 0.3,
-      "C": 0.15,
-      "V_image": 0.69
+      "S": 0.4,
+      "C": 0.05,
+      "V_image": 0.43
     }
   },
   {
     "id": 33,
-    "difficulty": 3.7,
-    "image": "assets/img/mosaic_015.webp",
+    "difficulty": 3,
+    "image": "assets/img/mosaic_020.webp",
     "grid": {
       "type": "hex",
       "seed": 635848483,
@@ -1330,12 +1330,527 @@
     },
     "targets": [
       {
-        "cellId": 19,
+        "cellId": 11,
         "rotation": 180
       },
       {
         "cellId": 24,
         "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        2,
+        6,
+        12
+      ],
+      "time": [
+        12,
+        24,
+        48
+      ]
+    },
+    "meta": {
+      "S": 0.24,
+      "C": 0.2,
+      "V_image": 0.47
+    }
+  },
+  {
+    "id": 34,
+    "difficulty": 3.6,
+    "image": "assets/img/mosaic_128.webp",
+    "grid": {
+      "type": "hex",
+      "seed": 4177690644,
+      "param": 4
+    },
+    "targets": [
+      {
+        "cellId": 18,
+        "rotation": 120
+      },
+      {
+        "cellId": 29,
+        "rotation": 180
+      },
+      {
+        "cellId": 34,
+        "rotation": 90
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        3,
+        9,
+        18
+      ],
+      "time": [
+        10,
+        20,
+        40
+      ]
+    },
+    "meta": {
+      "S": 0.18,
+      "C": 0,
+      "V_image": 0.66
+    }
+  },
+  {
+    "id": 35,
+    "difficulty": 2.9,
+    "image": "assets/img/mosaic_074.webp",
+    "grid": {
+      "type": "square",
+      "seed": 1494878114,
+      "param": 4
+    },
+    "targets": [
+      {
+        "cellId": 12,
+        "rotation": 180
+      },
+      {
+        "cellId": 4,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        2,
+        6,
+        12
+      ],
+      "time": [
+        14,
+        28,
+        55
+      ]
+    },
+    "meta": {
+      "S": 0.23,
+      "C": 0.38,
+      "V_image": 0.53
+    }
+  },
+  {
+    "id": 36,
+    "difficulty": 2.2,
+    "image": "assets/img/mosaic_067.webp",
+    "grid": {
+      "type": "square",
+      "seed": 36453298,
+      "param": 5
+    },
+    "targets": [
+      {
+        "cellId": 21,
+        "rotation": 150
+      },
+      {
+        "cellId": 24,
+        "rotation": 30
+      },
+      {
+        "cellId": 13,
+        "rotation": 210
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        3,
+        9,
+        18
+      ],
+      "time": [
+        10,
+        20,
+        40
+      ]
+    },
+    "meta": {
+      "S": 0.44,
+      "C": 0.35,
+      "V_image": 0.71
+    }
+  },
+  {
+    "id": 37,
+    "difficulty": 2.3,
+    "image": "assets/img/mosaic_015.webp",
+    "grid": {
+      "type": "tri",
+      "seed": 823872297,
+      "param": 4
+    },
+    "targets": [
+      {
+        "cellId": 27,
+        "rotation": 180
+      },
+      {
+        "cellId": 11,
+        "rotation": 90
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        2,
+        6,
+        12
+      ],
+      "time": [
+        12,
+        24,
+        48
+      ]
+    },
+    "meta": {
+      "S": 0.43,
+      "C": 0.15,
+      "V_image": 0.77
+    }
+  },
+  {
+    "id": 38,
+    "difficulty": 1.9,
+    "image": "assets/img/mosaic_068.webp",
+    "grid": {
+      "type": "voronoi",
+      "seed": 885318069,
+      "param": 12
+    },
+    "targets": [
+      {
+        "cellId": 4,
+        "rotation": 180
+      },
+      {
+        "cellId": 7,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        2,
+        6,
+        12
+      ],
+      "time": [
+        14,
+        28,
+        55
+      ]
+    },
+    "meta": {
+      "S": 0.4,
+      "C": 0.11,
+      "V_image": 0.7
+    }
+  },
+  {
+    "id": 39,
+    "difficulty": 2.4,
+    "image": "assets/img/mosaic_116.webp",
+    "grid": {
+      "type": "voronoi",
+      "seed": 1090059501,
+      "param": 16
+    },
+    "targets": [
+      {
+        "cellId": 11,
+        "rotation": 180
+      },
+      {
+        "cellId": 4,
+        "rotation": 90
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        2,
+        6,
+        12
+      ],
+      "time": [
+        12,
+        24,
+        48
+      ]
+    },
+    "meta": {
+      "S": 0.35,
+      "C": 0.25,
+      "V_image": 0.92
+    }
+  },
+  {
+    "id": 40,
+    "difficulty": 2.1,
+    "image": "assets/img/mosaic_016.webp",
+    "grid": {
+      "type": "voronoi",
+      "seed": 1398763858,
+      "param": 20
+    },
+    "targets": [
+      {
+        "cellId": 13,
+        "rotation": 180
+      },
+      {
+        "cellId": 14,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        2,
+        6,
+        12
+      ],
+      "time": [
+        10,
+        20,
+        40
+      ]
+    },
+    "meta": {
+      "S": 0.46,
+      "C": 0,
+      "V_image": 0
+    }
+  },
+  {
+    "id": 41,
+    "difficulty": 3.8,
+    "image": "assets/img/mosaic_073.webp",
+    "grid": {
+      "type": "voronoi",
+      "seed": 4034204342,
+      "param": 20
+    },
+    "targets": [
+      {
+        "cellId": 9,
+        "rotation": 180
+      },
+      {
+        "cellId": 6,
+        "rotation": 180
+      },
+      {
+        "cellId": 2,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        3,
+        9,
+        18
+      ],
+      "time": [
+        10,
+        20,
+        40
+      ]
+    },
+    "meta": {
+      "S": 0.16,
+      "C": 0,
+      "V_image": 0.94
+    }
+  },
+  {
+    "id": 42,
+    "difficulty": 4,
+    "image": "assets/img/mosaic_028.webp",
+    "grid": {
+      "type": "voronoi",
+      "seed": 3806699249,
+      "param": 24
+    },
+    "targets": [
+      {
+        "cellId": 6,
+        "rotation": 225
+      },
+      {
+        "cellId": 1,
+        "rotation": 270
+      },
+      {
+        "cellId": 13,
+        "rotation": 30
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        3,
+        9,
+        18
+      ],
+      "time": [
+        8,
+        16,
+        32
+      ]
+    },
+    "meta": {
+      "S": 0.16,
+      "C": 0.3,
+      "V_image": 0.85
+    }
+  },
+  {
+    "id": 43,
+    "difficulty": 3.6,
+    "image": "assets/img/mosaic_140.webp",
+    "grid": {
+      "type": "voronoi",
+      "seed": 2220360470,
+      "param": 28
+    },
+    "targets": [
+      {
+        "cellId": 11,
+        "rotation": 180
+      },
+      {
+        "cellId": 22,
+        "rotation": 180
+      },
+      {
+        "cellId": 13,
+        "rotation": 180
+      }
+    ],
+    "mode": {
+      "autoSnap": false,
+      "showTargetCount": true
+    },
+    "limits": {
+      "timeLimit": null,
+      "hints": 1
+    },
+    "star": {
+      "clicks": [
+        3,
+        9,
+        18
+      ],
+      "time": [
+        8,
+        16,
+        32
+      ]
+    },
+    "meta": {
+      "S": 0.18,
+      "C": 0,
+      "V_image": 0.11
+    }
+  },
+  {
+    "id": 44,
+    "difficulty": 3.6,
+    "image": "assets/img/mosaic_050.webp",
+    "grid": {
+      "type": "square",
+      "seed": 3165207350,
+      "param": 5
+    },
+    "targets": [
+      {
+        "cellId": 16,
+        "rotation": 187
+      },
+      {
+        "cellId": 15,
+        "rotation": 173
       }
     ],
     "mode": {
@@ -1360,529 +1875,14 @@
     },
     "meta": {
       "S": 0.17,
-      "C": 0.1,
-      "V_image": 0.24
-    }
-  },
-  {
-    "id": 34,
-    "difficulty": 5.9,
-    "image": "assets/img/mosaic_095.webp",
-    "grid": {
-      "type": "hex",
-      "seed": 4177690644,
-      "param": 4
-    },
-    "targets": [
-      {
-        "cellId": 5,
-        "rotation": 180
-      },
-      {
-        "cellId": 12,
-        "rotation": 210
-      },
-      {
-        "cellId": 9,
-        "rotation": 180
-      }
-    ],
-    "mode": {
-      "autoSnap": false,
-      "showTargetCount": true
-    },
-    "limits": {
-      "timeLimit": null,
-      "hints": 1
-    },
-    "star": {
-      "clicks": [
-        3,
-        9,
-        18
-      ],
-      "time": [
-        10,
-        20,
-        40
-      ]
-    },
-    "meta": {
-      "S": 0.09,
       "C": 0,
-      "V_image": 0.68
-    }
-  },
-  {
-    "id": 35,
-    "difficulty": 3.6,
-    "image": "assets/img/mosaic_056.webp",
-    "grid": {
-      "type": "square",
-      "seed": 1494878114,
-      "param": 4
-    },
-    "targets": [
-      {
-        "cellId": 13,
-        "rotation": 270
-      },
-      {
-        "cellId": 4,
-        "rotation": 90
-      }
-    ],
-    "mode": {
-      "autoSnap": false,
-      "showTargetCount": true
-    },
-    "limits": {
-      "timeLimit": null,
-      "hints": 1
-    },
-    "star": {
-      "clicks": [
-        2,
-        6,
-        12
-      ],
-      "time": [
-        14,
-        28,
-        55
-      ]
-    },
-    "meta": {
-      "S": 0.16,
-      "C": 0.25,
-      "V_image": 0.68
-    }
-  },
-  {
-    "id": 36,
-    "difficulty": 4.6,
-    "image": "assets/img/mosaic_052.webp",
-    "grid": {
-      "type": "square",
-      "seed": 36453298,
-      "param": 5
-    },
-    "targets": [
-      {
-        "cellId": 12,
-        "rotation": 180
-      },
-      {
-        "cellId": 3,
-        "rotation": 180
-      },
-      {
-        "cellId": 21,
-        "rotation": 180
-      }
-    ],
-    "mode": {
-      "autoSnap": false,
-      "showTargetCount": true
-    },
-    "limits": {
-      "timeLimit": null,
-      "hints": 1
-    },
-    "star": {
-      "clicks": [
-        3,
-        9,
-        18
-      ],
-      "time": [
-        10,
-        20,
-        40
-      ]
-    },
-    "meta": {
-      "S": 0.12,
-      "C": 0,
-      "V_image": 0.68
-    }
-  },
-  {
-    "id": 37,
-    "difficulty": 2.7,
-    "image": "assets/img/mosaic_012.webp",
-    "grid": {
-      "type": "tri",
-      "seed": 823872297,
-      "param": 4
-    },
-    "targets": [
-      {
-        "cellId": 17,
-        "rotation": 180
-      },
-      {
-        "cellId": 7,
-        "rotation": 180
-      }
-    ],
-    "mode": {
-      "autoSnap": false,
-      "showTargetCount": true
-    },
-    "limits": {
-      "timeLimit": null,
-      "hints": 1
-    },
-    "star": {
-      "clicks": [
-        2,
-        6,
-        12
-      ],
-      "time": [
-        12,
-        24,
-        48
-      ]
-    },
-    "meta": {
-      "S": 0.29,
-      "C": 0,
-      "V_image": 0
-    }
-  },
-  {
-    "id": 38,
-    "difficulty": 4.7,
-    "image": "assets/img/mosaic_053.webp",
-    "grid": {
-      "type": "voronoi",
-      "seed": 885318069,
-      "param": 12
-    },
-    "targets": [
-      {
-        "cellId": 7,
-        "rotation": 90
-      },
-      {
-        "cellId": 5,
-        "rotation": 180
-      }
-    ],
-    "mode": {
-      "autoSnap": false,
-      "showTargetCount": true
-    },
-    "limits": {
-      "timeLimit": null,
-      "hints": 1
-    },
-    "star": {
-      "clicks": [
-        2,
-        6,
-        12
-      ],
-      "time": [
-        14,
-        28,
-        55
-      ]
-    },
-    "meta": {
-      "S": 0.11,
-      "C": 0.11,
-      "V_image": 0.47
-    }
-  },
-  {
-    "id": 39,
-    "difficulty": 6.3,
-    "image": "assets/img/mosaic_082.webp",
-    "grid": {
-      "type": "voronoi",
-      "seed": 1090059501,
-      "param": 16
-    },
-    "targets": [
-      {
-        "cellId": 15,
-        "rotation": 180
-      },
-      {
-        "cellId": 13,
-        "rotation": 180
-      }
-    ],
-    "mode": {
-      "autoSnap": false,
-      "showTargetCount": true
-    },
-    "limits": {
-      "timeLimit": null,
-      "hints": 1
-    },
-    "star": {
-      "clicks": [
-        2,
-        6,
-        12
-      ],
-      "time": [
-        12,
-        24,
-        48
-      ]
-    },
-    "meta": {
-      "S": 0.08,
-      "C": 0,
-      "V_image": 0.08
-    }
-  },
-  {
-    "id": 40,
-    "difficulty": 3.1,
-    "image": "assets/img/mosaic_013.webp",
-    "grid": {
-      "type": "voronoi",
-      "seed": 1398763858,
-      "param": 20
-    },
-    "targets": [
-      {
-        "cellId": 12,
-        "rotation": 180
-      },
-      {
-        "cellId": 9,
-        "rotation": 180
-      }
-    ],
-    "mode": {
-      "autoSnap": false,
-      "showTargetCount": true
-    },
-    "limits": {
-      "timeLimit": null,
-      "hints": 1
-    },
-    "star": {
-      "clicks": [
-        2,
-        6,
-        12
-      ],
-      "time": [
-        10,
-        20,
-        40
-      ]
-    },
-    "meta": {
-      "S": 0.21,
-      "C": 0,
-      "V_image": 0.47
-    }
-  },
-  {
-    "id": 41,
-    "difficulty": 4,
-    "image": "assets/img/mosaic_056.webp",
-    "grid": {
-      "type": "voronoi",
-      "seed": 4034204342,
-      "param": 20
-    },
-    "targets": [
-      {
-        "cellId": 7,
-        "rotation": 180
-      },
-      {
-        "cellId": 6,
-        "rotation": 150
-      },
-      {
-        "cellId": 9,
-        "rotation": 150
-      }
-    ],
-    "mode": {
-      "autoSnap": false,
-      "showTargetCount": true
-    },
-    "limits": {
-      "timeLimit": null,
-      "hints": 1
-    },
-    "star": {
-      "clicks": [
-        3,
-        9,
-        18
-      ],
-      "time": [
-        10,
-        20,
-        40
-      ]
-    },
-    "meta": {
-      "S": 0.15,
-      "C": 0.13,
-      "V_image": 0.68
-    }
-  },
-  {
-    "id": 42,
-    "difficulty": 2.6,
-    "image": "assets/img/mosaic_022.webp",
-    "grid": {
-      "type": "voronoi",
-      "seed": 3806699249,
-      "param": 24
-    },
-    "targets": [
-      {
-        "cellId": 23,
-        "rotation": 180
-      },
-      {
-        "cellId": 17,
-        "rotation": 150
-      },
-      {
-        "cellId": 10,
-        "rotation": 90
-      }
-    ],
-    "mode": {
-      "autoSnap": false,
-      "showTargetCount": true
-    },
-    "limits": {
-      "timeLimit": null,
-      "hints": 1
-    },
-    "star": {
-      "clicks": [
-        3,
-        9,
-        18
-      ],
-      "time": [
-        8,
-        16,
-        32
-      ]
-    },
-    "meta": {
-      "S": 0.33,
-      "C": 0.15,
-      "V_image": 0.7
-    }
-  },
-  {
-    "id": 43,
-    "difficulty": 2.1,
-    "image": "assets/img/mosaic_006.webp",
-    "grid": {
-      "type": "voronoi",
-      "seed": 2220360470,
-      "param": 28
-    },
-    "targets": [
-      {
-        "cellId": 4,
-        "rotation": 180
-      },
-      {
-        "cellId": 6,
-        "rotation": 150
-      },
-      {
-        "cellId": 11,
-        "rotation": 90
-      }
-    ],
-    "mode": {
-      "autoSnap": false,
-      "showTargetCount": true
-    },
-    "limits": {
-      "timeLimit": null,
-      "hints": 1
-    },
-    "star": {
-      "clicks": [
-        3,
-        9,
-        18
-      ],
-      "time": [
-        8,
-        16,
-        32
-      ]
-    },
-    "meta": {
-      "S": 0.49,
-      "C": 0,
-      "V_image": 0.72
-    }
-  },
-  {
-    "id": 44,
-    "difficulty": 2,
-    "image": "assets/img/mosaic_040.webp",
-    "grid": {
-      "type": "square",
-      "seed": 3165207350,
-      "param": 5
-    },
-    "targets": [
-      {
-        "cellId": 24,
-        "rotation": 187
-      },
-      {
-        "cellId": 19,
-        "rotation": 166
-      }
-    ],
-    "mode": {
-      "autoSnap": false,
-      "showTargetCount": true
-    },
-    "limits": {
-      "timeLimit": null,
-      "hints": 1
-    },
-    "star": {
-      "clicks": [
-        2,
-        6,
-        12
-      ],
-      "time": [
-        12,
-        24,
-        48
-      ]
-    },
-    "meta": {
-      "S": 0.49,
-      "C": 0,
-      "V_image": 0.11
+      "V_image": 0.67
     }
   },
   {
     "id": 45,
     "difficulty": 2.8,
-    "image": "assets/img/mosaic_037.webp",
+    "image": "assets/img/mosaic_155.webp",
     "grid": {
       "type": "hex",
       "seed": 4189370177,
@@ -1890,15 +1890,15 @@
     },
     "targets": [
       {
-        "cellId": 21,
+        "cellId": 8,
         "rotation": 180
       },
       {
-        "cellId": 28,
-        "rotation": 90
+        "cellId": 7,
+        "rotation": 180
       },
       {
-        "cellId": 26,
+        "cellId": 4,
         "rotation": 90
       }
     ],
@@ -1923,15 +1923,15 @@
       ]
     },
     "meta": {
-      "S": 0.28,
-      "C": 0,
-      "V_image": 0.71
+      "S": 0.29,
+      "C": 0.15,
+      "V_image": 0.68
     }
   },
   {
     "id": 46,
-    "difficulty": 2.5,
-    "image": "assets/img/mosaic_083.webp",
+    "difficulty": 2.8,
+    "image": "assets/img/mosaic_174.webp",
     "grid": {
       "type": "voronoi",
       "seed": 2882415108,
@@ -1939,15 +1939,15 @@
     },
     "targets": [
       {
-        "cellId": 22,
+        "cellId": 19,
         "rotation": 166
       },
       {
-        "cellId": 5,
-        "rotation": 173
+        "cellId": 8,
+        "rotation": 187
       },
       {
-        "cellId": 4,
+        "cellId": 0,
         "rotation": 173
       }
     ],
@@ -1972,15 +1972,15 @@
       ]
     },
     "meta": {
-      "S": 0.4,
-      "C": 0.25,
-      "V_image": 0.74
+      "S": 0.29,
+      "C": 0.05,
+      "V_image": 0.7
     }
   },
   {
     "id": 47,
-    "difficulty": 2.5,
-    "image": "assets/img/mosaic_070.webp",
+    "difficulty": 2.8,
+    "image": "assets/img/mosaic_094.webp",
     "grid": {
       "type": "square",
       "seed": 2656339315,
@@ -1988,11 +1988,11 @@
     },
     "targets": [
       {
-        "cellId": 3,
+        "cellId": 1,
         "rotation": 180
       },
       {
-        "cellId": 1,
+        "cellId": 6,
         "rotation": 180
       }
     ],
@@ -2017,15 +2017,15 @@
       ]
     },
     "meta": {
-      "S": 0.27,
-      "C": 0.13,
-      "V_image": 0.21
+      "S": 0.22,
+      "C": 0,
+      "V_image": 0.67
     }
   },
   {
     "id": 48,
-    "difficulty": 2.4,
-    "image": "assets/img/mosaic_017.webp",
+    "difficulty": 2.6,
+    "image": "assets/img/mosaic_144.webp",
     "grid": {
       "type": "hex",
       "seed": 2469087063,
@@ -2037,11 +2037,11 @@
         "rotation": 180
       },
       {
-        "cellId": 24,
+        "cellId": 4,
         "rotation": 180
       },
       {
-        "cellId": 10,
+        "cellId": 31,
         "rotation": 180
       }
     ],
@@ -2066,15 +2066,15 @@
       ]
     },
     "meta": {
-      "S": 0.44,
-      "C": 0.05,
-      "V_image": 0.74
+      "S": 0.34,
+      "C": 0,
+      "V_image": 0.7
     }
   },
   {
     "id": 49,
-    "difficulty": 2.4,
-    "image": "assets/img/mosaic_036.webp",
+    "difficulty": 4.4,
+    "image": "assets/img/mosaic_157.webp",
     "grid": {
       "type": "voronoi",
       "seed": 2103678734,
@@ -2082,15 +2082,15 @@
     },
     "targets": [
       {
+        "cellId": 6,
+        "rotation": 166
+      },
+      {
         "cellId": 1,
-        "rotation": 187
+        "rotation": 14
       },
       {
-        "cellId": 20,
-        "rotation": 187
-      },
-      {
-        "cellId": 10,
+        "cellId": 12,
         "rotation": 166
       }
     ],
@@ -2115,15 +2115,15 @@
       ]
     },
     "meta": {
-      "S": 0.4,
-      "C": 0.1,
-      "V_image": 0.68
+      "S": 0.14,
+      "C": 0.2,
+      "V_image": 0.72
     }
   },
   {
     "id": 50,
-    "difficulty": 3.3,
-    "image": "assets/img/mosaic_097.webp",
+    "difficulty": 8.7,
+    "image": "assets/img/mosaic_184.webp",
     "grid": {
       "type": "voronoi",
       "seed": 1737418662,
@@ -2131,16 +2131,16 @@
     },
     "targets": [
       {
-        "cellId": 7,
+        "cellId": 6,
+        "rotation": 166
+      },
+      {
+        "cellId": 10,
         "rotation": 173
       },
       {
-        "cellId": 2,
+        "cellId": 15,
         "rotation": 194
-      },
-      {
-        "cellId": 14,
-        "rotation": 187
       }
     ],
     "mode": {
@@ -2164,9 +2164,9 @@
       ]
     },
     "meta": {
-      "S": 0.21,
-      "C": 0.05,
-      "V_image": 0.7
+      "S": 0.01,
+      "C": 0.95,
+      "V_image": 0.5
     }
   }
 ]

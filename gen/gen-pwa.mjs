@@ -66,23 +66,30 @@ const manifest = {
 fs.writeFileSync(path.resolve(PUBLIC, "manifest.json"), JSON.stringify(manifest, null, 2));
 console.log("Generated manifest.json");
 
-// ---- Service Worker ----
-const sw = `const CACHE = "odd-rotation-v1";
+// ---- Service Worker (network-first: always serve fresh, cache as offline fallback) ----
+const sw = `const CACHE = "odd-rotation-v2";
 self.addEventListener("install", (e) => {
   self.skipWaiting();
 });
 self.addEventListener("activate", (e) => {
-  e.waitUntil(clients.claim());
+  e.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+    ).then(() => clients.claim())
+  );
 });
 self.addEventListener("fetch", (e) => {
+  if (e.request.method !== "GET") return;
   e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request).then(res => {
-      if (e.request.url.startsWith(self.location.origin + "/")) {
+    fetch(e.request)
+      .then(res => {
         const clone = res.clone();
-        caches.open(CACHE).then(c => c.put(e.request, clone));
-      }
-      return res;
-    }))
+        if (e.request.url.startsWith(self.location.origin + "/")) {
+          caches.open(CACHE).then(c => c.put(e.request, clone));
+        }
+        return res;
+      })
+      .catch(() => caches.match(e.request))
   );
 });
 `;
@@ -97,8 +104,15 @@ if (!html.includes('rel="manifest"')) {
   html = html.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n<link rel="manifest" href="./manifest.json">\n<meta name="apple-mobile-web-app-capable" content="yes">');
 }
 // Add service worker registration
-if (!html.includes('register("sw.js")')) {
-  html = html.replace('</body>', '<script>navigator.serviceWorker?.register("sw.js");</script>\n</body>');
+const swSnippet = `<script>
+if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+  navigator.serviceWorker?.getRegistrations().then(rs => rs.forEach(r => r.unregister()));
+} else {
+  navigator.serviceWorker?.register("sw.js");
+}
+</script>`;
+if (!html.includes('serviceWorker')) {
+  html = html.replace('</body>', swSnippet + '\n</body>');
 }
 fs.writeFileSync(indexPath, html);
 console.log("Updated index.html");
@@ -110,7 +124,9 @@ if (fs.existsSync(gameHtmlPath)) {
   if (!ghtml.includes('rel="manifest"')) {
     ghtml = ghtml.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n<link rel="manifest" href="./manifest.json">\n<meta name="apple-mobile-web-app-capable" content="yes">');
   }
-  ghtml = ghtml.replace('</body>', '<script>navigator.serviceWorker?.register("sw.js");</script>\n</body>');
+  if (!ghtml.includes('serviceWorker')) {
+    ghtml = ghtml.replace('</body>', swSnippet + '\n</body>');
+  }
   fs.writeFileSync(gameHtmlPath, ghtml);
   console.log("Updated game.html");
 }

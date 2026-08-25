@@ -2,7 +2,7 @@ const KEY = "odd-rotation-v1";
 
 interface SaveData {
   campaign: { unlocked: number; stars: Record<string, { clicks: number; time: number; stars: number }>; attempts: Record<string, number> };
-  arcade: { bestScore: number; bestCombo: number };
+  arcade: { bestScore: number; bestCombo: number; time: number; minVar: number };
   daily: { date: string; firstTimeMs: number | null; bestTimeMs: number | null; played: boolean };
   intro: boolean;
 }
@@ -10,7 +10,7 @@ interface SaveData {
 function defaults(): SaveData {
   return {
     campaign: { unlocked: 1, stars: {}, attempts: {} },
-    arcade: { bestScore: 0, bestCombo: 0 },
+    arcade: { bestScore: 0, bestCombo: 0, time: 8, minVar: 0.15 },
     daily: { date: "", firstTimeMs: null, bestTimeMs: null, played: false },
     intro: false
   };
@@ -70,6 +70,24 @@ export function setArcadeResult(score: number, combo: number): void {
 
 export function getArcadeBest(): { bestScore: number; bestCombo: number } {
   return data.arcade;
+}
+
+export function getArcadeTime(): number {
+  return data.arcade.time ?? 8;
+}
+
+export function setArcadeTime(t: number): void {
+  data.arcade.time = t;
+  save();
+}
+
+export function getArcadeMinVar(): number {
+  return data.arcade.minVar ?? 0.15;
+}
+
+export function setArcadeMinVar(k: number): void {
+  data.arcade.minVar = k;
+  save();
 }
 
 export function getDailyState(): { date: string; firstTimeMs: number | null; bestTimeMs: number | null; played: boolean } {
