@@ -222,7 +222,13 @@ export class ArcadeSession {
     if (this.comboBroken && items.combo_restore > 0) invHtml.push(`<button class="btn btn-xs" id="item-combo-restore" style="padding:4px 8px;font-size:12px;border-radius:8px;background:#ffd94d;color:#000;border:none">恢复连击 x${items.combo_restore}</button>`);
     this.hudEl.innerHTML = `
       <div class="hud-top">
-        <div class="hud-grid">${gridLabel} · ${this.totalLevels + 1}</div>
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:4px">
+          <div class="hud-grid">${gridLabel} · ${this.totalLevels + 1}</div>
+          <div style="display:flex;gap:4px;flex-wrap:wrap">
+            ${invHtml.join("")}
+            <button class="btn btn-xs" id="skip-btn" style="padding:4px 10px;font-size:11px;border-radius:6px;background:#22262e;color:#e9ecf2;border:none">跳过</button>
+          </div>
+        </div>
         <div class="hud-combo">${this.combo > 0 ? `x${this.combo}` : ""}</div>
         <div class="hud-score">${this.score}</div>
       </div>
@@ -230,10 +236,6 @@ export class ArcadeSession {
         <div class="hud-timer">
           <div class="hud-timer-bar ${pct < 30 ? "danger" : ""}" style="width:${pct}%"></div>
         </div>
-      </div>
-      <div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap;padding:4px 16px 0">
-        ${invHtml.join("")}
-        <button class="btn btn-sm" id="skip-btn" style="padding:4px 12px;font-size:12px;border-radius:8px">跳过</button>
       </div>`;
   }
 
