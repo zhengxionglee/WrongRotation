@@ -1,5 +1,13 @@
 const KEY = "odd-rotation-v1";
 
+export interface ItemInventory {
+  combo_shield: number;
+  combo_restore: number;
+  time_15: number;
+  time_30: number;
+  time_60: number;
+}
+
 interface SaveData {
   campaign: { unlocked: number; stars: Record<string, { clicks: number; time: number; stars: number }>; attempts: Record<string, number> };
   arcade: { bestScore: number; bestCombo: number; time: number; minVar: number };
@@ -7,6 +15,7 @@ interface SaveData {
   intro: boolean;
   badges: string[];
   maxRevives: number;
+  items: ItemInventory;
 }
 
 function defaults(): SaveData {
@@ -16,7 +25,8 @@ function defaults(): SaveData {
     daily: { date: "", firstTimeMs: null, bestTimeMs: null, played: false },
     intro: false,
     badges: [],
-    maxRevives: 1
+    maxRevives: 1,
+    items: { combo_shield: 0, combo_restore: 0, time_15: 0, time_30: 0, time_60: 0 }
   };
 }
 
@@ -151,4 +161,22 @@ export function getMaxRevives(): number {
 export function setMaxRevives(n: number): void {
   data.maxRevives = Math.max(data.maxRevives ?? 1, n);
   save();
+}
+
+export function getItems(): ItemInventory {
+  return { ...(data.items ?? defaults().items) };
+}
+
+export function addItem(item: keyof ItemInventory, count: number): void {
+  if (!data.items) data.items = { ...defaults().items };
+  data.items[item] = (data.items[item] ?? 0) + count;
+  save();
+}
+
+export function useItem(item: keyof ItemInventory): boolean {
+  if (!data.items) data.items = { ...defaults().items };
+  if ((data.items[item] ?? 0) <= 0) return false;
+  data.items[item]--;
+  save();
+  return true;
 }

@@ -64,9 +64,10 @@ export class ArcadeSession {
   private recentImages: number[] = [];
   private totalLevels = 0;
   private lastUpdate = 0;
-  private revived = false;
   private revivesUsed = 0;
   private maxRevives = 1;
+  private lastCombo = 0;
+  private comboBroken = false;
 
   constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, onExit: () => void) {
     this.canvas = canvas;
@@ -79,7 +80,13 @@ export class ArcadeSession {
     this._renderer.layout(canvas.width, canvas.height, 80);
     this.hudEl.addEventListener("pointerdown", (e) => {
       const t = e.target as HTMLElement | null;
-      if (t && t.closest && t.closest("#skip-btn")) this.skip();
+      if (t && t.closest) {
+        if (t.closest("#skip-btn")) this.skip();
+        if (t.closest("#item-time-15")) this.useTimeItem("time_15");
+        if (t.closest("#item-time-30")) this.useTimeItem("time_30");
+        if (t.closest("#item-time-60")) this.useTimeItem("time_60");
+        if (t.closest("#item-combo-restore")) this.useComboRestore();
+      }
     });
   }
 
@@ -87,9 +94,10 @@ export class ArcadeSession {
     this.combo = 0;
     this.score = 0;
     this.totalLevels = 0;
-    this.revived = false;
     this.revivesUsed = 0;
     this.maxRevives = save.getMaxRevives();
+    this.lastCombo = 0;
+    this.comboBroken = false;
     this.timeScale = save.getArcadeTime() / 8;
     this.timeLeft = save.getArcadeTime();
     this.running = true;
@@ -206,6 +214,12 @@ export class ArcadeSession {
     const pct = this.currentLevel ? Math.max(0, this.timeLeft / (this.currentLevel.params.timeLimit * this.timeScale)) * 100 : 100;
     const g = this.currentLevel?.grid;
     const gridLabel = g ? (g.type === "square" ? `${g.param}×${g.param}` : `${g.cells.length}`) : "";
+    const items = save.getItems();
+    const invHtml = [];
+    if (items.time_15 > 0) invHtml.push(`<button class="btn btn-xs" id="item-time-15" style="padding:4px 8px;font-size:12px;border-radius:8px;background:#4ecdc4;color:#000;border:none">+15s x${items.time_15}</button>`);
+    if (items.time_30 > 0) invHtml.push(`<button class="btn btn-xs" id="item-time-30" style="padding:4px 8px;font-size:12px;border-radius:8px;background:#4ecdc4;color:#000;border:none">+30s x${items.time_30}</button>`);
+    if (items.time_60 > 0) invHtml.push(`<button class="btn btn-xs" id="item-time-60" style="padding:4px 8px;font-size:12px;border-radius:8px;background:#4ecdc4;color:#000;border:none">+60s x${items.time_60}</button>`);
+    if (this.comboBroken && items.combo_restore > 0) invHtml.push(`<button class="btn btn-xs" id="item-combo-restore" style="padding:4px 8px;font-size:12px;border-radius:8px;background:#ffd94d;color:#000;border:none">恢复连击 x${items.combo_restore}</button>`);
     this.hudEl.innerHTML = `
       <div class="hud-top">
         <div class="hud-grid">${gridLabel} · ${this.totalLevels + 1}</div>
@@ -216,6 +230,9 @@ export class ArcadeSession {
         <div class="hud-timer">
           <div class="hud-timer-bar ${pct < 30 ? "danger" : ""}" style="width:${pct}%"></div>
         </div>
+      </div>
+      <div style="position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 14px + 38px);left:0;right:0;display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+        ${invHtml.join("")}
       </div>
       <div style="position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);left:0;right:0;display:flex;justify-content:center;">
         <button class="btn btn-sm" id="skip-btn">跳过</button>
@@ -238,12 +255,15 @@ export class ArcadeSession {
         this.currentLevel!.rotation = startRot * (1 - t);
       }, () => {
         this.checkMilestone();
+        this.checkComboMilestone();
         this.advance();
       });
     } else {
-      sfx.wrong();
-      this.timeLeft -= 1.5;
+      this.lastCombo = this.combo;
       this.combo = 0;
+      this.comboBroken = true;
+      this.timeLeft -= 1.5;
+      sfx.wrong();
       this.flashType = "wrong";
       this.flashTimer = 300;
     }
@@ -270,17 +290,17 @@ export class ArcadeSession {
   }
 
   private checkMilestone() {
-    if (this.revived) return;
     const n = this.totalLevels;
     if (n === 10) {
       this.maxRevives++;
       save.setMaxRevives(this.maxRevives);
+      save.addItem("time_15", 2);
       showModal(`
         <div class="overlay" style="background:rgba(0,0,0,.45)">
           <div class="overlay-panel">
             <div class="big" style="font-size:28px;color:#ffd94d">太棒了！</div>
             <div class="label">已突破 10 关，继续加油！</div>
-            <div class="label" style="color:#4ecdc4;margin-top:8px">复活次数 +1</div>
+            <div class="label" style="color:#4ecdc4;margin-top:8px">复活次数 +1 · +15s 道具 x2</div>
             <button class="btn btn-primary" id="milestone-ok-btn">继续</button>
           </div>
         </div>`);
@@ -288,12 +308,13 @@ export class ArcadeSession {
     } else if (n === 25) {
       this.maxRevives++;
       save.setMaxRevives(this.maxRevives);
+      save.addItem("combo_shield", 1);
       showModal(`
         <div class="overlay" style="background:rgba(0,0,0,.45)">
           <div class="overlay-panel">
             <div class="big" style="font-size:28px;color:#ffd94d">火力全开！</div>
             <div class="label">已突破 25 关，状态极佳！</div>
-            <div class="label" style="color:#4ecdc4;margin-top:8px">复活次数 +1</div>
+            <div class="label" style="color:#4ecdc4;margin-top:8px">复活次数 +1 · 连击护盾 x1</div>
             <button class="btn btn-primary" id="milestone-ok-btn">继续</button>
           </div>
         </div>`);
@@ -302,12 +323,13 @@ export class ArcadeSession {
       save.addBadge("arcade_50");
       this.maxRevives++;
       save.setMaxRevives(this.maxRevives);
+      save.addItem("time_30", 2);
       showModal(`
         <div class="overlay" style="background:rgba(0,0,0,.45)">
           <div class="overlay-panel">
             <div class="big" style="font-size:28px;color:#ffd94d">传奇街机手！</div>
             <div class="label">已突破 50 关，你是传奇！</div>
-            <div class="label" style="color:#4ecdc4;margin-top:8px">复活次数 +1 · 获得徽章 🏆</div>
+            <div class="label" style="color:#4ecdc4;margin-top:8px">复活次数 +1 · +30s 道具 x2 · 🏆</div>
             <button class="btn btn-primary" id="milestone-ok-btn">继续</button>
           </div>
         </div>`);
@@ -315,17 +337,118 @@ export class ArcadeSession {
     } else if (n > 50 && n % 25 === 0) {
       this.maxRevives++;
       save.setMaxRevives(this.maxRevives);
+      save.addItem("combo_restore", 1);
       showModal(`
         <div class="overlay" style="background:rgba(0,0,0,.45)">
           <div class="overlay-panel">
             <div class="big" style="font-size:28px;color:#ffd94d">势不可挡！</div>
             <div class="label">已突破 ${n} 关，无人能挡！</div>
-            <div class="label" style="color:#4ecdc4;margin-top:8px">复活次数 +1</div>
+            <div class="label" style="color:#4ecdc4;margin-top:8px">复活次数 +1 · 连击恢复 x1</div>
             <button class="btn btn-primary" id="milestone-ok-btn">继续</button>
           </div>
         </div>`);
       document.getElementById("milestone-ok-btn")!.onclick = () => hideModal();
     }
+  }
+
+  private checkComboMilestone() {
+    const c = this.combo;
+    if (c === 5) {
+      save.addItem("time_15", 1);
+      showModal(`
+        <div class="overlay" style="background:rgba(0,0,0,.45)">
+          <div class="overlay-panel">
+            <div class="big" style="font-size:28px;color:#ffd94d">5 连击！</div>
+            <div class="label">手感火热，获得 +15s 道具 x1</div>
+            <button class="btn btn-primary" id="combo-ok-btn">继续</button>
+          </div>
+        </div>`);
+      document.getElementById("combo-ok-btn")!.onclick = () => hideModal();
+    } else if (c === 10) {
+      save.addItem("combo_shield", 1);
+      showModal(`
+        <div class="overlay" style="background:rgba(0,0,0,.45)">
+          <div class="overlay-panel">
+            <div class="big" style="font-size:28px;color:#ffd94d">10 连击！</div>
+            <div class="label">势如破竹，获得连击护盾 x1</div>
+            <button class="btn btn-primary" id="combo-ok-btn">继续</button>
+          </div>
+        </div>`);
+      document.getElementById("combo-ok-btn")!.onclick = () => hideModal();
+    } else if (c === 20) {
+      save.addItem("time_30", 1);
+      showModal(`
+        <div class="overlay" style="background:rgba(0,0,0,.45)">
+          <div class="overlay-panel">
+            <div class="big" style="font-size:28px;color:#ffd94d">20 连击！</div>
+            <div class="label">无人能挡，获得 +30s 道具 x1</div>
+            <button class="btn btn-primary" id="combo-ok-btn">继续</button>
+          </div>
+        </div>`);
+      document.getElementById("combo-ok-btn")!.onclick = () => hideModal();
+    } else if (c === 35) {
+      save.addItem("combo_restore", 1);
+      showModal(`
+        <div class="overlay" style="background:rgba(0,0,0,.45)">
+          <div class="overlay-panel">
+            <div class="big" style="font-size:28px;color:#ffd94d">35 连击！</div>
+            <div class="label">登峰造极，获得连击恢复 x1</div>
+            <button class="btn btn-primary" id="combo-ok-btn">继续</button>
+          </div>
+        </div>`);
+      document.getElementById("combo-ok-btn")!.onclick = () => hideModal();
+    } else if (c === 50) {
+      save.addItem("time_60", 1);
+      showModal(`
+        <div class="overlay" style="background:rgba(0,0,0,.45)">
+          <div class="overlay-panel">
+            <div class="big" style="font-size:28px;color:#ffd94d">50 连击！</div>
+            <div class="label">连击大师，获得 +60s 道具 x1</div>
+            <button class="btn btn-primary" id="combo-ok-btn">继续</button>
+          </div>
+        </div>`);
+      document.getElementById("combo-ok-btn")!.onclick = () => hideModal();
+    } else if (c === 75) {
+      save.addItem("combo_shield", 1);
+      showModal(`
+        <div class="overlay" style="background:rgba(0,0,0,.45)">
+          <div class="overlay-panel">
+            <div class="big" style="font-size:28px;color:#ffd94d">75 连击！</div>
+            <div class="label">连击之神，获得连击护盾 x1</div>
+            <button class="btn btn-primary" id="combo-ok-btn">继续</button>
+          </div>
+        </div>`);
+      document.getElementById("combo-ok-btn")!.onclick = () => hideModal();
+    } else if (c === 100) {
+      save.addBadge("combo_100");
+      save.addItem("combo_restore", 1);
+      showModal(`
+        <div class="overlay" style="background:rgba(0,0,0,.45)">
+          <div class="overlay-panel">
+            <div class="big" style="font-size:28px;color:#ffd94d">100 连击！！！</div>
+            <div class="label">传说级连击，获得连击恢复 x1 + 🏆</div>
+            <button class="btn btn-primary" id="combo-ok-btn">继续</button>
+          </div>
+        </div>`);
+      document.getElementById("combo-ok-btn")!.onclick = () => hideModal();
+    }
+  }
+
+  private useTimeItem(item: "time_15" | "time_30" | "time_60") {
+    if (!this.running || this.advancing || !this.currentLevel) return;
+    const addMap = { time_15: 15, time_30: 30, time_60: 60 };
+    const added = addMap[item];
+    if (!save.useItem(item)) return;
+    this.timeLeft += added;
+    sfx.correct(0);
+  }
+
+  private useComboRestore() {
+    if (!this.running || this.advancing || !this.currentLevel) return;
+    if (!save.useItem("combo_restore")) return;
+    this.combo = this.lastCombo;
+    this.comboBroken = false;
+    sfx.correct(0);
   }
 
   private gameOver() {
@@ -380,9 +503,7 @@ export class ArcadeSession {
   private revive() {
     if (this.revivesUsed >= this.maxRevives) return;
     this.revivesUsed++;
-    this.revived = true;
     this.score = 0;
-    this.combo = 0;
     this.timeLeft = (this.currentLevel?.params.timeLimit ?? 8) * this.timeScale;
     this.running = true;
     this.modalEl.innerHTML = "";
