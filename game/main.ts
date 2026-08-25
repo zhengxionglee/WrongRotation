@@ -119,26 +119,16 @@ function goHome() {
         <div class="title">转错了</div>
         <button class="btn btn-primary" id="start-campaign-btn">开始闯关</button>
         <div class="label">完成前3关解锁所有模式</div>
-        <span class="hint-link" id="rules-toggle2">玩法说明</span>
-        <div id="rules-text2" class="label" style="font-size:13px;color:#8b93a5;line-height:1.5;display:none;text-align:left;max-width:400px;padding:0 12px">
-          闯关模式：找到旋转错误的单元格，拖拽将其旋转归位。修复所有错误单元格即可过关。<br>
-        休闲模式：欣赏风景，点击不同的单元格，轻松无压力。
-        </div>
+        <button class="btn" id="rules-btn2" style="font-size:15px;padding:10px 20px;width:auto">玩法说明</button>
       </div>`);
     document.getElementById("start-campaign-btn")!.onclick = () => startCampaign(1);
-    const rulesToggle2 = document.getElementById("rules-toggle2");
-    if (rulesToggle2) {
-      rulesToggle2.addEventListener("click", () => {
-        const el = document.getElementById("rules-text2");
-        if (el) el.style.display = el.style.display === "none" ? "block" : "none";
-      });
-    }
+    document.getElementById("rules-btn2")?.addEventListener("click", () => showRules());
     return;
   }
 
   const arcadeBtn = passed >= 3 ? `<button class="btn btn-primary btn-hero" id="arcade-btn">街机模式</button>` : `<button class="btn btn-lock btn-hero" id="arcade-btn">街机 (未解锁)</button>`;
-  const dailyBtn = passed >= 3 ? `<button class="btn" id="daily-btn">挑战</button>` : `<button class="btn btn-lock">挑战 (未解锁)</button>`;
-  const relaxBtn = `<button class="btn" id="relax-btn">休闲</button>`;
+  const dailyBtn = passed >= 3 ? `<button class="btn" id="daily-btn">挑战模式</button>` : `<button class="btn btn-lock">挑战模式 (未解锁)</button>`;
+  const relaxBtn = `<button class="btn" id="relax-btn">休闲模式</button>`;
   const curTime = save.getArcadeTime();
   const timeBtns = [5, 8, 12, 20].map(t => `<button class="time-btn ${curTime === t ? "active" : ""}" data-t="${t}">${t}秒</button>`).join("");
   const curVar = save.getArcadeMinVar();
@@ -152,6 +142,7 @@ function goHome() {
       <button class="btn" id="campaign-btn">闯关 (${passed}/50)</button>
       ${dailyBtn}
       ${relaxBtn}
+      <button class="btn" id="rules-btn">玩法说明</button>
       <div class="row">
         <span class="badge">街机最高: ${arcade.bestScore}分</span>
         <span class="badge">连击: x${arcade.bestCombo}</span>
@@ -166,13 +157,6 @@ function goHome() {
         ${varBtns}
       </div>
       <div class="label" style="font-size:12px;color:#5a6270;margin-top:-4px;margin-bottom:6px;text-align:center">最小单元格方差比 (越高越容易识别)</div>
-      <span class="hint-link" id="rules-toggle">玩法说明</span>
-      <div id="rules-text" class="label" style="font-size:13px;color:#8b93a5;line-height:1.5;display:none;text-align:left;max-width:400px;padding:0 12px">
-        街机：点击旋转错误的单元格。争分夺秒，积累连击，刷新纪录。<br>
-        闯关：拖拽旋转错误单元格，全部修复即可过关。<br>
-        挑战：10关计时，找出每关的错误单元格。<br>
-        休闲：5关风景图，轻松找不同，不计时惩罚。
-      </div>
       ${passed < 20 ? '<div class="hint-link">通关第20关解锁六边形</div>' : ""}
     </div>`);
 
@@ -180,6 +164,7 @@ function goHome() {
   document.getElementById("arcade-btn")?.addEventListener("click", () => startArcade());
   document.getElementById("daily-btn")?.addEventListener("click", () => startChallenge());
   document.getElementById("relax-btn")?.addEventListener("click", () => startRelaxation());
+  document.getElementById("rules-btn")?.addEventListener("click", () => showRules());
   document.querySelectorAll(".time-btn").forEach(el => {
     el.addEventListener("click", () => {
       save.setArcadeTime(parseInt((el as HTMLElement).dataset.t || "8"));
@@ -192,13 +177,42 @@ function goHome() {
       goHome();
     });
   });
-  const rulesToggle = document.getElementById("rules-toggle");
-  if (rulesToggle) {
-    rulesToggle.addEventListener("click", () => {
-      const el = document.getElementById("rules-text");
-      if (el) el.style.display = el.style.display === "none" ? "block" : "none";
-    });
-  }
+}
+
+function showRules() {
+  showModal(`
+    <div class="overlay" style="background:rgba(0,0,0,.6);pointer-events:auto">
+      <div class="overlay-panel" style="max-width:440px;max-height:80vh;overflow-y:auto;text-align:left;line-height:1.7;font-size:clamp(15px,3.5vw,18px);color:#c8cdd6">
+        <div style="font-size:clamp(20px,4.5vw,24px);font-weight:700;color:#ffd94d;text-align:center;margin-bottom:12px">玩法说明</div>
+
+        <div style="font-weight:700;color:#ffd94d;margin-top:12px">🎯 闯关模式</div>
+        <div>拖拽旋转错误的单元格将其归位，全部修复即可过关。共 50 关，难度递增。</div>
+
+        <div style="font-weight:700;color:#ffd94d;margin-top:12px">⚡ 街机模式</div>
+        <div>点击正确的单元格消除错误，积累连击获取高分。时间耗尽则游戏结束。</div>
+        <div style="margin-top:6px;padding-left:12px;border-left:2px solid #333">
+          <div style="font-weight:600;color:#4ecdc4">道具系统</div>
+          <div>• 连击护盾：点错时自动消耗，连击不中断</div>
+          <div>• 连击恢复：连击断掉后手动使用，恢复至断前值</div>
+          <div>• 加时道具：+15s / +30s / +60s，时间不足时使用</div>
+          <div style="font-weight:600;color:#4ecdc4;margin-top:6px">连击里程碑</div>
+          <div>5连击→+15s · 10→护盾 · 20→+30s · 35→恢复 · 50→+60s · 75→护盾 · 100→恢复+🏆</div>
+          <div style="font-weight:600;color:#4ecdc4;margin-top:6px">关卡里程碑</div>
+          <div>10关→复活+1 · 25→复活+1+护盾 · 50→复活+1+🏆 · 75+→复活+1+恢复</div>
+          <div style="font-weight:600;color:#4ecdc4;margin-top:6px">复活</div>
+          <div>复活保留连击数，不阻挡里程碑奖励。复活次数通过里程碑获得。</div>
+        </div>
+
+        <div style="font-weight:700;color:#ffd94d;margin-top:12px">🔥 挑战模式</div>
+        <div>10 关计时挑战，每关 2 个错误单元格，找出全部即可过关。</div>
+
+        <div style="font-weight:700;color:#ffd94d;margin-top:12px">🌿 休闲模式</div>
+        <div>15 关摄影作品，拖拽旋转归位，不计时，轻松解压。</div>
+
+        <button class="btn btn-primary" id="rules-close-btn" style="margin-top:16px;width:100%">知道了</button>
+      </div>
+    </div>`);
+  document.getElementById("rules-close-btn")!.onclick = () => hideModal();
 }
 
 function showCampaignSelect() {
