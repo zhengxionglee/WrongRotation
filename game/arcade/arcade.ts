@@ -231,11 +231,9 @@ export class ArcadeSession {
           <div class="hud-timer-bar ${pct < 30 ? "danger" : ""}" style="width:${pct}%"></div>
         </div>
       </div>
-      <div style="position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 14px + 38px);left:0;right:0;display:flex;justify-content:center;gap:6px;flex-wrap:wrap">
+      <div style="display:flex;justify-content:center;gap:6px;flex-wrap:wrap;padding:4px 16px 0">
         ${invHtml.join("")}
-      </div>
-      <div style="position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);left:0;right:0;display:flex;justify-content:center;">
-        <button class="btn btn-sm" id="skip-btn">跳过</button>
+        <button class="btn btn-sm" id="skip-btn" style="padding:4px 12px;font-size:12px;border-radius:8px">跳过</button>
       </div>`;
   }
 
