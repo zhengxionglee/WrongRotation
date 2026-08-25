@@ -201,7 +201,7 @@ export class ArcadeSession {
     const gridLabel = g ? (g.type === "square" ? `${g.param}×${g.param}` : `${g.cells.length}`) : "";
     this.hudEl.innerHTML = `
       <div class="hud-top">
-        <div class="hud-grid">${gridLabel}</div>
+        <div class="hud-grid">${gridLabel} · ${this.totalLevels + 1}</div>
         <div class="hud-combo">${this.combo > 0 ? `x${this.combo}` : ""}</div>
         <div class="hud-score">${this.score}</div>
       </div>
