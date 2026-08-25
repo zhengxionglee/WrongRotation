@@ -24,7 +24,7 @@ export function hideModal() {
 /** Confirmation dialog. Game should be paused before calling; onCancel is where to resume. */
 export function confirmAction(title: string, message: string, confirmLabel: string, onConfirm: () => void, onCancel?: () => void): void {
   showModal(`
-    <div class="overlay" style="background:rgba(0,0,0,.6)">
+    <div class="overlay" style="background:rgba(8,10,14,0.95);backdrop-filter:blur(20px) brightness(.55);">
       <div class="overlay-panel" style="max-width:340px">
         <div class="label" style="font-size:22px;font-weight:700;color:#ffd94d;margin-bottom:4px">${title}</div>
         <div class="label" style="margin-bottom:8px;line-height:1.6;color:#c8cdd6;font-size:15px">${message}</div>
