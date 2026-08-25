@@ -1,4 +1,4 @@
-import { Rng } from "../../core/rng";
+﻿import { Rng } from "../../core/rng";
 import { buildGrid } from "../../core/grid";
 import { salience, S_MIN, downsampleLuma, extractCell } from "../../core/salience";
 import { arcadeParams, pickShape, gridSpecForShape } from "../../core/difficulty";
@@ -214,20 +214,20 @@ export class ArcadeSession {
   private renderHUD() {
     const pct = this.currentLevel ? Math.max(0, this.timeLeft / (this.currentLevel.params.timeLimit * this.timeScale)) * 100 : 100;
     const g = this.currentLevel?.grid;
-    const gridLabel = g ? (g.type === "square" ? `${g.param}×${g.param}` : `${g.cells.length}`) : "";
+    const gridLabel = g ? (g.type === "square" ? `${g.param}脳${g.param}` : `${g.cells.length}`) : "";
     const items = save.getItems();
     const invHtml = [];
     if (items.time_15 > 0) invHtml.push(`<button class="btn btn-xs" id="item-time-15" style="padding:4px 8px;font-size:12px;border-radius:8px;background:#4ecdc4;color:#000;border:none">+15s x${items.time_15}</button>`);
     if (items.time_30 > 0) invHtml.push(`<button class="btn btn-xs" id="item-time-30" style="padding:4px 8px;font-size:12px;border-radius:8px;background:#4ecdc4;color:#000;border:none">+30s x${items.time_30}</button>`);
     if (items.time_60 > 0) invHtml.push(`<button class="btn btn-xs" id="item-time-60" style="padding:4px 8px;font-size:12px;border-radius:8px;background:#4ecdc4;color:#000;border:none">+60s x${items.time_60}</button>`);
-    if (this.comboBroken && items.combo_restore > 0) invHtml.push(`<button class="btn btn-xs" id="item-combo-restore" style="padding:4px 8px;font-size:12px;border-radius:8px;background:#ffd94d;color:#000;border:none">恢复连击 x${items.combo_restore}</button>`);
+    if (this.comboBroken && items.combo_restore > 0) invHtml.push(`<button class="btn btn-xs" id="item-combo-restore" style="padding:4px 8px;font-size:12px;border-radius:8px;background:#ffd94d;color:#000;border:none">鎭㈠杩炲嚮 x${items.combo_restore}</button>`);
     this.hudEl.innerHTML = `
       <div class="hud-top">
         <div style="display:flex;flex-direction:column;align-items:flex-start;gap:4px">
-          <div class="hud-grid">${gridLabel} · ${this.totalLevels + 1}</div>
+          <div class="hud-grid">${gridLabel} 路 ${this.totalLevels + 1}</div>
           <div style="display:flex;gap:4px;flex-wrap:wrap">
             ${invHtml.join("")}
-            <button class="btn btn-xs" id="skip-btn" style="padding:4px 10px;font-size:11px;border-radius:6px;background:#22262e;color:#e9ecf2;border:none">跳过</button>
+            <button class="btn btn-xs" id="skip-btn" style="padding:4px 10px;font-size:11px;border-radius:6px;background:#22262e;color:#e9ecf2;border:none">璺宠繃</button>
           </div>
         </div>
         <div class="hud-combo">${this.combo > 0 ? `x${this.combo}` : ""}</div>
@@ -300,10 +300,10 @@ export class ArcadeSession {
       showModal(`
         <div class="overlay" style="background:rgba(0,0,0,.45)">
           <div class="overlay-panel">
-            <div class="big" style="font-size:28px;color:#ffd94d">太棒了！</div>
-            <div class="label">已突破 10 关，继续加油！</div>
-            <div class="label" style="color:#4ecdc4;margin-top:8px">复活次数 +1 · +15s 道具 x2</div>
-            <button class="btn btn-primary" id="milestone-ok-btn">继续</button>
+            <div class="big" style="font-size:28px;color:#ffd94d">澶浜嗭紒</div>
+            <div class="label">宸茬獊鐮?10 鍏筹紝缁х画鍔犳补锛?/div>
+            <div class="label" style="color:#4ecdc4;margin-top:8px">澶嶆椿娆℃暟 +1 路 +15s 閬撳叿 x2</div>
+            <button class="btn btn-primary" id="milestone-ok-btn">缁х画</button>
           </div>
         </div>`);
       document.getElementById("milestone-ok-btn")!.onclick = () => { this.paused = false; hideModal(); };
@@ -315,10 +315,10 @@ export class ArcadeSession {
       showModal(`
         <div class="overlay" style="background:rgba(0,0,0,.45)">
           <div class="overlay-panel">
-            <div class="big" style="font-size:28px;color:#ffd94d">火力全开！</div>
-            <div class="label">已突破 25 关，状态极佳！</div>
-            <div class="label" style="color:#4ecdc4;margin-top:8px">复活次数 +1 · 连击护盾 x1</div>
-            <button class="btn btn-primary" id="milestone-ok-btn">继续</button>
+            <div class="big" style="font-size:28px;color:#ffd94d">鐏姏鍏ㄥ紑锛?/div>
+            <div class="label">宸茬獊鐮?25 鍏筹紝鐘舵€佹瀬浣筹紒</div>
+            <div class="label" style="color:#4ecdc4;margin-top:8px">澶嶆椿娆℃暟 +1 路 杩炲嚮鎶ょ浘 x1</div>
+            <button class="btn btn-primary" id="milestone-ok-btn">缁х画</button>
           </div>
         </div>`);
       document.getElementById("milestone-ok-btn")!.onclick = () => { this.paused = false; hideModal(); };
@@ -331,10 +331,10 @@ export class ArcadeSession {
       showModal(`
         <div class="overlay" style="background:rgba(0,0,0,.45)">
           <div class="overlay-panel">
-            <div class="big" style="font-size:28px;color:#ffd94d">传奇街机手！</div>
-            <div class="label">已突破 50 关，你是传奇！</div>
-            <div class="label" style="color:#4ecdc4;margin-top:8px">复活次数 +1 · +30s 道具 x2 · 🏆</div>
-            <button class="btn btn-primary" id="milestone-ok-btn">继续</button>
+            <div class="big" style="font-size:28px;color:#ffd94d">浼犲琛楁満鎵嬶紒</div>
+            <div class="label">宸茬獊鐮?50 鍏筹紝浣犳槸浼犲锛?/div>
+            <div class="label" style="color:#4ecdc4;margin-top:8px">澶嶆椿娆℃暟 +1 路 +30s 閬撳叿 x2 路 馃弳</div>
+            <button class="btn btn-primary" id="milestone-ok-btn">缁х画</button>
           </div>
         </div>`);
       document.getElementById("milestone-ok-btn")!.onclick = () => { this.paused = false; hideModal(); };
@@ -343,13 +343,14 @@ export class ArcadeSession {
       this.maxRevives++;
       save.setMaxRevives(this.maxRevives);
       save.addItem("combo_restore", 1);
+      this.paused = true;
       showModal(`
         <div class="overlay" style="background:rgba(0,0,0,.45)">
           <div class="overlay-panel">
-            <div class="big" style="font-size:28px;color:#ffd94d">势不可挡！</div>
-            <div class="label">已突破 ${n} 关，无人能挡！</div>
-            <div class="label" style="color:#4ecdc4;margin-top:8px">复活次数 +1 · 连击恢复 x1</div>
-            <button class="btn btn-primary" id="milestone-ok-btn">继续</button>
+            <div class="big" style="font-size:28px;color:#ffd94d">鍔夸笉鍙尅锛?/div>
+            <div class="label">宸茬獊鐮?${n} 鍏筹紝鏃犱汉鑳芥尅锛?/div>
+            <div class="label" style="color:#4ecdc4;margin-top:8px">澶嶆椿娆℃暟 +1 路 杩炲嚮鎭㈠ x1</div>
+            <button class="btn btn-primary" id="milestone-ok-btn">缁х画</button>
           </div>
         </div>`);
       document.getElementById("milestone-ok-btn")!.onclick = () => { this.paused = false; hideModal(); };
@@ -360,82 +361,87 @@ export class ArcadeSession {
     const c = this.combo;
     if (c === 5) {
       save.addItem("time_15", 1);
+      this.paused = true;
       showModal(`
         <div class="overlay" style="background:rgba(0,0,0,.45)">
           <div class="overlay-panel">
-            <div class="big" style="font-size:28px;color:#ffd94d">5 连击！</div>
-            <div class="label">手感火热，获得 +15s 道具 x1</div>
-            <button class="btn btn-primary" id="combo-ok-btn">继续</button>
+            <div class="big" style="font-size:28px;color:#ffd94d">5 杩炲嚮锛?/div>
+            <div class="label">鎵嬫劅鐏儹锛岃幏寰?+15s 閬撳叿 x1</div>
+            <button class="btn btn-primary" id="combo-ok-btn">缁х画</button>
           </div>
         </div>`);
-      document.getElementById("combo-ok-btn")!.onclick = () => hideModal();
+      document.getElementById("combo-ok-btn")!.onclick = () => { this.paused = false; hideModal(); };
     } else if (c === 10) {
       save.addItem("combo_shield", 1);
       showModal(`
         <div class="overlay" style="background:rgba(0,0,0,.45)">
           <div class="overlay-panel">
-            <div class="big" style="font-size:28px;color:#ffd94d">10 连击！</div>
-            <div class="label">势如破竹，获得连击护盾 x1</div>
-            <button class="btn btn-primary" id="combo-ok-btn">继续</button>
+            <div class="big" style="font-size:28px;color:#ffd94d">10 杩炲嚮锛?/div>
+            <div class="label">鍔垮鐮寸锛岃幏寰楄繛鍑绘姢鐩?x1</div>
+            <button class="btn btn-primary" id="combo-ok-btn">缁х画</button>
           </div>
         </div>`);
-      document.getElementById("combo-ok-btn")!.onclick = () => hideModal();
+      document.getElementById("combo-ok-btn")!.onclick = () => { this.paused = false; hideModal(); };
     } else if (c === 20) {
       save.addItem("time_30", 1);
+      this.paused = true;
       showModal(`
         <div class="overlay" style="background:rgba(0,0,0,.45)">
           <div class="overlay-panel">
-            <div class="big" style="font-size:28px;color:#ffd94d">20 连击！</div>
-            <div class="label">无人能挡，获得 +30s 道具 x1</div>
-            <button class="btn btn-primary" id="combo-ok-btn">继续</button>
+            <div class="big" style="font-size:28px;color:#ffd94d">20 杩炲嚮锛?/div>
+            <div class="label">鏃犱汉鑳芥尅锛岃幏寰?+30s 閬撳叿 x1</div>
+            <button class="btn btn-primary" id="combo-ok-btn">缁х画</button>
           </div>
         </div>`);
-      document.getElementById("combo-ok-btn")!.onclick = () => hideModal();
+      document.getElementById("combo-ok-btn")!.onclick = () => { this.paused = false; hideModal(); };
     } else if (c === 35) {
       save.addItem("combo_restore", 1);
+      this.paused = true;
       showModal(`
         <div class="overlay" style="background:rgba(0,0,0,.45)">
           <div class="overlay-panel">
-            <div class="big" style="font-size:28px;color:#ffd94d">35 连击！</div>
-            <div class="label">登峰造极，获得连击恢复 x1</div>
-            <button class="btn btn-primary" id="combo-ok-btn">继续</button>
+            <div class="big" style="font-size:28px;color:#ffd94d">35 杩炲嚮锛?/div>
+            <div class="label">鐧诲嘲閫犳瀬锛岃幏寰楄繛鍑绘仮澶?x1</div>
+            <button class="btn btn-primary" id="combo-ok-btn">缁х画</button>
           </div>
         </div>`);
-      document.getElementById("combo-ok-btn")!.onclick = () => hideModal();
+      document.getElementById("combo-ok-btn")!.onclick = () => { this.paused = false; hideModal(); };
     } else if (c === 50) {
       save.addItem("time_60", 1);
+      this.paused = true;
       showModal(`
         <div class="overlay" style="background:rgba(0,0,0,.45)">
           <div class="overlay-panel">
-            <div class="big" style="font-size:28px;color:#ffd94d">50 连击！</div>
-            <div class="label">连击大师，获得 +60s 道具 x1</div>
-            <button class="btn btn-primary" id="combo-ok-btn">继续</button>
+            <div class="big" style="font-size:28px;color:#ffd94d">50 杩炲嚮锛?/div>
+            <div class="label">杩炲嚮澶у笀锛岃幏寰?+60s 閬撳叿 x1</div>
+            <button class="btn btn-primary" id="combo-ok-btn">缁х画</button>
           </div>
         </div>`);
-      document.getElementById("combo-ok-btn")!.onclick = () => hideModal();
+      document.getElementById("combo-ok-btn")!.onclick = () => { this.paused = false; hideModal(); };
     } else if (c === 75) {
       save.addItem("combo_shield", 1);
       showModal(`
         <div class="overlay" style="background:rgba(0,0,0,.45)">
           <div class="overlay-panel">
-            <div class="big" style="font-size:28px;color:#ffd94d">75 连击！</div>
-            <div class="label">连击之神，获得连击护盾 x1</div>
-            <button class="btn btn-primary" id="combo-ok-btn">继续</button>
+            <div class="big" style="font-size:28px;color:#ffd94d">75 杩炲嚮锛?/div>
+            <div class="label">杩炲嚮涔嬬锛岃幏寰楄繛鍑绘姢鐩?x1</div>
+            <button class="btn btn-primary" id="combo-ok-btn">缁х画</button>
           </div>
         </div>`);
-      document.getElementById("combo-ok-btn")!.onclick = () => hideModal();
+      document.getElementById("combo-ok-btn")!.onclick = () => { this.paused = false; hideModal(); };
     } else if (c === 100) {
       save.addBadge("combo_100");
       save.addItem("combo_restore", 1);
+      this.paused = true;
       showModal(`
         <div class="overlay" style="background:rgba(0,0,0,.45)">
           <div class="overlay-panel">
-            <div class="big" style="font-size:28px;color:#ffd94d">100 连击！！！</div>
-            <div class="label">传说级连击，获得连击恢复 x1 + 🏆</div>
-            <button class="btn btn-primary" id="combo-ok-btn">继续</button>
+            <div class="big" style="font-size:28px;color:#ffd94d">100 杩炲嚮锛侊紒锛?/div>
+            <div class="label">浼犺绾ц繛鍑伙紝鑾峰緱杩炲嚮鎭㈠ x1 + 馃弳</div>
+            <button class="btn btn-primary" id="combo-ok-btn">缁х画</button>
           </div>
         </div>`);
-      document.getElementById("combo-ok-btn")!.onclick = () => hideModal();
+      document.getElementById("combo-ok-btn")!.onclick = () => { this.paused = false; hideModal(); };
     }
   }
 
@@ -486,17 +492,17 @@ export class ArcadeSession {
     this.modalEl.innerHTML = `
       <div class="overlay" style="background:rgba(0,0,0,.45)">
         <div class="overlay-panel">
-          <div class="label">游戏结束</div>
+          <div class="label">娓告垙缁撴潫</div>
           <div class="big">${this.score}</div>
-          <div class="label">连击 x${this.combo} · 通过 ${this.totalLevels} 关</div>
+          <div class="label">杩炲嚮 x${this.combo} 路 閫氳繃 ${this.totalLevels} 鍏?/div>
           <div class="row">
-            <div><div class="label">最高分</div><div class="big" style="font-size:24px">${best.bestScore}</div></div>
-            <div><div class="label">最高连击</div><div class="big" style="font-size:24px">x${best.bestCombo}</div></div>
+            <div><div class="label">鏈€楂樺垎</div><div class="big" style="font-size:24px">${best.bestScore}</div></div>
+            <div><div class="label">鏈€楂樿繛鍑?/div><div class="big" style="font-size:24px">x${best.bestCombo}</div></div>
           </div>
-          <button class="btn" id="show-answer-btn">显示答案</button>
-          ${this.revivesUsed < this.maxRevives ? '<button class="btn btn-primary" id="revive-btn">复活 (' + (this.maxRevives - this.revivesUsed) + '/' + this.maxRevives + ')</button>' : ''}
-          <button class="btn" id="restart-btn">再来一局</button>
-          <span class="hint-link" id="exit-btn">主页</span>
+          <button class="btn" id="show-answer-btn">鏄剧ず绛旀</button>
+          ${this.revivesUsed < this.maxRevives ? '<button class="btn btn-primary" id="revive-btn">澶嶆椿 (' + (this.maxRevives - this.revivesUsed) + '/' + this.maxRevives + ')</button>' : ''}
+          <button class="btn" id="restart-btn">鍐嶆潵涓€灞€</button>
+          <span class="hint-link" id="exit-btn">涓婚〉</span>
         </div>
       </div>`;
     document.getElementById("show-answer-btn")!.onclick = () => this.revealAnswer();
@@ -521,8 +527,8 @@ export class ArcadeSession {
     this.modalEl.innerHTML = "";
     this.hudEl.innerHTML = `
       <div class="hud-top" style="justify-content:flex-end">
-        <div class="hud-grid" style="text-align:left;flex:1;padding-left:12px">答案</div>
-        <button class="btn btn-sm" id="back-answer-btn">返回</button>
+        <div class="hud-grid" style="text-align:left;flex:1;padding-left:12px">绛旀</div>
+        <button class="btn btn-sm" id="back-answer-btn">杩斿洖</button>
       </div>`;
     document.getElementById("back-answer-btn")!.onclick = () => this.showGameOverModal();
   }
@@ -531,3 +537,4 @@ export class ArcadeSession {
     this._renderer.layout(this.canvas.width, this.canvas.height, 80);
   }
 }
+
