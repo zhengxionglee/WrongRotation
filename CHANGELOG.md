@@ -1,5 +1,10 @@
 # 版本迭代日志
 
+## Unreleased
+
+### 新功能
+- **烟花庆祝特效**：单元格转正时火花 + 冲击波特效，通关 / 整局完成时全屏烟花（闯关 / 街机 / 挑战 / 休闲）
+
 ## 项目概述
 转错了（Wrong Rotation）—— H5 休闲解谜游戏，TypeScript + Vite 5 + Canvas 2D，支持 PWA 离线访问和 GitHub Pages 在线游玩。
 

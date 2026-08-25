@@ -8,8 +8,9 @@ import { PuzzleRenderer, PuzzleState } from "../shared/renderer";
 import { loadImage, getLuma, preload } from "../shared/images";
 import { sfx } from "../shared/audio";
 import * as tween from "../shared/tween";
+import * as effects from "../shared/effects";
 import * as save from "../shared/save";
-import { showModal, hideModal } from "../shared/ui";
+import { showModal, hideModal, confirmAction } from "../shared/ui";
 import manifestData from "../../assets/manifest.json";
 
 const SKIP_PENALTY = 100;
@@ -87,6 +88,7 @@ export class ArcadeSession {
         if (t.closest("#item-time-30")) this.useTimeItem("time_30");
         if (t.closest("#item-time-60")) this.useTimeItem("time_60");
         if (t.closest("#item-combo-restore")) this.useComboRestore();
+        if (t.closest("#exit-btn")) this.confirmExit();
       }
     });
   }
@@ -106,6 +108,7 @@ export class ArcadeSession {
     this.currentLevel = await this.buildLevel(0);
     this._renderer.layout(this.canvas.width, this.canvas.height, 80);
     this.buildNext();
+    effects.clearAll();
     this.renderHUD();
     this.lastUpdate = performance.now();
     requestAnimationFrame(this.loop.bind(this));
@@ -176,6 +179,7 @@ export class ArcadeSession {
     const dt = Math.min(time - this.lastUpdate, 50);
     this.lastUpdate = time;
     tween.update(dt);
+    effects.update(dt);
     if (this.advancing || this.paused) {
       this.renderHUD();
       this.render();
@@ -209,6 +213,7 @@ export class ArcadeSession {
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
     this._renderer.render(this.ctx, state);
+    effects.render(this.ctx);
   }
 
   private renderHUD() {
@@ -228,6 +233,7 @@ export class ArcadeSession {
           <div style="display:flex;gap:4px;flex-wrap:wrap">
             ${invHtml.join("")}
             <button class="btn btn-xs" id="skip-btn" style="padding:4px 10px;font-size:11px;border-radius:6px;background:#22262e;color:#e9ecf2;border:none">跳过</button>
+            <button class="btn btn-xs" id="exit-btn" style="padding:4px 10px;font-size:11px;border-radius:6px;background:#2b2125;color:#ff9f9f;border:none">退出</button>
           </div>
         </div>
         <div class="hud-combo">${this.combo > 0 ? `x${this.combo}` : ""}</div>
@@ -248,6 +254,11 @@ export class ArcadeSession {
       this.totalLevels++;
       this.score += 100 + this.combo * 25;
       this.timeLeft = Math.min(this.timeLeft + 2.5 * this.timeScale, 20 * this.timeScale);
+      const cell = this.currentLevel.grid.cells.find(c => c.id === cellId);
+      if (cell) {
+        const b = this._renderer.board;
+        effects.firework(b.x + cell.cx * b.size, b.y + cell.cy * b.size);
+      }
       this.flashType = "correct";
       this.flashTimer = 200;
       this.advancing = true;
@@ -276,6 +287,27 @@ export class ArcadeSession {
     this.score = Math.max(0, this.score - SKIP_PENALTY);
     sfx.skip();
     this.advance();
+  }
+
+  private confirmExit() {
+    if (!this.running || this.advancing) return;
+    this.running = false; // pause while dialog is open
+    confirmAction(
+      "退出街机模式？",
+      "退出后本局结束，当前得分将计入最高分记录。",
+      "退出",
+      () => {
+        save.setArcadeResult(this.score, this.combo);
+        this.modalEl.innerHTML = "";
+        this.hudEl.innerHTML = "";
+        this.onExit();
+      },
+      () => {
+        this.running = true;
+        this.lastUpdate = performance.now();
+        requestAnimationFrame(this.loop.bind(this));
+      }
+    );
   }
 
   private advance() {

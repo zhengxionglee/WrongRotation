@@ -21,6 +21,21 @@ export function hideModal() {
   if (modal) modal.innerHTML = "";
 }
 
+/** Confirmation dialog. Game should be paused before calling; onCancel is where to resume. */
+export function confirmAction(title: string, message: string, confirmLabel: string, onConfirm: () => void, onCancel?: () => void): void {
+  showModal(`
+    <div class="overlay" style="background:rgba(8,10,14,0.95);backdrop-filter:blur(20px) brightness(.55);">
+      <div class="overlay-panel" style="max-width:340px">
+        <div class="label" style="font-size:22px;font-weight:700;color:#ffd94d;margin-bottom:4px">${title}</div>
+        <div class="label" style="margin-bottom:8px;line-height:1.6;color:#c8cdd6;font-size:15px">${message}</div>
+        <button class="btn btn-primary" id="confirm-yes-btn" style="width:100%">${confirmLabel}</button>
+        <button class="btn" id="confirm-no-btn" style="width:100%">取消</button>
+      </div>
+    </div>`);
+  document.getElementById("confirm-yes-btn")!.onclick = () => { hideModal(); onConfirm(); };
+  document.getElementById("confirm-no-btn")!.onclick = () => { hideModal(); onCancel?.(); };
+}
+
 export function toast(msg: string, ms = 2000) {
   const el = $("#toast");
   if (!el) return;

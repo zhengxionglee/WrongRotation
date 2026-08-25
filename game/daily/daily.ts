@@ -6,8 +6,9 @@ import { PuzzleRenderer, PuzzleState } from "../shared/renderer";
 import { loadImage, getLuma, preload } from "../shared/images";
 import { sfx } from "../shared/audio";
 import * as tween from "../shared/tween";
+import * as effects from "../shared/effects";
 import * as save from "../shared/save";
-import { showModal, hideModal, setScreen, setHud, formatTime, toast } from "../shared/ui";
+import { showModal, hideModal, setScreen, setHud, formatTime, toast, confirmAction } from "../shared/ui";
 import manifest from "../../assets/manifest.json";
 
 export class DailySession {
@@ -37,7 +38,7 @@ export class DailySession {
     document.getElementById("hud")!.addEventListener("pointerdown", (e) => {
       const t = e.target as HTMLElement | null;
       if (!t || !t.closest) return;
-      if (t.closest("#cancel-btn")) { this.running = false; this.onExit(); }
+      if (t.closest("#cancel-btn")) this.confirmExit();
       if (t.closest("#hint-btn")) this.useHint();
     });
   }
@@ -104,6 +105,7 @@ export class DailySession {
     this.currentIdx = 0;
     this.totalTimeMs = 0;
     this.running = true;
+    effects.clearAll();
     this.lastUpdate = performance.now();
     this.loadLevel(0);
     requestAnimationFrame(this.loop.bind(this));
@@ -128,6 +130,7 @@ export class DailySession {
     this.totalTimeMs += dt;
     this.highlightTimer -= dt;
     if (this.highlightTimer <= 0) this.highlightTarget = -1;
+    effects.update(dt);
     this.renderHUD();
     this.render();
     requestAnimationFrame(this.loop.bind(this));
@@ -142,6 +145,7 @@ export class DailySession {
     };
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this._renderer.render(this.ctx, state);
+    effects.render(this.ctx);
   }
 
   private renderHUD() {
@@ -155,7 +159,7 @@ export class DailySession {
     const nT = lvl ? lvl.targets.length : 2;
     document.getElementById("hud")!.innerHTML = `
       <div class="hud-top" style="background:rgba(0,0,0,0.25);padding:clamp(6px,2vh,14px) clamp(10px,3vw,18px);padding-top:calc(env(safe-area-inset-top,0px) + clamp(6px,2vh,14px))">
-        <button class="btn btn-icon" id="cancel-btn" style="width:48px;height:48px;font-size:22px;border-radius:14px;font-weight:700">x</button>
+        <button class="btn btn-sm" id="cancel-btn" style="padding:10px 18px;font-size:15px;font-weight:700">退出</button>
         <div style="flex:1;text-align:center">
           <div style="font-size:clamp(16px,4vw,22px);font-weight:700;color:#ffd94d">${this.currentIdx + 1}/10 · 已修复 ${fixed}/${nT}</div>
           <div style="font-size:clamp(12px,2.5vw,15px);color:#8b93a5">${gridLabel} · ${formatTime(this.totalTimeMs)}</div>
@@ -179,6 +183,22 @@ export class DailySession {
     sfx.tap();
   }
 
+  private confirmExit() {
+    if (!this.running) return;
+    this.running = false; // pause while dialog is open
+    confirmAction(
+      "退出挑战？",
+      "退出后本次挑战进度不会保存。",
+      "退出",
+      () => this.onExit(),
+      () => {
+        this.running = true;
+        this.lastUpdate = performance.now();
+        requestAnimationFrame(this.loop.bind(this));
+      }
+    );
+  }
+
   onTap(cellId: number) {
     const lvl = this.levels[this.currentIdx];
     if (!lvl) return;
@@ -188,6 +208,11 @@ export class DailySession {
       if (Math.abs(((r % 360) + 360) % 360) < 5) return;
       sfx.correct(this.currentIdx);
       this.rotations.set(cellId, 0);
+      const cell = this.grid_?.cells.find(c => c.id === cellId);
+      if (cell) {
+        const b = this._renderer.board;
+        effects.firework(b.x + cell.cx * b.size, b.y + cell.cy * b.size);
+      }
       const allFixed = lvl.targets.every(t => {
         const rr = this.rotations.get(t.cellId) ?? 0;
         return Math.abs(((rr % 360) + 360) % 360) < 5;
@@ -211,6 +236,7 @@ export class DailySession {
   private finish() {
     this.running = false;
     sfx.win();
+    effects.celebration(this.canvas.width, this.canvas.height);
     save.setDailyResult("challenge", this.totalTimeMs);
     const state = save.getDailyState();
     showModal(`

@@ -4,8 +4,9 @@ import { PuzzleRenderer, PuzzleState } from "../shared/renderer";
 import { loadImage } from "../shared/images";
 import { sfx } from "../shared/audio";
 import * as tween from "../shared/tween";
+import * as effects from "../shared/effects";
 import * as save from "../shared/save";
-import { setScreen, showModal, hideModal, toast } from "../shared/ui";
+import { setScreen, showModal, hideModal, toast, confirmAction } from "../shared/ui";
 import levels from "../../levels/levels.json";
 
 export class CampaignSession {
@@ -40,7 +41,7 @@ export class CampaignSession {
     document.getElementById("hud")!.addEventListener("pointerdown", (e) => {
       const t = e.target as HTMLElement | null;
       if (!t || !t.closest) return;
-      if (t.closest("#back-btn")) { this.running = false; this.onExit(); }
+      if (t.closest("#back-btn")) this.confirmExit();
       if (t.closest("#reset-btn")) this.reset();
       if (t.closest("#hint-btn")) this.useHint();
     });
@@ -60,6 +61,7 @@ export class CampaignSession {
     this.clicks = 0;
     this.hintsUsed = 0;
     this.running = true;
+    effects.clearAll();
     this.lastUpdate = performance.now();
     this.renderHUD();
     requestAnimationFrame(this.loop.bind(this));
@@ -74,6 +76,7 @@ export class CampaignSession {
     if (this.highlightTimer <= 0) this.highlightTarget = -1;
     if (!this.animating) {
       tween.update(dt);
+      effects.update(dt);
       this.renderHUD();
       this.render();
     }
@@ -90,6 +93,7 @@ export class CampaignSession {
     };
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this._renderer.render(this.ctx, state);
+    effects.render(this.ctx);
   }
 
   private renderHUD() {
@@ -123,6 +127,22 @@ export class CampaignSession {
     this.render();
   }
 
+  private confirmExit() {
+    if (!this.running) return;
+    this.running = false; // pause while dialog is open
+    confirmAction(
+      "退出本关？",
+      "退出后本关进度不会保存，已通关关卡记录不受影响。",
+      "退出",
+      () => this.onExit(),
+      () => {
+        this.running = true;
+        this.lastUpdate = performance.now();
+        requestAnimationFrame(this.loop.bind(this));
+      }
+    );
+  }
+
   onTap(cellId: number) {
     if (!this.levelData || this.animating) return;
     this.clicks++;
@@ -141,6 +161,11 @@ export class CampaignSession {
       if (norm === 0) {
         this.touched.add(cellId);
         sfx.correct(this.clicks);
+        const cell = this.grid?.cells.find(c => c.id === cellId);
+        if (cell) {
+          const b = this._renderer.board;
+          effects.firework(b.x + cell.cx * b.size, b.y + cell.cy * b.size);
+        }
       } else {
         this.touched.add(cellId);
         sfx.tap();
@@ -170,6 +195,7 @@ export class CampaignSession {
     if (!allFixed) return;
     this.running = false;
     sfx.win();
+    effects.celebration(this.canvas.width, this.canvas.height);
 
     if (this.levelId === 3) {
       save.setCampaignLevelStars(3, this.clicks, this.elapsed, 3);
