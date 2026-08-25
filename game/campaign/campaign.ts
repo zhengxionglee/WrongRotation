@@ -6,7 +6,7 @@ import { sfx } from "../shared/audio";
 import * as tween from "../shared/tween";
 import * as effects from "../shared/effects";
 import * as save from "../shared/save";
-import { setScreen, showModal, hideModal, toast } from "../shared/ui";
+import { setScreen, showModal, hideModal, toast, confirmAction } from "../shared/ui";
 import levels from "../../levels/levels.json";
 
 export class CampaignSession {
@@ -41,7 +41,7 @@ export class CampaignSession {
     document.getElementById("hud")!.addEventListener("pointerdown", (e) => {
       const t = e.target as HTMLElement | null;
       if (!t || !t.closest) return;
-      if (t.closest("#back-btn")) { this.running = false; this.onExit(); }
+      if (t.closest("#back-btn")) this.confirmExit();
       if (t.closest("#reset-btn")) this.reset();
       if (t.closest("#hint-btn")) this.useHint();
     });
@@ -125,6 +125,22 @@ export class CampaignSession {
     this._renderer.invalidate();
     sfx.tap();
     this.render();
+  }
+
+  private confirmExit() {
+    if (!this.running) return;
+    this.running = false; // pause while dialog is open
+    confirmAction(
+      "退出本关？",
+      "退出后本关进度不会保存，已通关关卡记录不受影响。",
+      "退出",
+      () => this.onExit(),
+      () => {
+        this.running = true;
+        this.lastUpdate = performance.now();
+        requestAnimationFrame(this.loop.bind(this));
+      }
+    );
   }
 
   onTap(cellId: number) {

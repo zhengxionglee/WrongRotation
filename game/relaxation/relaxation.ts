@@ -8,7 +8,7 @@ import { sfx } from "../shared/audio";
 import * as tween from "../shared/tween";
 import * as effects from "../shared/effects";
 import * as save from "../shared/save";
-import { showModal, hideModal, setScreen, setHud, formatTime, toast } from "../shared/ui";
+import { showModal, hideModal, setScreen, setHud, formatTime, toast, confirmAction } from "../shared/ui";
 import relaxImages from "../../assets/relax/manifest.json";
 
 interface RelaxEntry { file: string; size: number; }
@@ -46,7 +46,7 @@ export class RelaxationSession {
     this.hudEl.addEventListener("pointerdown", (e) => {
       const t = e.target as HTMLElement | null;
       if (!t || !t.closest) return;
-      if (t.closest("#cancel-btn")) { this.running = false; this.onExit(); }
+      if (t.closest("#cancel-btn")) this.confirmExit();
       if (t.closest("#reset-btn")) this.resetLevel();
       if (t.closest("#skip-btn")) this.skipLevel();
     });
@@ -144,7 +144,7 @@ export class RelaxationSession {
     const gridLabel = g ? (g.type === "square" ? `${g.param}×${g.param}` : `${g.cells.length}`) : "";
     this.hudEl.innerHTML = `
       <div class="hud-top" style="background:rgba(0,0,0,0.25);padding:clamp(6px,2vh,14px) clamp(10px,3vw,18px);padding-top:calc(env(safe-area-inset-top,0px) + clamp(6px,2vh,14px))">
-        <button class="btn btn-icon" id="cancel-btn" style="width:48px;height:48px;font-size:22px;border-radius:14px;font-weight:700">x</button>
+        <button class="btn btn-sm" id="cancel-btn" style="padding:10px 18px;font-size:15px;font-weight:700">退出</button>
         <div style="flex:1;text-align:center">
           <div style="font-size:clamp(16px,4vw,22px);font-weight:700;color:#ffd94d">${this.currentIdx + 1}/${this.levels.length}</div>
           <div style="font-size:clamp(12px,2.5vw,15px);color:#8b93a5">已修复 ${fixed}/${nT} · ${gridLabel}</div>
@@ -185,6 +185,22 @@ export class RelaxationSession {
       }
       this.checkWin();
     }
+  }
+
+  private confirmExit() {
+    if (!this.running || this.animating) return;
+    this.running = false; // pause while dialog is open
+    confirmAction(
+      "退出休闲模式？",
+      "退出后当前图片进度不会保存。",
+      "退出",
+      () => this.onExit(),
+      () => {
+        this.running = true;
+        this.lastUpdate = performance.now();
+        requestAnimationFrame(this.loop.bind(this));
+      }
+    );
   }
 
   private resetLevel() {
