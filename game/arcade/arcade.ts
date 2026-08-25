@@ -292,8 +292,8 @@ export class ArcadeSession {
 
   private checkMilestone() {
     const n = this.totalLevels;
-    this.paused = true;
     if (n === 10) {
+      this.paused = true;
       this.maxRevives++;
       save.setMaxRevives(this.maxRevives);
       save.addItem("time_15", 2);
@@ -308,6 +308,7 @@ export class ArcadeSession {
         </div>`);
       document.getElementById("milestone-ok-btn")!.onclick = () => { this.paused = false; hideModal(); };
     } else if (n === 25) {
+      this.paused = true;
       this.maxRevives++;
       save.setMaxRevives(this.maxRevives);
       save.addItem("combo_shield", 1);
@@ -322,6 +323,7 @@ export class ArcadeSession {
         </div>`);
       document.getElementById("milestone-ok-btn")!.onclick = () => { this.paused = false; hideModal(); };
     } else if (n === 50) {
+      this.paused = true;
       save.addBadge("arcade_50");
       this.maxRevives++;
       save.setMaxRevives(this.maxRevives);
@@ -337,6 +339,7 @@ export class ArcadeSession {
         </div>`);
       document.getElementById("milestone-ok-btn")!.onclick = () => { this.paused = false; hideModal(); };
     } else if (n > 50 && n % 25 === 0) {
+      this.paused = true;
       this.maxRevives++;
       save.setMaxRevives(this.maxRevives);
       save.addItem("combo_restore", 1);
