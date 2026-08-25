@@ -9,6 +9,7 @@ import { loadImage, getLuma, preload } from "../shared/images";
 import { sfx } from "../shared/audio";
 import * as tween from "../shared/tween";
 import * as save from "../shared/save";
+import { showModal, hideModal } from "../shared/ui";
 import manifestData from "../../assets/manifest.json";
 
 const SKIP_PENALTY = 100;
@@ -63,6 +64,9 @@ export class ArcadeSession {
   private recentImages: number[] = [];
   private totalLevels = 0;
   private lastUpdate = 0;
+  private revived = false;
+  private revivesUsed = 0;
+  private maxRevives = 1;
 
   constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, onExit: () => void) {
     this.canvas = canvas;
@@ -83,6 +87,9 @@ export class ArcadeSession {
     this.combo = 0;
     this.score = 0;
     this.totalLevels = 0;
+    this.revived = false;
+    this.revivesUsed = 0;
+    this.maxRevives = save.getMaxRevives();
     this.timeScale = save.getArcadeTime() / 8;
     this.timeLeft = save.getArcadeTime();
     this.running = true;
@@ -229,7 +236,10 @@ export class ArcadeSession {
       const startRot = this.currentLevel.rotation;
       tween.add(600, 0, 1, (t) => {
         this.currentLevel!.rotation = startRot * (1 - t);
-      }, () => this.advance());
+      }, () => {
+        this.checkMilestone();
+        this.advance();
+      });
     } else {
       sfx.wrong();
       this.timeLeft -= 1.5;
@@ -256,6 +266,65 @@ export class ArcadeSession {
     }
     if (this.currentLevel) {
       this.timeLeft = this.currentLevel.params.timeLimit * this.timeScale;
+    }
+  }
+
+  private checkMilestone() {
+    if (this.revived) return;
+    const n = this.totalLevels;
+    if (n === 10) {
+      this.maxRevives++;
+      save.setMaxRevives(this.maxRevives);
+      showModal(`
+        <div class="overlay" style="background:rgba(0,0,0,.45)">
+          <div class="overlay-panel">
+            <div class="big" style="font-size:28px;color:#ffd94d">太棒了！</div>
+            <div class="label">已突破 10 关，继续加油！</div>
+            <div class="label" style="color:#4ecdc4;margin-top:8px">复活次数 +1</div>
+            <button class="btn btn-primary" id="milestone-ok-btn">继续</button>
+          </div>
+        </div>`);
+      document.getElementById("milestone-ok-btn")!.onclick = () => hideModal();
+    } else if (n === 25) {
+      this.maxRevives++;
+      save.setMaxRevives(this.maxRevives);
+      showModal(`
+        <div class="overlay" style="background:rgba(0,0,0,.45)">
+          <div class="overlay-panel">
+            <div class="big" style="font-size:28px;color:#ffd94d">火力全开！</div>
+            <div class="label">已突破 25 关，状态极佳！</div>
+            <div class="label" style="color:#4ecdc4;margin-top:8px">复活次数 +1</div>
+            <button class="btn btn-primary" id="milestone-ok-btn">继续</button>
+          </div>
+        </div>`);
+      document.getElementById("milestone-ok-btn")!.onclick = () => hideModal();
+    } else if (n === 50) {
+      save.addBadge("arcade_50");
+      this.maxRevives++;
+      save.setMaxRevives(this.maxRevives);
+      showModal(`
+        <div class="overlay" style="background:rgba(0,0,0,.45)">
+          <div class="overlay-panel">
+            <div class="big" style="font-size:28px;color:#ffd94d">传奇街机手！</div>
+            <div class="label">已突破 50 关，你是传奇！</div>
+            <div class="label" style="color:#4ecdc4;margin-top:8px">复活次数 +1 · 获得徽章 🏆</div>
+            <button class="btn btn-primary" id="milestone-ok-btn">继续</button>
+          </div>
+        </div>`);
+      document.getElementById("milestone-ok-btn")!.onclick = () => hideModal();
+    } else if (n > 50 && n % 25 === 0) {
+      this.maxRevives++;
+      save.setMaxRevives(this.maxRevives);
+      showModal(`
+        <div class="overlay" style="background:rgba(0,0,0,.45)">
+          <div class="overlay-panel">
+            <div class="big" style="font-size:28px;color:#ffd94d">势不可挡！</div>
+            <div class="label">已突破 ${n} 关，无人能挡！</div>
+            <div class="label" style="color:#4ecdc4;margin-top:8px">复活次数 +1</div>
+            <button class="btn btn-primary" id="milestone-ok-btn">继续</button>
+          </div>
+        </div>`);
+      document.getElementById("milestone-ok-btn")!.onclick = () => hideModal();
     }
   }
 
@@ -291,13 +360,13 @@ export class ArcadeSession {
         <div class="overlay-panel">
           <div class="label">游戏结束</div>
           <div class="big">${this.score}</div>
-          <div class="label">连击 x${this.combo}</div>
+          <div class="label">连击 x${this.combo} · 通过 ${this.totalLevels} 关</div>
           <div class="row">
             <div><div class="label">最高分</div><div class="big" style="font-size:24px">${best.bestScore}</div></div>
             <div><div class="label">最高连击</div><div class="big" style="font-size:24px">x${best.bestCombo}</div></div>
           </div>
           <button class="btn" id="show-answer-btn">显示答案</button>
-          <button class="btn btn-primary" id="revive-btn">复活</button>
+          ${this.revivesUsed < this.maxRevives ? '<button class="btn btn-primary" id="revive-btn">复活 (' + (this.maxRevives - this.revivesUsed) + '/' + this.maxRevives + ')</button>' : ''}
           <button class="btn" id="restart-btn">再来一局</button>
           <span class="hint-link" id="exit-btn">主页</span>
         </div>
@@ -309,6 +378,9 @@ export class ArcadeSession {
   }
 
   private revive() {
+    if (this.revivesUsed >= this.maxRevives) return;
+    this.revivesUsed++;
+    this.revived = true;
     this.score = 0;
     this.combo = 0;
     this.timeLeft = (this.currentLevel?.params.timeLimit ?? 8) * this.timeScale;

@@ -5,6 +5,8 @@ interface SaveData {
   arcade: { bestScore: number; bestCombo: number; time: number; minVar: number };
   daily: { date: string; firstTimeMs: number | null; bestTimeMs: number | null; played: boolean };
   intro: boolean;
+  badges: string[];
+  maxRevives: number;
 }
 
 function defaults(): SaveData {
@@ -12,7 +14,9 @@ function defaults(): SaveData {
     campaign: { unlocked: 1, stars: {}, attempts: {} },
     arcade: { bestScore: 0, bestCombo: 0, time: 8, minVar: 0.15 },
     daily: { date: "", firstTimeMs: null, bestTimeMs: null, played: false },
-    intro: false
+    intro: false,
+    badges: [],
+    maxRevives: 1
   };
 }
 
@@ -126,4 +130,25 @@ export function isChaosUnlocked(): boolean {
 export function todayStr(): string {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+export function getBadges(): string[] {
+  return data.badges ?? [];
+}
+
+export function addBadge(badge: string): void {
+  if (!data.badges) data.badges = [];
+  if (!data.badges.includes(badge)) {
+    data.badges.push(badge);
+    save();
+  }
+}
+
+export function getMaxRevives(): number {
+  return data.maxRevives ?? 1;
+}
+
+export function setMaxRevives(n: number): void {
+  data.maxRevives = Math.max(data.maxRevives ?? 1, n);
+  save();
 }
