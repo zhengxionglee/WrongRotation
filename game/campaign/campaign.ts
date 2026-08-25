@@ -170,27 +170,54 @@ export class CampaignSession {
     if (!allFixed) return;
     this.running = false;
     sfx.win();
+
+    if (this.levelId === 3) {
+      save.addItem("combo_shield", 1);
+      save.addItem("combo_restore", 1);
+      save.addItem("time_15", 1);
+      save.addItem("time_30", 1);
+      save.addItem("time_60", 1);
+      save.setMaxRevives(save.getMaxRevives() + 1);
+      showModal(`
+        <div class="overlay" style="background:rgba(0,0,0,.45)">
+          <div class="overlay-panel" style="max-width:400px">
+            <div class="big" style="font-size:28px;color:#ffd94d">🎉 新手引导完成！</div>
+            <div class="label" style="margin-top:8px;line-height:1.6;font-size:15px;color:#c8cdd6">
+              恭喜你掌握了基本玩法！以下是你的新手福利：
+            </div>
+            <div style="text-align:left;margin:12px 0;padding:12px;background:#1a1e26;border-radius:12px;line-height:1.8;font-size:14px;color:#e9ecf2">
+              <div>🛡 连击护盾 x1 — 点错不中断连击</div>
+              <div>🔄 连击恢复 x1 — 断连后恢复至断前值</div>
+              <div>⏱ +15s 道具 x1</div>
+              <div>⏱ +30s 道具 x1</div>
+              <div>⏱ +60s 道具 x1</div>
+              <div>💫 复活次数 +1</div>
+            </div>
+            <div class="label" style="color:#ffd94d;margin-bottom:8px">快去街机模式大展身手吧！</div>
+            <button class="btn btn-primary" id="welcome-ok-btn" style="width:100%">进入主界面</button>
+          </div>
+        </div>`);
+      document.getElementById("welcome-ok-btn")!.onclick = () => { hideModal(); this.onExit(); };
+      return;
+    }
+
     const t = this.levelData.targets.length;
     const starsC = this.clicks <= t ? 3 : this.clicks <= t * 3 ? 2 : this.clicks <= t * 6 ? 1 : 1;
     const starsT = this.elapsed <= this.levelData.star.time[0] ? 3 : this.elapsed <= this.levelData.star.time[1] ? 2 : 1;
     const stars = Math.min(starsC, starsT);
     save.setCampaignLevelStars(this.levelId, this.clicks, this.elapsed, stars);
-    const next = this.levelId < 50 && this.levelId !== 3;
-    const nextLabel = this.levelId === 3 ? "返回主页" : "下一关";
-    const nextHandler = this.levelId === 3
-      ? () => { hideModal(); this.onExit(); }
-      : () => { hideModal(); this.levelId++; this.start(); };
+    const next = this.levelId < 50;
     showModal(`
       <div class="overlay">
         <div class="overlay-panel">
           <div class="label">${'*'.repeat(stars)}${'*'.repeat(3-stars)}</div>
           <div class="label">${Math.round(this.elapsed/1000)}秒 | ${this.clicks}次点击</div>
-          ${next ? `<button class="btn btn-primary" id="next-btn">${nextLabel}</button>` : ''}
+          ${next ? `<button class="btn btn-primary" id="next-btn">下一关</button>` : ''}
           <button class="btn" id="retry-btn">重试</button>
           <span class="hint-link" id="exit-btn">选关</span>
         </div>
       </div>`);
-    document.getElementById("next-btn")?.addEventListener("click", nextHandler);
+    document.getElementById("next-btn")?.addEventListener("click", () => { hideModal(); this.levelId++; this.start(); });
     document.getElementById("retry-btn")?.addEventListener("click", () => { hideModal(); this.start(); });
     document.getElementById("exit-btn")?.addEventListener("click", () => { hideModal(); this.onExit(); });
   }
