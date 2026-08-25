@@ -6,6 +6,7 @@ import { PuzzleRenderer, PuzzleState } from "../shared/renderer";
 import { loadImage, getLuma } from "../shared/images";
 import { sfx } from "../shared/audio";
 import * as tween from "../shared/tween";
+import * as effects from "../shared/effects";
 import * as save from "../shared/save";
 import { showModal, hideModal, setScreen, setHud, formatTime, toast } from "../shared/ui";
 import relaxImages from "../../assets/relax/manifest.json";
@@ -87,6 +88,7 @@ export class RelaxationSession {
     this.touched = new Set();
     this.animating = false;
     this.running = true;
+    effects.clearAll();
     this.lastUpdate = performance.now();
     this.loadLevel(0);
     requestAnimationFrame(this.loop.bind(this));
@@ -112,6 +114,7 @@ export class RelaxationSession {
     this.totalTimeMs += dt;
     if (!this.animating) {
       tween.update(dt);
+      effects.update(dt);
       this.renderHUD();
       this.render();
     }
@@ -126,6 +129,7 @@ export class RelaxationSession {
     };
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this._renderer.render(this.ctx, state);
+    effects.render(this.ctx);
   }
 
   private renderHUD() {
@@ -170,6 +174,11 @@ export class RelaxationSession {
       if (norm === 0) {
         this.touched.add(cellId);
         sfx.correct(this.clicks);
+        const cell = this.grid?.cells.find(c => c.id === cellId);
+        if (cell) {
+          const b = this._renderer.board;
+          effects.firework(b.x + cell.cx * b.size, b.y + cell.cy * b.size);
+        }
       } else {
         this.touched.add(cellId);
         sfx.tap();
@@ -207,6 +216,7 @@ export class RelaxationSession {
     });
     if (!allFixed) return;
     this.animating = true;
+    effects.celebration(this.canvas.width, this.canvas.height);
     setTimeout(() => {
       this.animating = false;
       this.currentIdx++;

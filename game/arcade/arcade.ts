@@ -8,6 +8,7 @@ import { PuzzleRenderer, PuzzleState } from "../shared/renderer";
 import { loadImage, getLuma, preload } from "../shared/images";
 import { sfx } from "../shared/audio";
 import * as tween from "../shared/tween";
+import * as effects from "../shared/effects";
 import * as save from "../shared/save";
 import { showModal, hideModal } from "../shared/ui";
 import manifestData from "../../assets/manifest.json";
@@ -106,6 +107,7 @@ export class ArcadeSession {
     this.currentLevel = await this.buildLevel(0);
     this._renderer.layout(this.canvas.width, this.canvas.height, 80);
     this.buildNext();
+    effects.clearAll();
     this.renderHUD();
     this.lastUpdate = performance.now();
     requestAnimationFrame(this.loop.bind(this));
@@ -176,6 +178,7 @@ export class ArcadeSession {
     const dt = Math.min(time - this.lastUpdate, 50);
     this.lastUpdate = time;
     tween.update(dt);
+    effects.update(dt);
     if (this.advancing || this.paused) {
       this.renderHUD();
       this.render();
@@ -209,6 +212,7 @@ export class ArcadeSession {
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
     this._renderer.render(this.ctx, state);
+    effects.render(this.ctx);
   }
 
   private renderHUD() {
@@ -248,6 +252,11 @@ export class ArcadeSession {
       this.totalLevels++;
       this.score += 100 + this.combo * 25;
       this.timeLeft = Math.min(this.timeLeft + 2.5 * this.timeScale, 20 * this.timeScale);
+      const cell = this.currentLevel.grid.cells.find(c => c.id === cellId);
+      if (cell) {
+        const b = this._renderer.board;
+        effects.firework(b.x + cell.cx * b.size, b.y + cell.cy * b.size);
+      }
       this.flashType = "correct";
       this.flashTimer = 200;
       this.advancing = true;

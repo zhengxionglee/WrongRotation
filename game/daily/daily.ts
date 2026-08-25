@@ -6,6 +6,7 @@ import { PuzzleRenderer, PuzzleState } from "../shared/renderer";
 import { loadImage, getLuma, preload } from "../shared/images";
 import { sfx } from "../shared/audio";
 import * as tween from "../shared/tween";
+import * as effects from "../shared/effects";
 import * as save from "../shared/save";
 import { showModal, hideModal, setScreen, setHud, formatTime, toast } from "../shared/ui";
 import manifest from "../../assets/manifest.json";
@@ -104,6 +105,7 @@ export class DailySession {
     this.currentIdx = 0;
     this.totalTimeMs = 0;
     this.running = true;
+    effects.clearAll();
     this.lastUpdate = performance.now();
     this.loadLevel(0);
     requestAnimationFrame(this.loop.bind(this));
@@ -128,6 +130,7 @@ export class DailySession {
     this.totalTimeMs += dt;
     this.highlightTimer -= dt;
     if (this.highlightTimer <= 0) this.highlightTarget = -1;
+    effects.update(dt);
     this.renderHUD();
     this.render();
     requestAnimationFrame(this.loop.bind(this));
@@ -142,6 +145,7 @@ export class DailySession {
     };
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this._renderer.render(this.ctx, state);
+    effects.render(this.ctx);
   }
 
   private renderHUD() {
@@ -188,6 +192,11 @@ export class DailySession {
       if (Math.abs(((r % 360) + 360) % 360) < 5) return;
       sfx.correct(this.currentIdx);
       this.rotations.set(cellId, 0);
+      const cell = this.grid_?.cells.find(c => c.id === cellId);
+      if (cell) {
+        const b = this._renderer.board;
+        effects.firework(b.x + cell.cx * b.size, b.y + cell.cy * b.size);
+      }
       const allFixed = lvl.targets.every(t => {
         const rr = this.rotations.get(t.cellId) ?? 0;
         return Math.abs(((rr % 360) + 360) % 360) < 5;
@@ -211,6 +220,7 @@ export class DailySession {
   private finish() {
     this.running = false;
     sfx.win();
+    effects.celebration(this.canvas.width, this.canvas.height);
     save.setDailyResult("challenge", this.totalTimeMs);
     const state = save.getDailyState();
     showModal(`
