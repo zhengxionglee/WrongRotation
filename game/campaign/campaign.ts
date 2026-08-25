@@ -104,7 +104,7 @@ export class CampaignSession {
     const canHint = true;
     document.getElementById("hud")!.innerHTML = `
       <div class="hud-top" style="background:rgba(0,0,0,0.25);padding:clamp(6px,2vh,14px) clamp(10px,3vw,18px);padding-top:calc(env(safe-area-inset-top,0px) + clamp(6px,2vh,14px))">
-        <button class="btn btn-icon" id="back-btn" style="width:48px;height:48px;font-size:22px;border-radius:14px;font-weight:700">x</button>
+        <button class="btn btn-sm" id="back-btn" style="padding:8px 14px;font-size:14px;font-weight:600;border-radius:10px">退出</button>
         <div class="hud-combo" style="font-size:clamp(16px,4vw,22px);font-weight:700;color:#ffd94d">${count || `第${this.levelId}关`}</div>
         <div style="display:flex;gap:8px;align-items:center">
           <button class="btn btn-sm" id="reset-btn" style="padding:10px 18px;font-size:15px;font-weight:700">重置</button>
@@ -175,18 +175,22 @@ export class CampaignSession {
     const starsT = this.elapsed <= this.levelData.star.time[0] ? 3 : this.elapsed <= this.levelData.star.time[1] ? 2 : 1;
     const stars = Math.min(starsC, starsT);
     save.setCampaignLevelStars(this.levelId, this.clicks, this.elapsed, stars);
-    const next = this.levelId < 50;
+    const next = this.levelId < 50 && this.levelId !== 3;
+    const nextLabel = this.levelId === 3 ? "返回主页" : "下一关";
+    const nextHandler = this.levelId === 3
+      ? () => { hideModal(); this.onExit(); }
+      : () => { hideModal(); this.levelId++; this.start(); };
     showModal(`
       <div class="overlay">
         <div class="overlay-panel">
           <div class="label">${'*'.repeat(stars)}${'*'.repeat(3-stars)}</div>
           <div class="label">${Math.round(this.elapsed/1000)}秒 | ${this.clicks}次点击</div>
-          ${next ? `<button class="btn btn-primary" id="next-btn">下一关</button>` : ''}
+          ${next ? `<button class="btn btn-primary" id="next-btn">${nextLabel}</button>` : ''}
           <button class="btn" id="retry-btn">重试</button>
           <span class="hint-link" id="exit-btn">选关</span>
         </div>
       </div>`);
-    document.getElementById("next-btn")?.addEventListener("click", () => { hideModal(); this.levelId++; this.start(); });
+    document.getElementById("next-btn")?.addEventListener("click", nextHandler);
     document.getElementById("retry-btn")?.addEventListener("click", () => { hideModal(); this.start(); });
     document.getElementById("exit-btn")?.addEventListener("click", () => { hideModal(); this.onExit(); });
   }
