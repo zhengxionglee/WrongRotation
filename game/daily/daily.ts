@@ -57,14 +57,19 @@ export class DailySession {
       { shape: "tri", n: 5, tier: "weak", angles: EXTRA },
       { shape: "voronoi", n: 30, tier: "weak", angles: [...MICRO, ...EXTRA] },
     ];
-    for (let i = 0; i < params.length; i++) {
-      const p = params[i];
+    const preloadTasks = params.map(async (p) => {
       const pool = this.manifest.filter(e => e.tier === p.tier || (p.tier === "mid" && (e.tier === "strong" || e.tier === "mid")));
       const entry = pool[Math.floor(Math.random() * pool.length)];
-      const grid = buildGrid({ type: p.shape as any, seed: Math.random() * 100000 | 0, param: p.n });
-      const cells = grid.cells.slice().sort(() => Math.random() - 0.5);
       const img = await loadImage(entry.file);
       const luma = await getLuma(entry.file);
+      return { entry, img, luma };
+    });
+    const preloaded = await Promise.all(preloadTasks);
+    for (let i = 0; i < params.length; i++) {
+      const p = params[i];
+      const { entry, luma } = preloaded[i];
+      const grid = buildGrid({ type: p.shape as any, seed: Math.random() * 100000 | 0, param: p.n });
+      const cells = grid.cells.slice().sort(() => Math.random() - 0.5);
       const scored: { cellId: number; rotation: number; s: number }[] = [];
       for (const cell of cells.slice(0, 12)) {
         for (const angle of p.angles) {

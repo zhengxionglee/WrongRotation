@@ -55,13 +55,17 @@ export class RelaxationSession {
     const pool = this.manifest.slice().sort(() => Math.random() - 0.5);
     const n = Math.min(15, pool.length);
     this.levels = [];
+    const entries = pool.slice(0, n);
+    const preloaded = await Promise.all(entries.map(async (entry) => {
+      const img = await loadImage(entry.file);
+      const luma = await getLuma(entry.file);
+      return { entry, img, luma };
+    }));
     for (let i = 0; i < n; i++) {
-      const entry = pool[i];
+      const { entry, luma } = preloaded[i];
       const grid = buildGrid({ type: "square", seed: Math.random() * 100000 | 0, param: 4 });
       const angle = [90, 180, 270][Math.floor(Math.random() * 3)];
       const cells = grid.cells.slice().sort(() => Math.random() - 0.5);
-      const img = await loadImage(entry.file);
-      const luma = await getLuma(entry.file);
       let bestCell = cells[0], bestS = 0;
       for (const cell of cells) {
         const s = salience(luma, cell, angle).S;
