@@ -172,6 +172,7 @@ export class CampaignSession {
     sfx.win();
 
     if (this.levelId === 3) {
+      save.setCampaignLevelStars(3, this.clicks, this.elapsed, 3);
       save.addItem("combo_shield", 1);
       save.addItem("combo_restore", 1);
       save.addItem("time_15", 1);
