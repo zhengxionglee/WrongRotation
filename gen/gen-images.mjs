@@ -1188,24 +1188,20 @@ P.lattice = function(rng, noise, pal) {
 
 P.mosaic = function(rng, noise, pal) {
   const d = newBuf(pal.bg);
-  const n = ri(rng, 30, 50);
+  const n = ri(rng, 80, 120);
   const s = Math.ceil(W / n);
+  const ns = rr(rng, 0.008, 0.015);
   for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) {
-    const col = pick(rng, pal.cols);
-    const gradDir = Math.floor(rng() * 4);
     const cx = c * s + s / 2, cy = r * s + s / 2;
+    const baseCol = pal.cols[Math.floor(noise.fbm(cx * ns, cy * ns, 3) * pal.cols.length) % pal.cols.length];
     for (let y = 0; y < s; y++) for (let x = 0; x < s; x++) {
-      let t;
-      if (gradDir === 0) t = x / s;
-      else if (gradDir === 1) t = y / s;
-      else if (gradDir === 2) t = Math.hypot(x - s / 2, y - s / 2) / (s * 0.71);
-      else t = (x + y) / (s * 2);
-      t = Math.min(1, t * 0.7 + 0.15);
-      const cg = mixC(col, pal.bg, t * 0.35);
+      const nv = noise.fbm((c * s + x) * 0.04, (r * s + y) * 0.04, 2);
+      const grad = Math.min(1, Math.hypot(x - s / 2, y - s / 2) / (s * 0.6));
+      const t = (nv * 0.5 + grad * 0.5);
+      const cg = mixC(baseCol, pal.bg, t * 0.5);
       setP(d, c * s + x, r * s + y, cg);
     }
   }
-  addTex(d, noise, 0.05, 0.08);
   return d;
 };
 

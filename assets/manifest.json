@@ -1088,8 +1088,8 @@
       "tier": "mid",
       "pattern": "mosaic",
       "seed": 4084961132,
-      "anisotropy": 0.086,
-      "V_image": 0.91
+      "anisotropy": 0.113,
+      "V_image": 0.89
     },
     {
       "id": 122,
@@ -1097,8 +1097,8 @@
       "tier": "mid",
       "pattern": "mosaic",
       "seed": 1455041218,
-      "anisotropy": 0.075,
-      "V_image": 0.93
+      "anisotropy": 0.099,
+      "V_image": 0.9
     },
     {
       "id": 123,
@@ -1106,8 +1106,8 @@
       "tier": "mid",
       "pattern": "mosaic",
       "seed": 3521545912,
-      "anisotropy": 0.066,
-      "V_image": 0.93
+      "anisotropy": 0.107,
+      "V_image": 0.89
     },
     {
       "id": 124,
