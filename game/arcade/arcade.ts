@@ -60,6 +60,7 @@ export class ArcadeSession {
   private flashTimer = 0;
   private flashType: "correct" | "wrong" | "none" = "none";
   private advancing = false;
+  private paused = false;
   private manifest: ManifestEntry[];
   private recentImages: number[] = [];
   private totalLevels = 0;
@@ -175,7 +176,7 @@ export class ArcadeSession {
     const dt = Math.min(time - this.lastUpdate, 50);
     this.lastUpdate = time;
     tween.update(dt);
-    if (this.advancing) {
+    if (this.advancing || this.paused) {
       this.renderHUD();
       this.render();
       requestAnimationFrame(this.loop.bind(this));
@@ -291,6 +292,7 @@ export class ArcadeSession {
 
   private checkMilestone() {
     const n = this.totalLevels;
+    this.paused = true;
     if (n === 10) {
       this.maxRevives++;
       save.setMaxRevives(this.maxRevives);
@@ -304,7 +306,7 @@ export class ArcadeSession {
             <button class="btn btn-primary" id="milestone-ok-btn">继续</button>
           </div>
         </div>`);
-      document.getElementById("milestone-ok-btn")!.onclick = () => hideModal();
+      document.getElementById("milestone-ok-btn")!.onclick = () => { this.paused = false; hideModal(); };
     } else if (n === 25) {
       this.maxRevives++;
       save.setMaxRevives(this.maxRevives);
@@ -318,7 +320,7 @@ export class ArcadeSession {
             <button class="btn btn-primary" id="milestone-ok-btn">继续</button>
           </div>
         </div>`);
-      document.getElementById("milestone-ok-btn")!.onclick = () => hideModal();
+      document.getElementById("milestone-ok-btn")!.onclick = () => { this.paused = false; hideModal(); };
     } else if (n === 50) {
       save.addBadge("arcade_50");
       this.maxRevives++;
@@ -333,7 +335,7 @@ export class ArcadeSession {
             <button class="btn btn-primary" id="milestone-ok-btn">继续</button>
           </div>
         </div>`);
-      document.getElementById("milestone-ok-btn")!.onclick = () => hideModal();
+      document.getElementById("milestone-ok-btn")!.onclick = () => { this.paused = false; hideModal(); };
     } else if (n > 50 && n % 25 === 0) {
       this.maxRevives++;
       save.setMaxRevives(this.maxRevives);
@@ -347,7 +349,7 @@ export class ArcadeSession {
             <button class="btn btn-primary" id="milestone-ok-btn">继续</button>
           </div>
         </div>`);
-      document.getElementById("milestone-ok-btn")!.onclick = () => hideModal();
+      document.getElementById("milestone-ok-btn")!.onclick = () => { this.paused = false; hideModal(); };
     }
   }
 
