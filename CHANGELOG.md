@@ -1,20 +1,222 @@
-# Changelog
+# 版本迭代日志
 
-## v0.1.0 — 2026-08-20 — Demo
+## 项目概述
+转错了（Wrong Rotation）—— H5 休闲解谜游戏，TypeScript + Vite 5 + Canvas 2D，支持 PWA 离线访问和 GitHub Pages 在线游玩。
 
-### Features
-- **100 procedural images** with strong/mid/weak orientation tiers
-- **50 campaign levels** with square/hex/tri/voronoi grids, multi-target & manual rotation from level 32, micro angles from level 45
-- **Arcade mode** with combo-driven difficulty, breathing levels, preloading, and continuous flow
-- **Daily challenge** with date-seeded puzzles, global same-set, timed leaderboard, and share card
-- **Core engine** with seeded RNG, grid generation, salience computation, and difficulty model
-- **Canvas-based renderer** with offscreen caching for performance
-- **Web Audio** synthesized sound effects with combo pitch rising
-- **localStorage** persistence for campaign progress, arcade records, and daily results
+---
 
-### Technical
-- TypeScript + Vite, pure Canvas 2D, no external runtime deps except d3-delaunay (Voronoi)
-- All images generated deterministically with seeded RNG
-- Level data generated via salience-based target selection with S > S_min gate
-- First-screen bundle < 500KB (23KB gzipped)
-- 35 unit tests across core modules
+## v1.0 — 基础框架
+
+### 核心架构
+- 技术栈：TypeScript strict, Vite 5, Canvas 2D, d3-delaunay, Web Audio API
+- 渲染管线：Canvas 2D 逐帧绘制，支持拖拽旋转交互
+- 存储：localStorage 持久化存档
+
+### 模式
+- **闯关模式**：50 关，拖拽旋转归位，星级评价
+- **街机模式**：无限关卡，点击消除，连击 + 计分
+- **挑战模式**：10 关计时，极微角度，高难度
+
+### 图像生成
+- 62 个图案族 × 3 张 = 186 张程序化生成图像
+- 质量门控：平坦度 >60% 的单元格自动重试
+- 分级：strong(40张) / mid(35张) / weak(25张)
+
+---
+
+## v1.1 — PWA 与部署
+
+### 改动
+- 添加 manifest.json、service worker（network-first 策略 v2）
+- 生成 PWA 图标（192px / 512px）
+- 开发环境自动注销 SW，避免缓存旧代码
+- 构建 `game.html` 独立离线包（内嵌全部图片 base64）
+
+### 思考
+SW 缓存策略选择 network-first 而非 cache-first，因为游戏需要实时加载最新图片。dev 环境下自动注销 SW 是必须的，否则每次修改都要手动清理缓存。
+
+---
+
+## v1.2 — 闯关模式优化
+
+### 改动
+- 所有关卡统一为拖拽旋转（移除 autoSnap）
+- 添加重置按钮
+- 提示功能（高亮未修复单元格）
+- 所有按钮改用 pointerdown 事件委托（因 innerHTML 每帧替换，onclick 会丢失）
+
+### 思考
+pointerdown 委托是一个反复出现的 bug 模式。HUD 每帧通过 innerHTML 重建，传统 onclick 绑定会丢失，必须用事件捕获 + closest 判断。
+
+---
+
+## v1.3 — 街机模式大改
+
+### 改动
+- 添加 baseRotation（整图预旋转，增加难度）
+- 答错显示答案
+- 主页可设置基础时间（5s/8s/12s/20s）
+- 网格尺寸显示 + 粗网格线
+- 跳过按钮（pointerdown 委托）
+- 方差门控（MinVar 设置，控制单元格可识别度）
+- 难度绑定总关卡数：`effectiveCombo = Math.max(combo, floor(totalLevels × 0.5))`
+- 时间限制固定 8s，不随难度缩放
+- 180° 对称性守卫：`s < 0.1` 时跳过 180° 角
+- 回答正确动画 600ms
+- 复活功能
+
+### 思考
+难度只依赖 combo 会导致后期太简单，加入 totalLevels 保底后曲线更平滑。180° 对称性守卫是必要的——中心对称的单元格旋转 180° 后视觉上完全一致，salience 检测几乎为 0。
+
+---
+
+## v1.4 — 挑战模式
+
+### 改动
+- 每关 2 个错误单元格
+- 网格尺寸显示
+- 提示按钮（同闯关模式）
+- 粗网格线
+- X 按钮修复（pointerdown 委托）
+- 极难参数：微角度 5°-14°，weak 级别，voronoi/hex/tri 网格
+
+---
+
+## v1.5 — 休闲模式创建
+
+### 改动
+- 主页添加"休闲"按钮
+- 创建 `RelaxationSession` 类
+- 5 关，3×3 网格，180° 旋转
+- 使用风景类图案（从主 manifest 中筛选 landscape/city/celestial/map/terrain）
+
+### 初始交互
+- 点击自动修复（autoSnap: true），简化操作
+
+---
+
+## v1.6 — 摄影作品集成
+
+### 改动
+- 用户提供个人 JPG 照片
+- 编写 `gen-relax.mjs`：sharp 转换 JPG → 1080×1080 WebP（quality 86）
+- 修复大小写过滤（`.JPG` 兼容）
+- 支持子目录递归扫描
+- 生成 `assets/relax/manifest.json`
+- 休闲模式改为**只使用用户照片**，移除主 manifest 依赖
+
+### 思考
+用户照片是休闲模式的核心体验，不应该与程序化生成图片混用。独立的 manifest 和目录结构也便于后续扩展。
+
+---
+
+## v1.7 — 休闲模式拖拽化
+
+### 改动
+- 交互改为拖拽旋转（同闯关模式）
+- rotatable: true，15° 吸附
+- 4×4 网格，随机角度 [90, 180, 270]
+- 每局 15 关（从 39 张照片中不重复抽取）
+- 添加跳过按钮和重置按钮
+- 修复多个独占一个入口的问题
+
+### 思考
+点击自动修复太简单，拖拽旋转才有游戏性。4×4 + 随机角度保证了适度难度，同时不破坏休闲的轻松感。
+
+---
+
+## v1.8 — 道具系统与里程碑
+
+### 改动
+- 添加道具系统（localStorage 持久化）
+  - 连击护盾：点错自动消耗，连击不中断
+  - 连击恢复：连击断后手动使用，恢复至断前值
+  - 加时道具：+15s / +30s / +60s
+- 关卡里程碑（10/25/50/75+）：复活次数 +1 + 道具奖励
+- 连击里程碑（5/10/20/35/50/75/100）：道具奖励 + 徽章
+- 复活不再重置连击，不阻挡里程碑奖励
+- 复活次数限制（初始 1 次，里程碑增加）
+
+### 思考
+里程碑系统是留存的关键。每 25 关一个节点给玩家明确的短期目标。道具系统增加了策略性——是留着护盾还是赌一把？
+
+---
+
+## v1.9 — 引导流程
+
+### 改动
+- 第 3 关通关后弹出新手福利弹窗
+- 奖励：各类道具各 x1 + 复活次数 +1
+- 点击"进入主界面"回到主页
+- 闯关模式"x"按钮改为"退出"文本按钮
+
+### Bug 修复
+- 第 3 关未调用 `save.setCampaignLevelStars()`，导致 `goHome()` 判断 `passed < 3` 重新显示入门引导页
+- 修复后添加 `save.setCampaignLevelStars(3, ...)` 再 return
+
+---
+
+## v1.10 — 图像生成优化
+
+### 改动
+- Mosaic 图案重写：80-120 细密格子（原 30-50）
+- 改用 noise 平滑过渡选色，相邻格子不再同色
+- 每个格子内嵌 fbm 噪点 + 径向渐变
+- 解决 4×4-6×6 下纯色块无旋转特征的问题
+
+### 思考
+程序化生成图在密集网格下容易暴露出"纯色块"的问题。根本原因是 palette 只有 4 色，随机抽取导致相邻格子同色。用 noise 做颜色选择 + 格子内渐变 + 子像素噪点三层保障，确保每个单元格都有方向特征。
+
+---
+
+## v1.11 — 性能优化
+
+### 改动
+- 休闲模式：`Promise.all` 并行预加载 15 张图片
+- 挑战模式：`Promise.all` 并行预加载 10 张图片
+- 加载时间从 5-10s 降至 1-2s
+
+### 思考
+`await loadImage` 在 for 循环中串行执行是常见性能陷阱。每张图片需要 HTTP 请求 + Canvas 解码 + 像素读取，串行 15 次必然卡顿。`Promise.all` 并行化后本质上是同时发起 15 个请求，总耗时 ≈ 最慢的单张图片加载时间。
+
+---
+
+## v1.12 — 部署与运维
+
+### 改动
+- 构建脚本输出到 `dist/` 目录
+- `gh-pages` 分支部署（16.4MB，236 个文件）
+- 排除 `game.html`（22MB 离线包，过大不适合 Pages）
+- 排除 `assets/jpg/`（原始照片，不必要）
+- 在线地址：https://zhengxionglee.github.io/WrongRotation
+
+### 注意事项
+- `gh-pages` 分支每次需重新构建再推送
+- GitHub Pages 部署约 1-2 分钟生效
+- 首次部署需在仓库 Settings → Pages 手动设置
+
+---
+
+## v1.13 — 玩法说明
+
+### 改动
+- 主页新增"玩法说明"按钮（第五个按钮）
+- 弹出 modal 显示所有模式规则 + 道具说明 + 里程碑
+- 字号 `clamp(15px, 3.5vw, 18px)` 适配移动端
+- 按钮重命名：挑战 → 挑战模式，休闲 → 休闲模式
+- 道具/跳过按钮移至 HUD 左上角，不再遮挡题目
+
+---
+
+## 技术债务与待办
+
+### 已知问题
+- `game.html` 22MB 过大，考虑拆分或按需加载
+- 部分 weak 图案在 6×6 网格下仍可能识别困难
+- 道具系统缺少可视化背包页面
+
+### 潜在优化
+- 图片懒加载 + 渐进式解码
+- 离线包增量更新
+- 排行榜 / 数据统计
+- 多语言支持
