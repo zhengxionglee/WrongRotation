@@ -226,8 +226,8 @@ function showCampaignSelect() {
   }).join("");
 
   setScreen(`
-    <div class="screen" style="justify-content:flex-start;padding-top:clamp(12px,3vh,24px);">
-      <div style="display:flex;align-items:center;gap:8px;width:100%;max-width:500px;padding:0 12px;">
+    <div class="screen" style="justify-content:flex-start;padding-top:clamp(12px,3vh,24px);overflow-y:auto;overflow-x:hidden;">
+      <div style="display:flex;align-items:center;gap:8px;width:100%;max-width:500px;padding:0 12px;flex-shrink:0;">
         <button class="btn btn-icon" id="back-btn">x</button>
         <div style="font-size:20px;font-weight:600;flex:1;text-align:center;">闯关</div>
         <div style="width:44px"></div>
