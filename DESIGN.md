@@ -270,4 +270,4 @@ TypeScript + Vite；渲染用原生 Canvas 2D，不引入游戏引擎；唯一�
 
 - **最终游戏作品**：H5 在线版（GitHub Pages）+ 单文件离线包 `game.html`；
 - **设计思路文档**：即本文（DESIGN.md）；
-- **迭代优化过程文档**：见 `CHANGELOG.md`，记录每次版本修改的内容、Bug 根源与设计思考（含与 AI 协作的完整迭代轨迹）。
+- **迭代优化过程文档**：`ITERATION.md`（含策划组协作截图，展示人机协作与不断改进的轨迹）；`CHANGELOG.md` 为逐版本修改明细。
